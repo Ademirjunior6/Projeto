@@ -45,7 +45,6 @@ uses FAG.DataModule.Conexao;
 begin
 DataModuleConexao.ExecSQL('SELECT * FROM CATEGORIA',FDMemTable1);
 end;
-TESTE
 end.
 
 
