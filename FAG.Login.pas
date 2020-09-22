@@ -46,7 +46,6 @@ begin
 DataModuleConexao.ExecSQL('SELECT * FROM CATEGORIA',FDMemTable1);
 end;
 
-testetstsdsadsadasdasd
 end.
 
 
