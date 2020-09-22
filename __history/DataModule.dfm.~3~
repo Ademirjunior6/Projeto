@@ -1,0 +1,40 @@
+object DataModule5: TDataModule5
+  OldCreateOrder = False
+  OnCreate = DataModuleCreate
+  Height = 329
+  Width = 460
+  object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
+    VendorLib = 'C:\Users\ademi\Desktop\projeto\Win32\Debug\libmysql.dll'
+    Left = 288
+    Top = 88
+  end
+  object FDConnection1: TFDConnection
+    Left = 200
+    Top = 232
+  end
+  object FDManager1: TFDManager
+    WaitCursor = gcrNone
+    FormatOptions.AssignedValues = [fvMapRules]
+    FormatOptions.OwnMapRules = True
+    FormatOptions.MapRules = <>
+    Active = True
+    Left = 288
+    Top = 168
+  end
+  object FDQuery1: TFDQuery
+    Connection = FDConnection1
+    Left = 120
+    Top = 160
+  end
+  object FDMemTable1: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 120
+    Top = 80
+  end
+end

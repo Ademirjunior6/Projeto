@@ -1,0 +1,61 @@
+unit DataModule;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Phys.MySQLDef, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
+  FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
+  FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
+  FireDAC.DApt, FireDAC.Comp.Client, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Phys.MySQL;
+
+type
+  TDataModule5 = class(TDataModule)
+    FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
+    FDConnection1: TFDConnection;
+    FDManager1: TFDManager;
+    FDQuery1: TFDQuery;
+    FDMemTable1: TFDMemTable;
+    procedure DataModuleCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DataModule5: TDataModule5;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+procedure TDataModule5.DataModuleCreate(Sender: TObject);
+var
+	oParams : TStrings;
+begin
+  // ShowMessage('Informe os Jogadores');
+  oParams := TStringlist.Create;
+  try
+    FDPhysMySQLDriverLink1.VendorLib := GetCurrentDir() + '\libmysql.dll';
+    oParams.Add('CharacterSet=Utf8');
+    oParams.Add('Server=localhost');
+    oParams.Add('DriverID=MySQL');
+    oParams.Add('Database=projeto');
+    oParams.Add('Port=3306');
+    oParams.Add('User_Name=root');
+    oParams.Add('Password=412405');
+    oParams.Add('Pooled=True');
+    FDManager1.Active := False;
+    FDManager1.AddConnectionDef('MySQL_Pooled', 'MySQL', oParams);
+    FDManager1.Active := True;
+  finally
+    FreeAndNil(oParams);
+	end;
+
+end;
+
+end.

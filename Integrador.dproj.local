@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020/09/16 17:01:05.000.265,=C:\Users\ademi\Documents\Embarcadero\Studio\Projects\Unit4.pas</Transaction>
+    <Transaction>2020/09/16 17:01:45.000.934,=C:\Users\ademi\Documents\Embarcadero\Studio\Projects\Unit5.pas</Transaction>
+    <Transaction>2020/09/16 17:35:25.000.474,C:\Users\ademi\Documents\Embarcadero\Studio\Projects\Unit4.pas=C:\Users\ademi\Desktop\projeto\login.pas</Transaction>
+    <Transaction>2020/09/16 17:35:25.000.474,C:\Users\ademi\Documents\Embarcadero\Studio\Projects\Unit4.dfm=C:\Users\ademi\Desktop\projeto\login.dfm</Transaction>
+    <Transaction>2020/09/16 17:35:38.000.186,C:\Users\ademi\Documents\Embarcadero\Studio\Projects\Unit5.pas=C:\Users\ademi\Desktop\projeto\DataModule.pas</Transaction>
+    <Transaction>2020/09/16 17:35:38.000.186,C:\Users\ademi\Documents\Embarcadero\Studio\Projects\Unit5.dfm=C:\Users\ademi\Desktop\projeto\DataModule.dfm</Transaction>
+    <Transaction>2020/09/16 17:35:50.000.457,C:\Users\ademi\Documents\Embarcadero\Studio\Projects\Project3.dproj=C:\Users\ademi\Desktop\projeto\Integrador.dproj</Transaction>
+    <Transaction>2020/09/18 19:30:23.716,C:\Users\ademi\Desktop\projeto\DataModule.pas=</Transaction>
+    <Transaction>2020/09/18 19:32:08.690,=C:\Users\ademi\Desktop\projeto\FAG.DataModule.Conexao.pas</Transaction>
+    <Transaction>2020/09/18 19:35:37.700,C:\Users\ademi\Desktop\projeto\Fag.Login.dfm=C:\Users\ademi\Desktop\projeto\login.dfm</Transaction>
+    <Transaction>2020/09/18 19:35:37.700,C:\Users\ademi\Desktop\projeto\Fag.Login.pas=C:\Users\ademi\Desktop\projeto\login.pas</Transaction>
+    <Transaction>2020/09/18 19:36:30.438,C:\Users\ademi\Desktop\projeto\FAGLogin.dfm=C:\Users\ademi\Desktop\projeto\Fag.Login.dfm</Transaction>
+    <Transaction>2020/09/18 19:36:30.438,C:\Users\ademi\Desktop\projeto\FAGLogin.pas=C:\Users\ademi\Desktop\projeto\Fag.Login.pas</Transaction>
+    <Transaction>2020/09/18 19:36:35.713,C:\Users\ademi\Desktop\projeto\FAG.Login.dfm=C:\Users\ademi\Desktop\projeto\FAGLogin.dfm</Transaction>
+    <Transaction>2020/09/18 19:36:35.713,C:\Users\ademi\Desktop\projeto\FAG.Login.pas=C:\Users\ademi\Desktop\projeto\FAGLogin.pas</Transaction>
+    <Transaction>2020/09/18 20:08:14.649,=C:\libmysql.dll</Transaction>
+  </Transactions>
+</BorlandProject>
