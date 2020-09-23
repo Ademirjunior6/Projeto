@@ -62,7 +62,7 @@ object Form_Login: TForm_Login
     end
     object Image1: TImage
       Left = 248
-      Top = 40
+      Top = 32
       Width = 105
       Height = 105
     end

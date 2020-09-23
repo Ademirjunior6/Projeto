@@ -44,6 +44,8 @@ uses FAG.DataModule.Conexao;
    procedure TForm_Login.entrarClick(Sender: TObject);
 begin
 DataModuleConexao.ExecSQL('SELECT * FROM CATEGORIA',FDMemTable1);
+
+oihdsaoidasjidsa
 end;
 
 end.
