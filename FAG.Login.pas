@@ -9,18 +9,18 @@ uses
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait,
   FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
-  FireDAC.Comp.Client, Data.DB, FireDAC.Comp.DataSet, FireDAC.Phys.MySQL;
+  FireDAC.Comp.Client, Data.DB, FireDAC.Comp.DataSet, FireDAC.Phys.MySQL,
+  Vcl.Imaging.jpeg;
 
 type
   TForm_Login = class(TForm)
-    Label1: TLabel;
-    Panel1: TPanel;
+    Panel_Login: TPanel;
     Label2: TLabel;
     Label3: TLabel;
     edit_usuario: TEdit;
     edit_senha: TEdit;
     entrar: TButton;
-    Image1: TImage;
+    FAG_Logo: TImage;
     FDMemTable1: TFDMemTable;
     procedure entrarClick(Sender: TObject);
 
@@ -38,13 +38,18 @@ implementation
 
 {$R *.dfm}
 
-uses FAG.DataModule.Conexao;
+uses FAG.DataModule.Conexao, FAG.Menu;
 
 
    procedure TForm_Login.entrarClick(Sender: TObject);
 begin
-DataModuleConexao.ExecSQL('SELECT * FROM CATEGORIA',FDMemTable1);
+//DataModuleConexao.ExecSQL('SELECT * FROM CATEGORIA',FDMemTable1);
 
+
+
+Form_Menu.Show;
+
+Form_Login.Hide;
 
 end;
 

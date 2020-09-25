@@ -109,6 +109,10 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="FAG.Menu.pas">
+            <Form>Form_Menu</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <RcItem Include="C:\libmysql.dll">
             <ContainerId>ResourceItem</ContainerId>
             <ResourceType>RCDATA</ResourceType>
