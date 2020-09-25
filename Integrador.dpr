@@ -6,7 +6,8 @@ uses
   Vcl.Forms,
   FAG.Login in 'FAG.Login.pas' {Form_Login},
   FAG.DataModule.Conexao in 'FAG.DataModule.Conexao.pas' {DataModuleConexao: TDataModule},
-  FAG.Menu in 'FAG.Menu.pas' {Form_Menu};
+  FAG.Menu in 'FAG.Menu.pas' {Form_Menu},
+  FAG.Usuario in 'FAG.Usuario.pas' {Form_Usuario};
 
 {$R *.res}
 
@@ -16,5 +17,6 @@ begin
   Application.CreateForm(TDataModuleConexao, DataModuleConexao);
   Application.CreateForm(TForm_Login, Form_Login);
   Application.CreateForm(TForm_Menu, Form_Menu);
+  Application.CreateForm(TForm_Usuario, Form_Usuario);
   Application.Run;
 end.
