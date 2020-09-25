@@ -45,14 +45,6 @@ uses FAG.DataModule.Conexao, FAG.Menu;
 begin
 //DataModuleConexao.ExecSQL('SELECT * FROM CATEGORIA',FDMemTable1);
 
-      adsadasdasdasasdadsadaasdasdasdasasda
-      dsa
-      d
-      asd
-      asd
-      as
-      d
-
 Form_Menu.Show;
 
 Form_Login.Hide;
