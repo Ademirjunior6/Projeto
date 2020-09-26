@@ -15,6 +15,7 @@ object Form_Menu: TForm_Menu
   OldCreateOrder = False
   Position = poDesktopCenter
   WindowState = wsMaximized
+  OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -26,9 +27,6 @@ object Form_Menu: TForm_Menu
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
-    OnClick = Panel1Click
-    ExplicitWidth = 777
-    ExplicitHeight = 449
   end
   object MainMenu1: TMainMenu
     Left = 744

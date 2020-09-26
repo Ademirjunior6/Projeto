@@ -24,7 +24,7 @@ type
     N2: TMenuItem;
     N3: TMenuItem;
     N4: TMenuItem;
-    procedure Panel1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -40,11 +40,9 @@ implementation
 
 uses FAG.Usuario;
 
-procedure TForm_Menu.Panel1Click(Sender: TObject);
+procedure TForm_Menu.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Form_Usuario.show;
-
-  Form_Menu.hide;
+  Application.Terminate;
 end;
 
 end.
