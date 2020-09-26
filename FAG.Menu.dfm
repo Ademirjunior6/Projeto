@@ -41,9 +41,11 @@ object Form_Menu: TForm_Menu
     end
     object N4: TMenuItem
       Caption = ' '
+      Enabled = False
     end
     object N2: TMenuItem
-      Caption = ' '
+      Caption = '  '
+      Enabled = False
     end
     object MovimentarEstoque1: TMenuItem
       Caption = 'Estoque'

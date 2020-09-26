@@ -44,25 +44,7 @@ procedure TForm_Usuario.Usurio1Click(Sender: TObject);
 begin
   Form_Usuario.hide;
 
-  asd
-  as
-  das
-  das
-  d
-  asd
-  as
-  das
-  das
-  da
-  sda
-  s
-  ad
-  da
-  dsa
-  d
-  as
-  asd
-Form_Menu.show;
+  Form_Menu.show;
 end;
 
 end.

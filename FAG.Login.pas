@@ -10,7 +10,8 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait,
   FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
   FireDAC.Comp.Client, Data.DB, FireDAC.Comp.DataSet, FireDAC.Phys.MySQL,
-  Vcl.Imaging.jpeg;
+  Vcl.Imaging.jpeg, Vcl.Buttons, Vcl.Imaging.pngimage, System.ImageList,
+  Vcl.ImgList;
 
 type
   TForm_Login = class(TForm)
@@ -22,7 +23,20 @@ type
     entrar: TButton;
     FAG_Logo: TImage;
     FDMemTable1: TFDMemTable;
+    Image1: TImage;
+    Shape1: TShape;
+    Edit1: TEdit;
+    ovI_ImagemSenha: TImage;
+    ovP_Entrar: TPanel;
+    ovB_Entrar: TButton;
+    ovP_Cancelar: TPanel;
+    ovB_Cancelar: TButton;
+    ovS_Cancelar: TShape;
+    ovI_ImagemLogin: TImage;
+    Shape2: TShape;
+    Edit2: TEdit;
     procedure entrarClick(Sender: TObject);
+    procedure ovP_CancelarClick(Sender: TObject);
 
 
   private
@@ -49,6 +63,11 @@ Form_Menu.Show;
 
 Form_Login.Hide;
 
+end;
+
+procedure TForm_Login.ovP_CancelarClick(Sender: TObject);
+begin
+  Application.Terminate;
 end;
 
 end.
