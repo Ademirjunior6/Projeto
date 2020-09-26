@@ -103,7 +103,7 @@ begin
 		if (LeiaConfigINI) and (ExtrairArquivoInterno) then
 		begin
 
-			FDPhysMySQLDriverLink1.VendorLib := ExtractFilePath(Application.ExeName) + LIBMYSQL;
+			         FDPhysMySQLDriverLink1.VendorLib := ExtractFilePath(Application.ExeName) + LIBMYSQL;
 			oParams.Add('CharacterSet=utf8');
 			oParams.Add('Server=' + configIni.DBServer);
 			oParams.Add('DriverID=MySQL');
