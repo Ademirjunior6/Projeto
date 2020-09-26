@@ -16,7 +16,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDataModuleConexao, DataModuleConexao);
   Application.CreateForm(TForm_Login, Form_Login);
-  Application.CreateForm(TForm_Menu, Form_Menu);
-  Application.CreateForm(TForm_Usuario, Form_Usuario);
   Application.Run;
 end.

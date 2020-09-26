@@ -10,20 +10,25 @@ object Form_Menu: TForm_Menu
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  FormStyle = fsMDIForm
   Menu = MainMenu1
   OldCreateOrder = False
   Position = poDesktopCenter
+  WindowState = wsMaximized
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 777
-    Height = 449
+    Width = 771
+    Height = 447
+    Align = alClient
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
     OnClick = Panel1Click
+    ExplicitWidth = 777
+    ExplicitHeight = 449
   end
   object MainMenu1: TMainMenu
     Left = 744

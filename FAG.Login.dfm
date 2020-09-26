@@ -25,9 +25,6 @@ object Form_Login: TForm_Login
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
-    ExplicitTop = -9
-    ExplicitWidth = 849
-    ExplicitHeight = 546
     object Label2: TLabel
       Left = 223
       Top = 198
