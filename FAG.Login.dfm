@@ -22960,6 +22960,7 @@ object Form_Login: TForm_Login
       Top = 280
       Width = 178
       Height = 21
+      PasswordChar = '*'
       TabOrder = 1
     end
     object entrar: TButton

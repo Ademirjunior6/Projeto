@@ -29,6 +29,8 @@ type
     { Private declarations }
   public
     { Public declarations }
+    protected
+  procedure CreateParams(var Params: TCreateParams); override;
   end;
 
 var
@@ -39,6 +41,12 @@ implementation
 {$R *.dfm}
 
 uses FAG.Usuario;
+
+procedure TForm_Menu.CreateParams(var Params: TCreateParams);
+begin
+  inherited;
+  Params.ExStyle := Params.ExStyle OR WS_EX_APPWINDOW;
+end;
 
 procedure TForm_Menu.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
