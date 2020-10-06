@@ -1,9 +1,11 @@
 object Form_Menu: TForm_Menu
   Left = 55
   Top = 0
+  BorderIcons = [biSystemMenu, biMaximize]
+  BorderStyle = bsSingle
   Caption = 'Menu'
-  ClientHeight = 447
-  ClientWidth = 771
+  ClientHeight = 758
+  ClientWidth = 1270
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,27 +15,44 @@ object Form_Menu: TForm_Menu
   FormStyle = fsMDIForm
   Menu = MainMenu1
   OldCreateOrder = False
-  Position = poDesktopCenter
   WindowState = wsMaximized
   OnClose = FormClose
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Panel1: TPanel
+  object Panel2: TPanel
     Left = 0
-    Top = 0
-    Width = 771
-    Height = 447
-    Align = alClient
-    Color = clWhite
-    ParentBackground = False
+    Top = 738
+    Width = 1270
+    Height = 20
+    Align = alBottom
+    AutoSize = True
     TabOrder = 0
+    object Label1: TLabel
+      Left = 1171
+      Top = 1
+      Width = 98
+      Height = 18
+      Align = alRight
+      AutoSize = False
+      Caption = 'Nome Usu'#225'rio'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      ExplicitLeft = 1028
+    end
   end
   object MainMenu1: TMainMenu
-    Left = 744
+    Left = 48
+    Top = 24
     object Cadastro1: TMenuItem
       Caption = 'Cadastro'
       object Produto1: TMenuItem
         Caption = 'Produto'
+        OnClick = Produto1Click
       end
       object Fornecedor1: TMenuItem
         Caption = 'Fornecedor'
@@ -42,25 +61,11 @@ object Form_Menu: TForm_Menu
         Caption = 'Usu'#225'rio'
       end
     end
-    object N4: TMenuItem
-      Caption = ' '
-      Enabled = False
-    end
-    object N2: TMenuItem
-      Caption = '  '
-      Enabled = False
-    end
     object MovimentarEstoque1: TMenuItem
       Caption = 'Estoque'
       object Movimentar1: TMenuItem
         Caption = 'Movimentar'
       end
-    end
-    object N3: TMenuItem
-      Caption = ' '
-    end
-    object N1: TMenuItem
-      Caption = ' '
     end
     object ConsultareAlterar1: TMenuItem
       Caption = 'Relat'#243'rio'

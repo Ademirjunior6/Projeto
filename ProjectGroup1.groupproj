@@ -6,9 +6,6 @@
         <Projects Include="Integrador.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="..\Jogo da velha\Project1.dproj">
-            <Dependencies/>
-        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -26,23 +23,14 @@
     <Target Name="Integrador:Make">
         <MSBuild Projects="Integrador.dproj" Targets="Make"/>
     </Target>
-    <Target Name="Project1">
-        <MSBuild Projects="..\Jogo da velha\Project1.dproj"/>
-    </Target>
-    <Target Name="Project1:Clean">
-        <MSBuild Projects="..\Jogo da velha\Project1.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="Project1:Make">
-        <MSBuild Projects="..\Jogo da velha\Project1.dproj" Targets="Make"/>
-    </Target>
     <Target Name="Build">
-        <CallTarget Targets="Integrador;Project1"/>
+        <CallTarget Targets="Integrador"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Integrador:Clean;Project1:Clean"/>
+        <CallTarget Targets="Integrador:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Integrador:Make;Project1:Make"/>
+        <CallTarget Targets="Integrador:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

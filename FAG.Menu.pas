@@ -3,28 +3,33 @@ unit FAG.Menu;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client,  Vcl.Buttons, Vcl.Menus,FAG.Usuario, FAG.CadastroProduto;
 
 type
   TForm_Menu = class(TForm)
-    Panel1: TPanel;
     MainMenu1: TMainMenu;
     Cadastro1: TMenuItem;
     Produto1: TMenuItem;
     Fornecedor1: TMenuItem;
     Usurio1: TMenuItem;
-    N1: TMenuItem;
     MovimentarEstoque1: TMenuItem;
     ConsultareAlterar1: TMenuItem;
     Movimentar1: TMenuItem;
     CadastrodeProduto1: TMenuItem;
     Movimentao1: TMenuItem;
     Fornecedores1: TMenuItem;
-    N2: TMenuItem;
-    N3: TMenuItem;
-    N4: TMenuItem;
+    Panel2: TPanel;
+    Label1: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Produto1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -40,7 +45,19 @@ implementation
 
 {$R *.dfm}
 
-uses FAG.Usuario;
+uses  FAG.Login;
+
+procedure TForm_Menu.Button1Click(Sender: TObject);
+begin
+
+  Application.CreateForm(TForm_CadastroProduto, Form_CadastroProduto);
+  Application.Run;
+
+  //Form_CadastroProduto := TForm_CadastroProduto.Create(Application);
+  //Form_CadastroProduto.Show;
+ShowMessage('TESTE');
+
+end;
 
 procedure TForm_Menu.CreateParams(var Params: TCreateParams);
 begin
@@ -51,6 +68,33 @@ end;
 procedure TForm_Menu.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Application.Terminate;
+end;
+
+procedure TForm_Menu.FormShow(Sender: TObject);
+begin
+// if not Assigned(Form_Login) then
+//  begin
+//    Form_Login := TForm_Login.Create(Self)
+//  end;
+//  while (Form_Login.ShowModal = mrOk) do
+//  begin
+//    FreeAndNil(Form_Login);
+//    Break;
+//  end;
+//  if Form_Login <> nil then
+//    Application.Terminate;
+end;
+
+procedure TForm_Menu.Produto1Click(Sender: TObject);
+begin
+  if not Assigned(Form_CadastroProduto) then
+  begin
+  Form_CadastroProduto             := TForm_CadastroProduto.Create(Application);
+  Form_CadastroProduto.BorderStyle := bsNone;
+  Form_CadastroProduto.Position    := poOwnerFormCenter;
+  end;
+  Form_CadastroProduto.Position    := poOwnerFormCenter;
+  Form_CadastroProduto.Show;
 end;
 
 end.

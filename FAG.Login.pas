@@ -71,9 +71,8 @@ begin
   if existe_usuario(edit_usuario.Text) then
   begin
     if not Assigned(Form_Menu) then
-      Form_Menu := TForm_Menu.Create(nil);
-    Form_Menu.Show;
-    Form_Login.Hide;
+    Form_Menu.Hide;
+    ModalResult := mrOk;
   end
 
   else
