@@ -22,17 +22,18 @@ object Form_Menu: TForm_Menu
   TextHeight = 13
   object Panel2: TPanel
     Left = 0
-    Top = 738
+    Top = 727
     Width = 1270
-    Height = 20
+    Height = 31
     Align = alBottom
     AutoSize = True
     TabOrder = 0
+    ExplicitTop = 728
     object Label1: TLabel
       Left = 1171
       Top = 1
       Width = 98
-      Height = 18
+      Height = 29
       Align = alRight
       AutoSize = False
       Caption = 'Nome Usu'#225'rio'
@@ -42,7 +43,8 @@ object Form_Menu: TForm_Menu
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      ExplicitLeft = 1028
+      ExplicitTop = 2
+      ExplicitHeight = 28
     end
   end
   object MainMenu1: TMainMenu

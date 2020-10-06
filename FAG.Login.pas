@@ -30,17 +30,24 @@ type
     ovI_ImagemLogin: TImage;
     Shape2: TShape;
     Edit_usuario: TEdit;
+    ImagemAparecer: TImage;
+    ImagemOcultar: TImage;
     procedure entrarClick(Sender: TObject);
     procedure ovP_CancelarClick(Sender: TObject);
     function existe_usuario(codigo: String): Boolean;
     function confirmar: Boolean;
     function validarCampos: Boolean;
     procedure ovP_EntrarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure ImagemOcultarClick(Sender: TObject);
+    procedure ImagemAparecerClick(Sender: TObject);
+    procedure Edit_usuarioKeyPress(Sender: TObject; var Key: Char);
+    procedure Edit_senhaKeyPress(Sender: TObject; var Key: Char);
 
   private
     { Private declarations }
   public
-    { Public declarations }
+
   end;
 
 var
@@ -63,10 +70,10 @@ begin
     Exit;
   end;
 
-  if existe_usuario(edit_usuario.Text) then
+  if existe_usuario(Edit_usuario.Text) then
   begin
     if not Assigned(Form_Menu) then
-    Form_Menu.Hide;
+      Form_Menu.Hide;
     ModalResult := mrOk;
   end
 
@@ -80,9 +87,21 @@ begin
 
 end;
 
+procedure TForm_Login.Edit_senhaKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key = #13 then
+    confirmar;
+end;
+
+procedure TForm_Login.Edit_usuarioKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key = #13 then
+    confirmar;
+end;
+
 procedure TForm_Login.entrarClick(Sender: TObject);
 begin
- confirmar;
+  confirmar;
 end;
 
 function TForm_Login.existe_usuario(codigo: String): Boolean;
@@ -91,15 +110,41 @@ var
   senhaLogin: String;
 begin
   excist := TFDMemTable.Create(Self);
-  senhaLogin := edit_senha.Text;
+  senhaLogin := Edit_senha.Text;
 
   try
     DataModuleConexao.ExecSQL
       ('SELECT login_usuario, login_senha FROM login WHERE login_usuario = "' +
-      codigo + '" AND login_senha ="' + edit_senha.Text + '"', excist);
+      codigo + '" AND login_senha ="' + Edit_senha.Text + '"', excist);
     Result := not excist.IsEmpty;
   finally
     FreeAndNil(excist);
+  end;
+end;
+
+procedure TForm_Login.FormShow(Sender: TObject);
+begin
+  ImagemOcultar.Visible := False;
+  ImagemAparecer.Visible := True;
+end;
+
+procedure TForm_Login.ImagemAparecerClick(Sender: TObject);
+begin
+  if ImagemAparecer.Visible = True then
+  begin
+    Edit_senha.PasswordChar := #0;
+    ImagemAparecer.Visible := False;
+    ImagemOcultar.Visible := True;
+  end;
+end;
+
+procedure TForm_Login.ImagemOcultarClick(Sender: TObject);
+begin
+  if ImagemOcultar.Visible = True then
+  begin
+    Edit_senha.PasswordChar := '*';
+    ImagemOcultar.Visible := False;
+    ImagemAparecer.Visible := True;
   end;
 end;
 
@@ -110,23 +155,23 @@ end;
 
 procedure TForm_Login.ovP_EntrarClick(Sender: TObject);
 begin
-confirmar;
+  confirmar;
 end;
 
 function TForm_Login.validarCampos: Boolean;
 begin
   Result := False;
-  if edit_usuario.Text = '' then
+  if Edit_usuario.Text = '' then
   begin
     Application.MessageBox('O campo login não foi preenchido !',
       'Atenção, campo não preenchido', MB_ICONWARNING + MB_OK + MB_TASKMODAL);
-    edit_usuario.SetFocus;
+    Edit_usuario.SetFocus;
   end
-  else if edit_senha.Text = '' then
+  else if Edit_senha.Text = '' then
   begin
     Application.MessageBox('O campo senha não foi preenchido !',
       'Atenção, campo não preenchido', MB_ICONWARNING + MB_OK + MB_TASKMODAL);
-    edit_senha.SetFocus;
+    Edit_senha.SetFocus;
   end
   else
   begin
