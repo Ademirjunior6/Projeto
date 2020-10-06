@@ -1,0 +1,103 @@
+object Form_Menu: TForm_Menu
+  Left = 55
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Menu'
+  ClientHeight = 577
+  ClientWidth = 1126
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsMDIForm
+  Menu = MainMenu1
+  OldCreateOrder = False
+  WindowState = wsMaximized
+  OnClose = FormClose
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object label_bemvindo: TLabel
+    Left = 0
+    Top = 0
+    Width = 1126
+    Height = 557
+    Align = alClient
+    Color = clSilver
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -80
+    Font.Name = 'Gabriola'
+    Font.Style = []
+    Font.Quality = fqAntialiased
+    ParentColor = False
+    ParentFont = False
+    Transparent = False
+    ExplicitWidth = 14
+    ExplicitHeight = 147
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 557
+    Width = 1126
+    Height = 20
+    Align = alBottom
+    AutoSize = True
+    TabOrder = 0
+    ExplicitTop = 528
+    object Label1: TLabel
+      Left = 1027
+      Top = 1
+      Width = 98
+      Height = 18
+      Align = alRight
+      AutoSize = False
+      Caption = 'Nome Usu'#225'rio'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      ExplicitLeft = 1028
+    end
+  end
+  object MainMenu1: TMainMenu
+    Left = 48
+    Top = 24
+    object Cadastro1: TMenuItem
+      Caption = 'Cadastro'
+      object Produto1: TMenuItem
+        Caption = 'Produto'
+        OnClick = Produto1Click
+      end
+      object Fornecedor1: TMenuItem
+        Caption = 'Fornecedor'
+      end
+      object Usurio1: TMenuItem
+        Caption = 'Usu'#225'rio'
+      end
+    end
+    object MovimentarEstoque1: TMenuItem
+      Caption = 'Estoque'
+      object Movimentar1: TMenuItem
+        Caption = 'Movimentar'
+      end
+    end
+    object ConsultareAlterar1: TMenuItem
+      Caption = 'Relat'#243'rio'
+      object CadastrodeProduto1: TMenuItem
+        Caption = 'Cadastro de Produto'
+      end
+      object Movimentao1: TMenuItem
+        Caption = 'Movimenta'#231#227'o'
+      end
+      object Fornecedores1: TMenuItem
+        Caption = 'Fornecedores'
+      end
+    end
+  end
+end

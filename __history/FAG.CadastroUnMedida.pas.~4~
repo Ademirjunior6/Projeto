@@ -1,0 +1,42 @@
+unit FAG.CadastroUnMedida;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons;
+
+type
+  TForm_CadastroUnMedida = class(TForm)
+    Edit_codigo: TEdit;
+    Label_codigo: TLabel;
+    Label_descricao: TLabel;
+    Edit_descricao: TEdit;
+    SpeedButton_salvar: TSpeedButton;
+    SpeedButton_cancelar: TSpeedButton;
+    procedure SpeedButton_cancelarClick(Sender: TObject);
+    procedure SpeedButton_salvarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form_CadastroUnMedida: TForm_CadastroUnMedida;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm_CadastroUnMedida.SpeedButton_cancelarClick(Sender: TObject);
+begin
+ Form_CadastroUnMedida.Close;
+end;
+
+procedure TForm_CadastroUnMedida.SpeedButton_salvarClick(Sender: TObject);
+begin
+ModalResult := mrOk;
+end;
+
+end.

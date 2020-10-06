@@ -1,0 +1,88 @@
+﻿unit FAG.Frame.Generico;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  TFrame_Generico = class(TFrame)
+    ComboBox_Informacao: TComboBox;
+    Label_Titulo: TLabel;
+    TableTemp: TFDMemTable;
+  private
+    Ftabela: String;
+    Fcampos: String;
+    FcarregaFrame: Boolean;
+    Fcondicao: String;
+    procedure Setcampos(const Value: String);
+    procedure Settabela(const Value: String);
+    procedure SetcarregaFrame(const Value: Boolean);
+    procedure Setcondicao(const Value: String);
+    { Private declarations }
+  public
+    property tabela: String read Ftabela write Settabela;
+    property campos: String read Fcampos write Setcampos;
+    property condicao: String read Fcondicao write Setcondicao;
+    property carregaFrame: Boolean read FcarregaFrame write SetcarregaFrame;
+    constructor Create(AOwner: TComponent); override;
+  end;
+
+implementation
+
+uses
+  FAG.DataModule.Conexao;
+
+{$R *.dfm}
+{ TFrame_Generico }
+
+constructor TFrame_Generico.Create(AOwner: TComponent);
+begin
+  inherited;
+
+end;
+
+procedure TFrame_Generico.Setcampos(const Value: String);
+begin
+  Fcampos := Value;
+end;
+
+procedure TFrame_Generico.SetcarregaFrame(const Value: Boolean);
+var
+  sql: String;
+begin
+  sql := 'SELET '+campos+' FROM '+tabela+' '+condicao;
+  DataModuleConexao.ExecSQL(sql, TableTemp);
+  TableTemp.First;
+  ComboBox_Informacao.Clear;
+  while not TableTemp.eof do
+  begin
+    ComboBox_Informacao.Items.Add(TableTemp.FieldByName())
+    TableTemp.Next;
+  end;
+
+
+
+
+
+
+
+  FcarregaFrame := Value;
+end;
+
+procedure TFrame_Generico.Setcondicao(const Value: String);
+begin
+  Fcondicao := ' WHERE '+Value;
+end;
+
+procedure TFrame_Generico.Settabela(const Value: String);
+begin
+  Ftabela := Value;
+end;
+
+end.
