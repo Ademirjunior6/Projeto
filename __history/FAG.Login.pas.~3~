@@ -17,10 +17,16 @@ uses
 type
   TForm_Login = class(TForm)
     Panel_Login: TPanel;
+    Label2: TLabel;
+    Label3: TLabel;
+    edit_usuario: TEdit;
+    edit_senha: TEdit;
+    entrar: TButton;
     FAG_Logo: TImage;
     FDMemTable1: TFDMemTable;
+    Image1: TImage;
     Shape1: TShape;
-    Edit_senha: TEdit;
+    Edit1: TEdit;
     ovI_ImagemSenha: TImage;
     ovP_Entrar: TPanel;
     ovB_Entrar: TButton;
@@ -29,13 +35,12 @@ type
     ovS_Cancelar: TShape;
     ovI_ImagemLogin: TImage;
     Shape2: TShape;
-    Edit_usuario: TEdit;
+    Edit2: TEdit;
     procedure entrarClick(Sender: TObject);
     procedure ovP_CancelarClick(Sender: TObject);
     function existe_usuario(codigo: String): Boolean;
     function confirmar: Boolean;
     function validarCampos: Boolean;
-    procedure ovP_EntrarClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -106,11 +111,6 @@ end;
 procedure TForm_Login.ovP_CancelarClick(Sender: TObject);
 begin
   Application.Terminate;
-end;
-
-procedure TForm_Login.ovP_EntrarClick(Sender: TObject);
-begin
-confirmar;
 end;
 
 function TForm_Login.validarCampos: Boolean;

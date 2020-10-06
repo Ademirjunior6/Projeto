@@ -22325,7 +22325,6 @@ object Form_Login: TForm_Login
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      PasswordChar = '*'
       TabOrder = 0
     end
     object ovP_Entrar: TPanel

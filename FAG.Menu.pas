@@ -72,17 +72,17 @@ end;
 
 procedure TForm_Menu.FormShow(Sender: TObject);
 begin
-// if not Assigned(Form_Login) then
-//  begin
-//    Form_Login := TForm_Login.Create(Self)
-//  end;
-//  while (Form_Login.ShowModal = mrOk) do
-//  begin
-//    FreeAndNil(Form_Login);
-//    Break;
-//  end;
-//  if Form_Login <> nil then
-//    Application.Terminate;
+ if not Assigned(Form_Login) then
+ begin
+    Form_Login := TForm_Login.Create(Self)
+  end;
+  while (Form_Login.ShowModal = mrOk) do
+ begin
+    FreeAndNil(Form_Login);
+    Break;
+  end;
+  if Form_Login <> nil then
+    Application.Terminate;
 end;
 
 procedure TForm_Menu.Produto1Click(Sender: TObject);
