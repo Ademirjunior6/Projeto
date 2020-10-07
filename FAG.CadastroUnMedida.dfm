@@ -1,8 +1,7 @@
 object Form_CadastroUnMedida: TForm_CadastroUnMedida
   Left = 0
   Top = 0
-  AutoSize = True
-  BorderIcons = [biSystemMenu]
+  BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Cadastro Un. Medida'
   ClientHeight = 211
@@ -10,14 +9,14 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
+  Font.Height = -16
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 21
   object Panel_cadastroUn: TPanel
     Left = 0
     Top = 0
@@ -103,5 +102,16 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
       TabOrder = 3
       OnClick = BitBtn_salvarClick
     end
+  end
+  object FDMemTable1: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 320
+    Top = 80
   end
 end

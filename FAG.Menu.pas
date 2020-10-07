@@ -9,7 +9,8 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, Vcl.Buttons, Vcl.Menus, FAG.Usuario, FAG.CadastroProduto, Vcl.ComCtrls;
+  FireDAC.Comp.Client, Vcl.Buttons, Vcl.Menus, FAG.Usuario, FAG.CadastroProduto,
+  Vcl.ComCtrls;
 
 type
   TForm_Menu = class(TForm)
@@ -31,7 +32,7 @@ type
     procedure Button1Click(Sender: TObject);
   private
   public
-    { Public declarations }
+    usuarioLogado: String;
   protected
     procedure CreateParams(var Params: TCreateParams); override;
   end;
@@ -50,7 +51,6 @@ begin
 
   Application.CreateForm(TForm_CadastroProduto, Form_CadastroProduto);
   Application.Run;
-
   // Form_CadastroProduto := TForm_CadastroProduto.Create(Application);
   // Form_CadastroProduto.Show;
   ShowMessage('TESTE');
@@ -77,7 +77,7 @@ begin
   while (Form_Login.ShowModal = mrOk) do
   begin
     FreeAndNil(Form_Login);
-    StatusBar1.Panels.Items[0].Text:= 'Usuário: ' + Form_Login.usuarioLogado;
+    StatusBar1.Panels.Items[0].Text := 'Usuário: ' + Form_Menu.usuarioLogado;
     Break;
   end;
   if Form_Login <> nil then

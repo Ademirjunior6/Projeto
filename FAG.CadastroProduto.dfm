@@ -1,11 +1,12 @@
 object Form_CadastroProduto: TForm_CadastroProduto
   Left = 0
   Top = 0
+  AutoSize = True
   BorderIcons = []
-  BorderStyle = bsNone
+  BorderStyle = bsSingle
   Caption = 'Cadastro de Produto'
-  ClientHeight = 622
-  ClientWidth = 860
+  ClientHeight = 632
+  ClientWidth = 870
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,8 +25,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
   object Panel_cadastroProduto: TPanel
     Left = 0
     Top = 0
-    Width = 860
-    Height = 622
+    Width = 870
+    Height = 632
     Align = alClient
     UseDockManager = False
     Font.Charset = DEFAULT_CHARSET
@@ -35,11 +36,11 @@ object Form_CadastroProduto: TForm_CadastroProduto
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    ExplicitWidth = 304
-    ExplicitHeight = 201
+    ExplicitWidth = 860
+    ExplicitHeight = 622
     object Label_tituloForm: TLabel
-      Left = 264
-      Top = 24
+      Left = 330
+      Top = 32
       Width = 191
       Height = 32
       Caption = 'Cadastrar Produto'

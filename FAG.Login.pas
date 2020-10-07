@@ -53,7 +53,7 @@ type
   private
     { Private declarations }
   public
-    usuarioLogado: String;
+
   end;
 
 var
@@ -78,8 +78,8 @@ begin
   if existe_usuario(Edit_usuario.Text) then
   begin
     if not Assigned(Form_Menu) then
-    Form_Menu.Hide;
-    usuarioLogado := Edit_usuario.Text;
+      Form_Menu.Hide;
+    Form_Menu.usuarioLogado := Edit_usuario.Text;
     ModalResult := mrOk;
   end
   else

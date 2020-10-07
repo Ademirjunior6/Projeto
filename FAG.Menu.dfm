@@ -25,6 +25,11 @@ object Form_Menu: TForm_Menu
     Top = 736
     Width = 1270
     Height = 22
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Style = []
     Panels = <
       item
         Bevel = pbRaised
@@ -32,6 +37,7 @@ object Form_Menu: TForm_Menu
         ParentBiDiMode = False
         Width = 50
       end>
+    UseSystemFont = False
   end
   object MainMenu1: TMainMenu
     Left = 48
