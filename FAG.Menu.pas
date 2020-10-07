@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, Vcl.Buttons, Vcl.Menus, FAG.Usuario, FAG.CadastroProduto;
+  FireDAC.Comp.Client, Vcl.Buttons, Vcl.Menus, FAG.Usuario, FAG.CadastroProduto, Vcl.ComCtrls;
 
 type
   TForm_Menu = class(TForm)
@@ -24,14 +24,12 @@ type
     CadastrodeProduto1: TMenuItem;
     Movimentao1: TMenuItem;
     Fornecedores1: TMenuItem;
-    Panel2: TPanel;
-    Label1: TLabel;
+    StatusBar1: TStatusBar;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Produto1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Button1Click(Sender: TObject);
   private
-    { Private declarations }
   public
     { Public declarations }
   protected
@@ -45,7 +43,7 @@ implementation
 
 {$R *.dfm}
 
-uses FAG.Login;
+uses FAG.Login, FAG.DataModule.Conexao;
 
 procedure TForm_Menu.Button1Click(Sender: TObject);
 begin
@@ -79,6 +77,7 @@ begin
   while (Form_Login.ShowModal = mrOk) do
   begin
     FreeAndNil(Form_Login);
+    StatusBar1.Panels.Items[0].Text:= 'Usuário: ' + Form_Login.usuarioLogado;
     Break;
   end;
   if Form_Login <> nil then

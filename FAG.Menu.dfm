@@ -20,32 +20,18 @@ object Form_Menu: TForm_Menu
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Panel2: TPanel
+  object StatusBar1: TStatusBar
     Left = 0
-    Top = 727
+    Top = 736
     Width = 1270
-    Height = 31
-    Align = alBottom
-    AutoSize = True
-    TabOrder = 0
-    ExplicitTop = 728
-    object Label1: TLabel
-      Left = 1171
-      Top = 1
-      Width = 98
-      Height = 29
-      Align = alRight
-      AutoSize = False
-      Caption = 'Nome Usu'#225'rio'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -15
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      ExplicitTop = 2
-      ExplicitHeight = 28
-    end
+    Height = 22
+    Panels = <
+      item
+        Bevel = pbRaised
+        BiDiMode = bdRightToLeft
+        ParentBiDiMode = False
+        Width = 50
+      end>
   end
   object MainMenu1: TMainMenu
     Left = 48

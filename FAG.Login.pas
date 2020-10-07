@@ -31,7 +31,6 @@ type
     Shape2: TShape;
     Edit_usuario: TEdit;
     ImagemAparecer: TImage;
-    ImagemOcultar: TImage;
     procedure entrarClick(Sender: TObject);
     procedure ovP_CancelarClick(Sender: TObject);
     function existe_usuario(codigo: String): Boolean;
@@ -39,15 +38,22 @@ type
     function validarCampos: Boolean;
     procedure ovP_EntrarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure ImagemOcultarClick(Sender: TObject);
     procedure ImagemAparecerClick(Sender: TObject);
     procedure Edit_usuarioKeyPress(Sender: TObject; var Key: Char);
     procedure Edit_senhaKeyPress(Sender: TObject; var Key: Char);
+    procedure ImagemOcultarMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure ImagemOcultarMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure ImagemAparecerMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure ImagemAparecerMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
 
   private
     { Private declarations }
   public
-
+    usuarioLogado: String;
   end;
 
 var
@@ -69,16 +75,14 @@ begin
     Result := False;
     Exit;
   end;
-
   if existe_usuario(Edit_usuario.Text) then
   begin
     if not Assigned(Form_Menu) then
-      Form_Menu.Hide;
+    Form_Menu.Hide;
+    usuarioLogado := Edit_usuario.Text;
     ModalResult := mrOk;
   end
-
   else
-
   begin
     Application.MessageBox
       ('Usuário ou senha inserido está inválido/incorreto, tente novamente.',
@@ -124,7 +128,6 @@ end;
 
 procedure TForm_Login.FormShow(Sender: TObject);
 begin
-  ImagemOcultar.Visible := False;
   ImagemAparecer.Visible := True;
 end;
 
@@ -134,18 +137,31 @@ begin
   begin
     Edit_senha.PasswordChar := #0;
     ImagemAparecer.Visible := False;
-    ImagemOcultar.Visible := True;
   end;
 end;
 
-procedure TForm_Login.ImagemOcultarClick(Sender: TObject);
+procedure TForm_Login.ImagemAparecerMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  if ImagemOcultar.Visible = True then
-  begin
-    Edit_senha.PasswordChar := '*';
-    ImagemOcultar.Visible := False;
-    ImagemAparecer.Visible := True;
-  end;
+  Edit_senha.PasswordChar := #0;
+end;
+
+procedure TForm_Login.ImagemAparecerMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  Edit_senha.PasswordChar := '*';
+end;
+
+procedure TForm_Login.ImagemOcultarMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  Edit_senha.PasswordChar := #0;
+end;
+
+procedure TForm_Login.ImagemOcultarMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  Edit_senha.PasswordChar := '*';
 end;
 
 procedure TForm_Login.ovP_CancelarClick(Sender: TObject);
