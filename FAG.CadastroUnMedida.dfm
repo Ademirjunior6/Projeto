@@ -85,22 +85,22 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
       TabOrder = 1
     end
     object BitBtn_salvar: TBitBtn
-      Left = 65
-      Top = 128
-      Width = 109
+      Left = 64
+      Top = 152
+      Width = 108
       Height = 33
       Caption = 'Salvar'
       TabOrder = 2
       OnClick = BitBtn_salvarClick
     end
     object BitBtn_cancelar: TBitBtn
-      Left = 196
-      Top = 128
-      Width = 109
+      Left = 197
+      Top = 152
+      Width = 108
       Height = 33
       Caption = 'Cancelar'
       TabOrder = 3
-      OnClick = BitBtn_salvarClick
+      OnClick = BitBtn_cancelarClick
     end
   end
   object FDMemTable1: TFDMemTable

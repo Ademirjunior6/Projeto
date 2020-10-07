@@ -1,13 +1,16 @@
 object Form_CadastroProduto: TForm_CadastroProduto
   Left = 0
   Top = 0
-  AutoSize = True
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Cadastro de Produto'
-  ClientHeight = 632
-  ClientWidth = 870
+  ClientHeight = 604
+  ClientWidth = 869
   Color = clBtnFace
+  Constraints.MaxHeight = 633
+  Constraints.MaxWidth = 875
+  Constraints.MinHeight = 633
+  Constraints.MinWidth = 875
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -16
@@ -25,8 +28,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
   object Panel_cadastroProduto: TPanel
     Left = 0
     Top = 0
-    Width = 870
-    Height = 632
+    Width = 869
+    Height = 604
     Align = alClient
     UseDockManager = False
     Font.Charset = DEFAULT_CHARSET
@@ -36,8 +39,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    ExplicitWidth = 860
-    ExplicitHeight = 622
+    ExplicitWidth = 848
     object Label_tituloForm: TLabel
       Left = 330
       Top = 32
@@ -108,8 +110,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
     object GroupBox1: TGroupBox
       Left = 19
       Top = 130
-      Width = 809
-      Height = 167
+      Width = 814
+      Height = 199
       BiDiMode = bdLeftToRight
       Caption = 'Dados B'#225'sicos'
       Font.Charset = DEFAULT_CHARSET
@@ -120,6 +122,9 @@ object Form_CadastroProduto: TForm_CadastroProduto
       ParentBiDiMode = False
       ParentFont = False
       TabOrder = 0
+      DesignSize = (
+        814
+        199)
       object Label_codigo: TLabel
         Left = 16
         Top = 29
@@ -147,7 +152,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         ParentFont = False
       end
       object Label_data: TLabel
-        Left = 608
+        Left = 611
         Top = 29
         Width = 32
         Height = 21
@@ -160,8 +165,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
         ParentFont = False
       end
       object Label_descricao: TLabel
-        Left = 16
-        Top = 87
+        Left = 224
+        Top = 29
         Width = 67
         Height = 21
         Caption = 'Descri'#231#227'o'
@@ -173,8 +178,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
         ParentFont = False
       end
       object Label_unMedida: TLabel
-        Left = 357
-        Top = 87
+        Left = 411
+        Top = 103
         Width = 79
         Height = 21
         Caption = 'Un. medida'
@@ -185,38 +190,18 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
       end
-      object Label_categoria: TLabel
-        Left = 510
-        Top = 87
-        Width = 67
-        Height = 21
-        Caption = 'Categoria'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
       object SpeedButton1: TSpeedButton
-        Left = 477
-        Top = 109
+        Left = 523
+        Top = 125
         Width = 25
         Height = 28
         Margins.Bottom = 4
         Caption = '+'
         OnClick = SpeedButton1Click
       end
-      object SpeedButton2: TSpeedButton
-        Left = 669
-        Top = 109
-        Width = 24
-        Height = 28
-        Caption = '+'
-      end
       object Label_valor: TLabel
-        Left = 712
-        Top = 87
+        Left = 572
+        Top = 98
         Width = 36
         Height = 21
         Caption = 'Valor'
@@ -227,11 +212,21 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
       end
+      object SpeedButton2: TSpeedButton
+        Left = 353
+        Top = 125
+        Width = 25
+        Height = 28
+        Margins.Bottom = 4
+        Caption = '+'
+        OnClick = SpeedButton1Click
+      end
       object Edit_codigo: TEdit
         Left = 16
         Top = 51
-        Width = 65
+        Width = 70
         Height = 29
+        Anchors = [akLeft, akTop, akRight]
         AutoSize = False
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
@@ -241,6 +236,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
+        ExplicitWidth = 65
       end
       object ComboBox_status: TComboBox
         Left = 104
@@ -251,9 +247,9 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Text = '1 - Ativo'
       end
       object Edit_descricao: TEdit
-        Left = 16
-        Top = 109
-        Width = 321
+        Left = 224
+        Top = 51
+        Width = 361
         Height = 29
         AutoSize = False
         CharCase = ecUpperCase
@@ -266,25 +262,17 @@ object Form_CadastroProduto: TForm_CadastroProduto
         TabOrder = 2
       end
       object ComboBox_unMedida: TComboBox
-        Left = 357
-        Top = 109
+        Left = 411
+        Top = 125
         Width = 114
         Height = 29
         TabOrder = 3
       end
-      object ComboBox_categoria: TComboBox
-        Left = 510
-        Top = 109
-        Width = 153
-        Height = 29
-        TabOrder = 4
-      end
       object DateTimePicker1: TDateTimePicker
-        Left = 608
+        Left = 611
         Top = 51
         Width = 185
         Height = 29
-        Date = 44100.000000000000000000
         Time = 0.354362268517434100
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
@@ -293,27 +281,12 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 5
-      end
-      object Edit_valor: TEdit
-        Left = 712
-        Top = 109
-        Width = 81
-        Height = 29
-        AutoSize = False
-        Enabled = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 6
+        TabOrder = 4
       end
       inline Frame_Generico1: TFrame_Generico
-        Left = 238
-        Top = 21
-        Width = 295
+        Left = 163
+        Top = 102
+        Width = 191
         Height = 60
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -321,10 +294,32 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 7
+        TabOrder = 5
         OnExit = Frame_Generico1Exit
-        ExplicitLeft = 238
-        ExplicitTop = 21
+        ExplicitLeft = 163
+        ExplicitTop = 102
+        ExplicitWidth = 191
+        inherited ComboBox_Informacao: TComboBox
+          Width = 190
+          ExplicitWidth = 190
+        end
+      end
+      object Edit_valor: TEdit
+        Left = 572
+        Top = 125
+        Width = 91
+        Height = 29
+        BiDiMode = bdRightToLeft
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentBiDiMode = False
+        ParentFont = False
+        TabOrder = 6
+        OnChange = Edit_valorChange
+        OnKeyPress = Edit_valorKeyPress
       end
     end
   end

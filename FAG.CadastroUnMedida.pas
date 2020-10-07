@@ -18,15 +18,16 @@ type
     Label_descricaoUnMedida: TLabel;
     Edit_descricaoUnMedida: TEdit;
     Panel_cadastroUn: TPanel;
+    FDMemTable1: TFDMemTable;
     BitBtn_salvar: TBitBtn;
     BitBtn_cancelar: TBitBtn;
-    FDMemTable1: TFDMemTable;
-    procedure SpeedButton_cancelarUnMedidaClick(Sender: TObject);
-    procedure SpeedButton_salvarUnMedidaClick(Sender: TObject);
-    procedure BitBtn_salvarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure BitBtn_cancelarClick(Sender: TObject);
+    procedure BitBtn_salvarClick(Sender: TObject);
   private
     function getUltimoID: String;
+    function validarCampos: Boolean;
+    function gravar: Boolean;
   public
     { Public declarations }
   end;
@@ -41,8 +42,45 @@ implementation
 Uses
   FAG.Menu, FAG.DataModule.Conexao;
 
+function TForm_CadastroUnMedida.validarCampos: Boolean;
+begin
+  Result := False;
+  if Edit_descricaoUnMedida.Text = '' then
+  begin
+    ShowMessage('Informe uma descrição da para Unidade!');
+    Edit_descricaoUnMedida.SetFocus;
+  end
+  else
+  begin
+    Result := True;
+  end;
+end;
+
+function TForm_CadastroUnMedida.gravar: Boolean;
+var
+  SQL: String;
+begin
+  if not validarCampos then
+  begin
+    Result := False;
+    Exit;
+  end;
+  begin
+    SQL := 'INSERT INTO un_medida (un_medida_id, un_medida_desc) ' + ' VALUES ('
+      + Edit_codigoUnMedida.Text + ',"' + Edit_descricaoUnMedida.Text + '")';
+    DataModuleConexao.ExecSQL(SQL);
+    ShowMessage('Salvo com Sucesso.');
+  end;
+end;
+
+procedure TForm_CadastroUnMedida.BitBtn_cancelarClick(Sender: TObject);
+begin
+  close;
+end;
+
 procedure TForm_CadastroUnMedida.BitBtn_salvarClick(Sender: TObject);
 begin
+  gravar;
   ModalResult := mrOk;
 end;
 
@@ -63,18 +101,6 @@ begin
   finally
     FreeAndNil(excist);
   end;
-end;
-
-procedure TForm_CadastroUnMedida.SpeedButton_cancelarUnMedidaClick
-  (Sender: TObject);
-begin
-  Form_CadastroUnMedida.Close;
-end;
-
-procedure TForm_CadastroUnMedida.SpeedButton_salvarUnMedidaClick
-  (Sender: TObject);
-begin
-  ModalResult := mrOk;
 end;
 
 end.
