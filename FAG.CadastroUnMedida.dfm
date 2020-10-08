@@ -3,10 +3,14 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
   Top = 0
   BorderIcons = []
   BorderStyle = bsSingle
-  Caption = 'Cadastro Un. Medida'
-  ClientHeight = 211
-  ClientWidth = 377
+  Caption = 'Cadastro de Un. Medida'
+  ClientHeight = 171
+  ClientWidth = 281
   Color = clBtnFace
+  Constraints.MaxHeight = 200
+  Constraints.MaxWidth = 287
+  Constraints.MinHeight = 200
+  Constraints.MinWidth = 287
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -16
@@ -17,91 +21,77 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 21
-  object Panel_cadastroUn: TPanel
-    Left = 0
-    Top = 0
-    Width = 377
-    Height = 211
-    Align = alClient
+  object Label_codigoUnMedida: TLabel
+    Left = 25
+    Top = 24
+    Width = 50
+    Height = 21
+    Caption = 'C'#243'digo'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
+  end
+  object Label_descricaoUnMedida: TLabel
+    Left = 112
+    Top = 24
+    Width = 67
+    Height = 21
+    Caption = 'Descri'#231#227'o'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+  end
+  object BitBtn_cancelar: TBitBtn
+    Left = 152
+    Top = 112
+    Width = 75
+    Height = 33
+    Caption = 'Cancelar'
     TabOrder = 0
-    object Label_descricaoUnMedida: TLabel
-      Left = 160
-      Top = 35
-      Width = 67
-      Height = 21
-      Caption = 'Descri'#231#227'o'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-    end
-    object Label_codigoUnMedida: TLabel
-      Left = 81
-      Top = 39
-      Width = 50
-      Height = 21
-      Caption = 'C'#243'digo'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-    end
-    object Edit_codigoUnMedida: TEdit
-      Left = 80
-      Top = 62
-      Width = 65
-      Height = 29
-      Enabled = False
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 0
-    end
-    object Edit_descricaoUnMedida: TEdit
-      Left = 160
-      Top = 62
-      Width = 145
-      Height = 29
-      CharCase = ecUpperCase
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 1
-    end
-    object BitBtn_salvar: TBitBtn
-      Left = 64
-      Top = 152
-      Width = 108
-      Height = 33
-      Caption = 'Salvar'
-      TabOrder = 2
-      OnClick = BitBtn_salvarClick
-    end
-    object BitBtn_cancelar: TBitBtn
-      Left = 197
-      Top = 152
-      Width = 108
-      Height = 33
-      Caption = 'Cancelar'
-      TabOrder = 3
-      OnClick = BitBtn_cancelarClick
-    end
+    OnClick = BitBtn_cancelarClick
+  end
+  object BitBtn_salvar: TBitBtn
+    Left = 56
+    Top = 112
+    Width = 75
+    Height = 33
+    Caption = 'Salvar'
+    TabOrder = 1
+    OnClick = BitBtn_salvarClick
+  end
+  object Edit_codigoUnMedida: TEdit
+    Left = 25
+    Top = 51
+    Width = 65
+    Height = 29
+    Enabled = False
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+  end
+  object Edit_descricaoUnMedida: TEdit
+    Left = 112
+    Top = 51
+    Width = 145
+    Height = 29
+    CharCase = ecUpperCase
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
   end
   object FDMemTable1: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -111,7 +101,6 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 320
-    Top = 80
+    Left = 256
   end
 end

@@ -189,14 +189,14 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
       end
-      object SpeedButton1: TSpeedButton
+      object SpeedButton_unMedida: TSpeedButton
         Left = 523
         Top = 125
         Width = 25
         Height = 28
         Margins.Bottom = 4
         Caption = '+'
-        OnClick = SpeedButton1Click
+        OnClick = SpeedButton_unMedidaClick
       end
       object Label_valor: TLabel
         Left = 572
@@ -211,14 +211,13 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
       end
-      object SpeedButton2: TSpeedButton
-        Left = 353
+      object SpeedButton_categoria: TSpeedButton
+        Left = 352
         Top = 125
         Width = 25
         Height = 28
-        Margins.Bottom = 4
         Caption = '+'
-        OnClick = SpeedButton1Click
+        OnClick = SpeedButton_categoriaClick
       end
       object Edit_codigo: TEdit
         Left = 16

@@ -30,20 +30,21 @@ type
     SpeedButton_pesquisar: TSpeedButton;
     SpeedButton_sair: TSpeedButton;
     SpeedButton_cancelar: TSpeedButton;
-    SpeedButton1: TSpeedButton;
+    SpeedButton_unMedida: TSpeedButton;
     Label_valor: TLabel;
     Frame_Generico1: TFrame_Generico;
-    SpeedButton2: TSpeedButton;
     Edit_valor: TEdit;
+    SpeedButton_categoria: TSpeedButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure SpeedButton_sairClick(Sender: TObject);
     procedure SpeedButton_cancelarClick(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton_unMedidaClick(Sender: TObject);
     procedure Frame_Generico1Exit(Sender: TObject);
     procedure Edit_valorExit(Sender: TObject);
     procedure Edit_valorKeyPress(Sender: TObject; var Key: Char);
     procedure Edit_valorChange(Sender: TObject);
+    procedure SpeedButton_categoriaClick(Sender: TObject);
   private
     { Private declarations }
     function getUltimoID: String;
@@ -59,44 +60,45 @@ implementation
 {$R *.dfm}
 
 Uses
-  FAG.Menu, FAG.DataModule.Conexao, FAG.CadastroUnMedida;
+  FAG.Menu, FAG.DataModule.Conexao, FAG.CadastroUnMedida, FAG.CadastroCategoria;
 
 procedure TForm_CadastroProduto.Edit_valorChange(Sender: TObject);
 var
-   s : string;
-   v : double;
-   I : integer;
+  s: string;
+  v: double;
+  I: integer;
 begin
-   //1º Passo : se o edit estiver vazio, nada pode ser feito.
-   If (Edit_valor.Text = emptystr) then
-      Edit_valor.Text := '0,00';
+  // 1º Passo : se o edit estiver vazio, nada pode ser feito.
+  If (Edit_valor.Text = emptystr) then
+    Edit_valor.Text := '0,00';
 
-   //2º Passo : obter o texto do edit, SEM a virgula e SEM o ponto decimal:
-   s := '';
-   for I := 1 to length(Edit_valor.Text) do
-   if (Edit_valor.text[I] in ['0'..'9']) then
-      s := s + Edit_valor.text[I];
+  // 2º Passo : obter o texto do edit, SEM a virgula e SEM o ponto decimal:
+  s := '';
+  for I := 1 to length(Edit_valor.Text) do
+    if (Edit_valor.Text[I] in ['0' .. '9']) then
+      s := s + Edit_valor.Text[I];
 
-   //3º Passo : fazer com que o conteúdo do edit apresente 2 casas decimais:
-   v := strtofloat(s);
-   v := (v /100); // para criar 2 casa decimais
+  // 3º Passo : fazer com que o conteúdo do edit apresente 2 casas decimais:
+  v := strtofloat(s);
+  v := (v / 100); // para criar 2 casa decimais
 
-   //4º Passo : Formata o valor de (V) para aceitar valores do tipo 0,10.
-   Edit_valor.text := FormatFloat('###,##0.00',v);
-   Edit_valor.selstart := Length(Edit_valor.text);
+  // 4º Passo : Formata o valor de (V) para aceitar valores do tipo 0,10.
+  Edit_valor.Text := FormatFloat('###,##0.00', v);
+  Edit_valor.selstart := length(Edit_valor.Text);
 end;
 
 procedure TForm_CadastroProduto.Edit_valorExit(Sender: TObject);
 begin
-//Edit_valor.Text := CurrToStrF(StrToCurrDef(Trim(Edit_valor.Text),0),ffNumber,2);
+  // Edit_valor.Text := CurrToStrF(StrToCurrDef(Trim(Edit_valor.Text),0),ffNumber,2);
 end;
 
-procedure TForm_CadastroProduto.Edit_valorKeyPress(Sender: TObject; var Key: Char);
+procedure TForm_CadastroProduto.Edit_valorKeyPress(Sender: TObject;
+  var Key: Char);
 begin
-     if NOT (Key in ['0'..'9', #8, #9]) then
-     key := #0;
-     //Função para posicionar o cursor sempre na direita
-     Edit_valor.selstart := Length(Edit_valor.text);
+  if NOT(Key in ['0' .. '9', #8, #9]) then
+    Key := #0;
+  // Função para posicionar o cursor sempre na direita
+  Edit_valor.selstart := length(Edit_valor.Text);
 end;
 
 procedure TForm_CadastroProduto.FormClose(Sender: TObject;
@@ -124,19 +126,18 @@ begin
   ComboBox_status.Items.Add('2 - Inativo');
 end;
 
-
 procedure TForm_CadastroProduto.Frame_Generico1Exit(Sender: TObject);
 begin
-//  showmessage(Frame_Generico1.TableTemp.FieldByName('cat_id_categoria')
-//    .AsString);
-//  showmessage(Frame_Generico1.TableTemp.FieldByName('cat_desc').AsString);
-//  showmessage(Frame_Generico1.TableTemp.FieldByName('cat_data_cadastro')
-//    .AsString);
-//  showmessage(Frame_Generico1.TableTemp.FieldByName('cat_data_alterado')
-//    .AsString);
+  // showmessage(Frame_Generico1.TableTemp.FieldByName('cat_id_categoria')
+  // .AsString);
+  // showmessage(Frame_Generico1.TableTemp.FieldByName('cat_desc').AsString);
+  // showmessage(Frame_Generico1.TableTemp.FieldByName('cat_data_cadastro')
+  // .AsString);
+  // showmessage(Frame_Generico1.TableTemp.FieldByName('cat_data_alterado')
+  // .AsString);
 end;
 
-procedure TForm_CadastroProduto.SpeedButton1Click(Sender: TObject);
+procedure TForm_CadastroProduto.SpeedButton_unMedidaClick(Sender: TObject);
 begin
   Form_CadastroUnMedida := TForm_CadastroUnMedida.Create(Self);
   try
@@ -144,7 +145,16 @@ begin
   finally
     Form_CadastroUnMedida.Free;
   end;
+end;
 
+procedure TForm_CadastroProduto.SpeedButton_categoriaClick(Sender: TObject);
+begin
+  Form_CadastroCategoria := TForm_CadastroCategoria.Create(Self);
+  try
+    Form_CadastroCategoria.ShowModal;
+  finally
+    Form_CadastroCategoria.Free;
+  end;
 end;
 
 procedure TForm_CadastroProduto.SpeedButton_cancelarClick(Sender: TObject);

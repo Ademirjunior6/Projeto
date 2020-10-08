@@ -17,7 +17,6 @@ type
     Label_codigoUnMedida: TLabel;
     Label_descricaoUnMedida: TLabel;
     Edit_descricaoUnMedida: TEdit;
-    Panel_cadastroUn: TPanel;
     FDMemTable1: TFDMemTable;
     BitBtn_salvar: TBitBtn;
     BitBtn_cancelar: TBitBtn;
