@@ -5,17 +5,17 @@
     <Transaction>2020/09/16 17:01:45.000.934,=C:\Users\ademi\Documents\Embarcadero\Studio\Projects\Unit5.pas</Transaction>
     <Transaction>2020/09/16 17:35:25.000.474,C:\Users\ademi\Desktop\projeto\login.pas=C:\Users\ademi\Documents\Embarcadero\Studio\Projects\Unit4.pas</Transaction>
     <Transaction>2020/09/16 17:35:25.000.474,C:\Users\ademi\Desktop\projeto\login.dfm=C:\Users\ademi\Documents\Embarcadero\Studio\Projects\Unit4.dfm</Transaction>
-    <Transaction>2020/09/16 17:35:38.000.186,C:\Users\ademi\Desktop\projeto\DataModule.pas=C:\Users\ademi\Documents\Embarcadero\Studio\Projects\Unit5.pas</Transaction>
     <Transaction>2020/09/16 17:35:38.000.186,C:\Users\ademi\Desktop\projeto\DataModule.dfm=C:\Users\ademi\Documents\Embarcadero\Studio\Projects\Unit5.dfm</Transaction>
+    <Transaction>2020/09/16 17:35:38.000.186,C:\Users\ademi\Desktop\projeto\DataModule.pas=C:\Users\ademi\Documents\Embarcadero\Studio\Projects\Unit5.pas</Transaction>
     <Transaction>2020/09/16 17:35:50.000.457,C:\Users\ademi\Desktop\projeto\Integrador.dproj=C:\Users\ademi\Documents\Embarcadero\Studio\Projects\Project3.dproj</Transaction>
     <Transaction>2020/09/18 19:30:23.000.716,C:\Users\ademi\Desktop\projeto\DataModule.pas=</Transaction>
     <Transaction>2020/09/18 19:32:08.000.690,=C:\Users\ademi\Desktop\projeto\FAG.DataModule.Conexao.pas</Transaction>
-    <Transaction>2020/09/18 19:35:37.000.700,C:\Users\ademi\Desktop\projeto\login.dfm=C:\Users\ademi\Desktop\projeto\Fag.Login.dfm</Transaction>
     <Transaction>2020/09/18 19:35:37.000.700,C:\Users\ademi\Desktop\projeto\login.pas=C:\Users\ademi\Desktop\projeto\Fag.Login.pas</Transaction>
+    <Transaction>2020/09/18 19:35:37.000.700,C:\Users\ademi\Desktop\projeto\login.dfm=C:\Users\ademi\Desktop\projeto\Fag.Login.dfm</Transaction>
     <Transaction>2020/09/18 19:36:30.000.438,C:\Users\ademi\Desktop\projeto\Fag.Login.pas=C:\Users\ademi\Desktop\projeto\FAGLogin.pas</Transaction>
     <Transaction>2020/09/18 19:36:30.000.438,C:\Users\ademi\Desktop\projeto\Fag.Login.dfm=C:\Users\ademi\Desktop\projeto\FAGLogin.dfm</Transaction>
-    <Transaction>2020/09/18 19:36:35.000.713,C:\Users\ademi\Desktop\projeto\FAGLogin.pas=C:\Users\ademi\Desktop\projeto\FAG.Login.pas</Transaction>
     <Transaction>2020/09/18 19:36:35.000.713,C:\Users\ademi\Desktop\projeto\FAGLogin.dfm=C:\Users\ademi\Desktop\projeto\FAG.Login.dfm</Transaction>
+    <Transaction>2020/09/18 19:36:35.000.713,C:\Users\ademi\Desktop\projeto\FAGLogin.pas=C:\Users\ademi\Desktop\projeto\FAG.Login.pas</Transaction>
     <Transaction>2020/09/18 20:08:14.000.649,=C:\libmysql.dll</Transaction>
     <Transaction>2020/09/25 16:41:50.000.148,=C:\lalapow\Unit1.pas</Transaction>
     <Transaction>2020/09/25 16:42:18.000.236,C:\lalapow\FAG.Menu.pas=C:\lalapow\Unit1.pas</Transaction>
@@ -39,5 +39,8 @@
     <Transaction>2020/10/05 21:59:59.000.334,=C:\ProjetoIntegrador\Unit1.pas</Transaction>
     <Transaction>2020/10/05 22:00:15.000.177,C:\ProjetoIntegrador\Unit1.dfm=C:\ProjetoIntegrador\FAG.teste.dfm</Transaction>
     <Transaction>2020/10/05 22:00:15.000.177,C:\ProjetoIntegrador\Unit1.pas=C:\ProjetoIntegrador\FAG.teste.pas</Transaction>
+    <Transaction>2020/10/08 13:56:25.479,=C:\ProjetoIntegrador\Unit1.pas</Transaction>
+    <Transaction>2020/10/08 13:56:39.165,C:\ProjetoIntegrador\FAG.CadastroCategoria.dfm=C:\ProjetoIntegrador\Unit1.dfm</Transaction>
+    <Transaction>2020/10/08 13:56:39.165,C:\ProjetoIntegrador\FAG.CadastroCategoria.pas=C:\ProjetoIntegrador\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>

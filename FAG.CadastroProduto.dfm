@@ -39,7 +39,6 @@ object Form_CadastroProduto: TForm_CadastroProduto
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    ExplicitWidth = 848
     object Label_tituloForm: TLabel
       Left = 330
       Top = 32
@@ -54,8 +53,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
       ParentFont = False
     end
     object SpeedButton_salvar: TSpeedButton
-      Left = 182
-      Top = 544
+      Left = 174
+      Top = 528
       Width = 109
       Height = 33
       Caption = 'Salvar'
@@ -67,8 +66,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
       ParentFont = False
     end
     object SpeedButton_pesquisar: TSpeedButton
-      Left = 443
-      Top = 544
+      Left = 435
+      Top = 528
       Width = 109
       Height = 33
       Caption = 'Pesquisar'
@@ -80,8 +79,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
       ParentFont = False
     end
     object SpeedButton_sair: TSpeedButton
-      Left = 573
-      Top = 544
+      Left = 565
+      Top = 528
       Width = 109
       Height = 33
       Caption = 'Sair'
@@ -94,8 +93,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
       OnClick = SpeedButton_sairClick
     end
     object SpeedButton_cancelar: TSpeedButton
-      Left = 312
-      Top = 544
+      Left = 304
+      Top = 528
       Width = 109
       Height = 33
       Caption = 'Cancelar'
@@ -236,7 +235,6 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
-        ExplicitWidth = 65
       end
       object ComboBox_status: TComboBox
         Left = 104
@@ -273,6 +271,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Top = 51
         Width = 185
         Height = 29
+        Date = 44112.000000000000000000
         Time = 0.354362268517434100
         Enabled = False
         Font.Charset = DEFAULT_CHARSET

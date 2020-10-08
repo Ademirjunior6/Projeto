@@ -126,6 +126,10 @@
             <Form>Form_teste</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="FAG.CadastroCategoria.pas">
+            <Form>Form_CadastroCategoria</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <RcItem Include="C:\libmysql.dll">
             <ContainerId>ResourceItem</ContainerId>
             <ResourceType>RCDATA</ResourceType>
