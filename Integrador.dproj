@@ -105,10 +105,6 @@
             <Form>Form_Menu</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="FAG.Usuario.pas">
-            <Form>Form_Usuario</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="FAG.CadastroProduto.pas">
             <Form>Form_CadastroProduto</Form>
             <FormType>dfm</FormType>
@@ -121,10 +117,6 @@
             <Form>Frame_Generico</Form>
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="FAG.teste.pas">
-            <Form>Form_teste</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="FAG.CadastroCategoria.pas">
             <Form>Form_CadastroCategoria</Form>
