@@ -152,7 +152,8 @@ procedure TForm_CadastroProduto.SpeedButton_categoriaClick(Sender: TObject);
 begin
   Form_CadastroCategoria := TForm_CadastroCategoria.Create(Self);
   try
-    Form_CadastroCategoria.ShowModal;
+    if Form_CadastroCategoria.ShowModal = mrOk then
+      carregaCategoria;
   finally
     Form_CadastroCategoria.Free;
   end;
