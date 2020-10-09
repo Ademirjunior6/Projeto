@@ -45,11 +45,13 @@ type
     procedure Edit_valorKeyPress(Sender: TObject; var Key: Char);
     procedure Edit_valorChange(Sender: TObject);
     procedure SpeedButton_categoriaClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
     function getUltimoID: String;
     function cancelar: Boolean;
   public
+  function carregaCategoria: Boolean;
   end;
 
 var
@@ -101,6 +103,11 @@ begin
   Edit_valor.selstart := length(Edit_valor.Text);
 end;
 
+procedure TForm_CadastroProduto.FormActivate(Sender: TObject);
+begin
+carregaCategoria;
+end;
+
 procedure TForm_CadastroProduto.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
@@ -111,13 +118,7 @@ end;
 
 procedure TForm_CadastroProduto.FormCreate(Sender: TObject);
 begin
-  Frame_Generico1.tabela := 'categoria';
-  Frame_Generico1.campoChave := 'cat_id_categoria';
-  Frame_Generico1.campoDescricao := 'cat_desc';
-  Frame_Generico1.camposExtras := 'cat_data_cadastro, cat_data_alterado';
-  Frame_Generico1.condicao := '';
-  Frame_Generico1.titulo := 'Categorias';
-  Frame_Generico1.carregaFrame := True;
+  carregaCategoria;
   // SetWindowLong(Handle, GWL_STYLE,
   // GetWindowLong(Handle,GWL_STYLE) and not WS_CAPTION);
   // Height := ClientHeight;
@@ -187,6 +188,17 @@ begin
   finally
     FreeAndNil(excist);
   end;
+end;
+
+function TForm_CadastroProduto.carregaCategoria: Boolean;
+begin
+  Frame_Generico1.tabela := 'categoria';
+  Frame_Generico1.campoChave := 'cat_id_categoria';
+  Frame_Generico1.campoDescricao := 'cat_desc';
+  Frame_Generico1.camposExtras := 'cat_data_cadastro, cat_data_alterado';
+  Frame_Generico1.condicao := '';
+  Frame_Generico1.titulo := 'Categorias';
+  Frame_Generico1.carregaFrame := True;
 end;
 
 end.

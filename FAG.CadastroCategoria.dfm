@@ -17,6 +17,7 @@ object Form_CadastroCategoria: TForm_CadastroCategoria
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -59,6 +60,7 @@ object Form_CadastroCategoria: TForm_CadastroCategoria
     Font.Style = []
     ParentFont = False
     TabOrder = 0
+    OnClick = BitBtn_salvarClick
   end
   object BitBtn_cancelar: TBitBtn
     Left = 152

@@ -21,6 +21,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
   PopupMode = pmExplicit
   Position = poOwnerFormCenter
   Visible = True
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
