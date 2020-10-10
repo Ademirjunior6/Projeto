@@ -34,10 +34,10 @@ uses FAG.DataModule.Conexao, FAG.Movimento;
 
 procedure TForm_Produtos.DBGrid1DblClick(Sender: TObject);
 begin
-  Form_Movimento.Edit_codigoProduto.Text := DBGrid1.Fields[0].Value;
-  Form_Movimento.Edit_descricao.Text := DBGrid1.Fields[1].Value;
-  Form_Movimento.Edit_categoria.Text := DBGrid1.Fields[2].Value;
-
+  Form_Movimento.Edit_codigoProduto.Text := Mem_Produtos.FieldByName('prod_id_produto').AsString;
+  Form_Movimento.Edit_descricao.Text := Mem_Produtos.FieldByName('prod_desc').AsString;
+  Form_Movimento.Edit_categoria.Text := Mem_Produtos.FieldByName('cat_desc').AsString;
+  Form_Produtos.Close;
 end;
 
 procedure TForm_Produtos.FormShow(Sender: TObject);
