@@ -59,6 +59,7 @@ object Form_Menu: TForm_Menu
       Caption = 'Estoque'
       object Movimentar1: TMenuItem
         Caption = 'Movimentar'
+        OnClick = Movimentar1Click
       end
     end
     object ConsultareAlterar1: TMenuItem

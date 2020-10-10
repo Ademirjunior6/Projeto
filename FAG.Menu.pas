@@ -30,6 +30,7 @@ type
     procedure Produto1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure Movimentar1Click(Sender: TObject);
   private
   public
     usuarioLogado: String;
@@ -44,7 +45,7 @@ implementation
 
 {$R *.dfm}
 
-uses FAG.Login, FAG.DataModule.Conexao;
+uses FAG.Login, FAG.DataModule.Conexao, FAG.Movimento;
 
 procedure TForm_Menu.Button1Click(Sender: TObject);
 begin
@@ -82,6 +83,18 @@ begin
   end;
   if Form_Login <> nil then
     Application.Terminate;
+end;
+
+procedure TForm_Menu.Movimentar1Click(Sender: TObject);
+begin
+  if not Assigned(Form_Movimento) then
+  begin
+    Form_Movimento := TForm_Movimento.Create(Application);
+    Form_Movimento.BorderStyle := bsNone;
+    Form_Movimento.Position := poOwnerFormCenter;
+  end;
+  Form_Movimento.Position := poOwnerFormCenter;
+  Form_Movimento.Show;
 end;
 
 procedure TForm_Menu.Produto1Click(Sender: TObject);

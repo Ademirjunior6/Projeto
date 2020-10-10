@@ -122,6 +122,14 @@
             <Form>Form_CadastroCategoria</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="FAG.Movimento.pas">
+            <Form>Form_Movimento</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FAG.Produtos.pas">
+            <Form>Form_Produtos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <RcItem Include="C:\libmysql.dll">
             <ContainerId>ResourceItem</ContainerId>
             <ResourceType>RCDATA</ResourceType>
@@ -148,8 +156,16 @@
                     <Source Name="MainSource">Integrador.dpr</Source>
                 </Source>
                 <Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\gabri\Desktop\Fastreport VCL Professional (SRC) v6.3.1\LibD26\dclfrxADO26.bpl">File C:\Users\gabri\Desktop\Fastreport VCL Professional (SRC) v6.3.1\LibD26\dclfrxADO26.bpl not found</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\gabri\Desktop\Fastreport VCL Professional (SRC) v6.3.1\LibD26\dclfrxDBX26.bpl">File C:\Users\gabri\Desktop\Fastreport VCL Professional (SRC) v6.3.1\LibD26\dclfrxDBX26.bpl not found</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\gabri\Desktop\Fastreport VCL Professional (SRC) v6.3.1\LibD26\dclfrxIntIO26.bpl">File C:\Users\gabri\Desktop\Fastreport VCL Professional (SRC) v6.3.1\LibD26\dclfrxIntIO26.bpl not found</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\gabri\Desktop\Fastreport VCL Professional (SRC) v6.3.1\LibD26\dclfrxIntIOIndy26.bpl">File C:\Users\gabri\Desktop\Fastreport VCL Professional (SRC) v6.3.1\LibD26\dclfrxIntIOIndy26.bpl not found</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\gabri\Desktop\Fastreport VCL Professional (SRC) v6.3.1\LibD26\dclfs26.bpl">File C:\Users\gabri\Desktop\Fastreport VCL Professional (SRC) v6.3.1\LibD26\dclfs26.bpl not found</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\gabri\Desktop\Fastreport VCL Professional (SRC) v6.3.1\LibD26\dclfsADO26.bpl">File C:\Users\gabri\Desktop\Fastreport VCL Professional (SRC) v6.3.1\LibD26\dclfsADO26.bpl not found</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\gabri\Desktop\Fastreport VCL Professional (SRC) v6.3.1\LibD26\dclfsDB26.bpl">File C:\Users\gabri\Desktop\Fastreport VCL Professional (SRC) v6.3.1\LibD26\dclfsDB26.bpl not found</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k260.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp260.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\FastReports\LibD26\dclfrxtee26.bpl">FastReport 6.0 Tee Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
