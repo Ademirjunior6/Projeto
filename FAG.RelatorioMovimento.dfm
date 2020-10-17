@@ -2,11 +2,15 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
   Left = 0
   Top = 0
   BorderIcons = []
-  BorderStyle = bsNone
+  BorderStyle = bsSingle
   Caption = 'Relatorio de Movimenta'#231#227'o'
-  ClientHeight = 622
-  ClientWidth = 860
+  ClientHeight = 602
+  ClientWidth = 869
   Color = clBtnFace
+  Constraints.MaxHeight = 633
+  Constraints.MaxWidth = 875
+  Constraints.MinHeight = 633
+  Constraints.MinWidth = 875
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -16
@@ -15,17 +19,18 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
   FormStyle = fsMDIChild
   OldCreateOrder = False
   PopupMode = pmExplicit
-  Position = poDesigned
+  Position = poOwnerFormCenter
   Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 21
   object Panel_relatorioMovimento: TPanel
     Left = 0
     Top = 0
-    Width = 860
-    Height = 622
+    Width = 869
+    Height = 602
     Align = alClient
     UseDockManager = False
     Font.Charset = DEFAULT_CHARSET
@@ -38,9 +43,9 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
     object Label_tituloForm: TLabel
       Left = 264
       Top = 24
-      Width = 278
+      Width = 269
       Height = 32
-      Caption = 'Relatorio de Momimentos'
+      Caption = 'Relatorio de Movimentos'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -24
@@ -133,7 +138,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       ParentFont = False
       TabOrder = 0
       object Label_codigo: TLabel
-        Left = 16
+        Left = 17
         Top = 29
         Width = 50
         Height = 21
@@ -148,9 +153,9 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       object Label_data_ate: TLabel
         Left = 335
         Top = 54
-        Width = 23
+        Width = 21
         Height = 21
-        Caption = 'At'#233
+        Caption = 'at'#233
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -172,7 +177,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
       end
       object Label_categoria: TLabel
-        Left = 358
+        Left = 360
         Top = 93
         Width = 67
         Height = 21
@@ -198,8 +203,8 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
       end
       object Label_tipoMoviemento: TLabel
-        Left = 534
-        Top = 92
+        Left = 536
+        Top = 93
         Width = 135
         Height = 21
         Caption = 'Tipo de Movimento'
@@ -211,7 +216,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
       end
       object SpeedButton_filtrar: TSpeedButton
-        Left = 710
+        Left = 707
         Top = 115
         Width = 83
         Height = 30
@@ -229,12 +234,12 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         Font.Color = clWindowText
         Font.Height = -16
         Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
+        Font.Style = []
         ParentFont = False
         TabOrder = 0
       end
       object Edit_produto: TEdit
-        Left = 17
+        Left = 16
         Top = 115
         Width = 321
         Height = 29
@@ -246,16 +251,24 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 1
+        TabOrder = 3
       end
       object ComboBox_categoria: TComboBox
         Left = 360
         Top = 115
         Width = 153
         Height = 29
-        TabOrder = 2
+        Style = csDropDownList
+        CharCase = ecUpperCase
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 4
       end
-      object DateTimePicker1: TDateTimePicker
+      object DateTimePicker_Fim: TDateTimePicker
         Left = 373
         Top = 51
         Width = 185
@@ -269,9 +282,9 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 2
       end
-      object DateTimePicker2: TDateTimePicker
+      object DateTimePicker_Ini: TDateTimePicker
         Left = 129
         Top = 51
         Width = 185
@@ -285,14 +298,31 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 4
+        TabOrder = 1
       end
       object ComboBox_tipoMoviemento: TComboBox
         Left = 536
         Top = 115
         Width = 153
         Height = 29
-        TabOrder = 3
+        Style = csDropDownList
+        CharCase = ecUpperCase
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 5
+      end
+      inline FrProd_Filtro: TFrame_Produto
+        Left = 320
+        Top = -8
+        Width = 426
+        Height = 56
+        TabOrder = 6
+        ExplicitLeft = 320
+        ExplicitTop = -8
       end
     end
     object GroupBox2: TGroupBox
@@ -330,8 +360,8 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
           Font.Color = clWindowText
           Font.Height = -16
           Font.Name = 'Segoe UI'
-          Font.Style = [fsBold]
-          Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleHotTrack]
+          Font.Style = []
+          Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleHotTrack]
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 0
@@ -340,34 +370,60 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
           TitleFont.Height = -15
           TitleFont.Name = 'Segoe UI'
           TitleFont.Style = []
+          OnDblClick = DBGrid_resultadoPesquisaDblClick
           Columns = <
             item
               Expanded = False
-              FieldName = 'mov_id'
-              PickList.Strings = (
-                '')
-              Title.Caption = 'Codigo'
-              Width = 140
+              Title.Caption = 'C'#243'digo'
+              Title.Font.Charset = DEFAULT_CHARSET
+              Title.Font.Color = clWindowText
+              Title.Font.Height = -13
+              Title.Font.Name = 'Segoe UI'
+              Title.Font.Style = []
+              Width = 152
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'mov_data_movimento'
               Title.Caption = 'Data'
-              Width = 198
+              Title.Font.Charset = DEFAULT_CHARSET
+              Title.Font.Color = clWindowText
+              Title.Font.Height = -13
+              Title.Font.Name = 'Segoe UI'
+              Title.Font.Style = []
+              Width = 195
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'mov_tipo'
               Title.Caption = 'Tipo de Movimento'
-              Width = 233
+              Title.Font.Charset = DEFAULT_CHARSET
+              Title.Font.Color = clWindowText
+              Title.Font.Height = -13
+              Title.Font.Name = 'Segoe UI'
+              Title.Font.Style = []
+              Width = 202
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'login_usuario'
-              Title.Caption = 'Usuario'
+              Title.Caption = 'Usu'#225'rio'
+              Title.Font.Charset = DEFAULT_CHARSET
+              Title.Font.Color = clWindowText
+              Title.Font.Height = -13
+              Title.Font.Name = 'Segoe UI'
+              Title.Font.Style = []
+              Width = 186
+              Visible = True
+            end
+            item
+              Expanded = False
+              Width = 2
+              Visible = True
+            end
+            item
+              Expanded = False
+              Width = 2
               Visible = True
             end>
         end
@@ -380,21 +436,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
     Top = 384
   end
   object FDMemTable_consulta: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'mov_id'
-        DataType = ftInteger
-      end
-      item
-        Name = 'mov_data_movimento'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'mov_tipo'
-        DataType = ftString
-        Size = 20
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -406,19 +448,5 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
     StoreDefs = True
     Left = 315
     Top = 383
-    object FDMemTable_consultamov_id: TIntegerField
-      FieldName = 'mov_id'
-    end
-    object FDMemTable_consultamov_data_movimento: TDateTimeField
-      FieldName = 'mov_data_movimento'
-    end
-    object FDMemTable_consultamov_tipo: TStringField
-      FieldName = 'mov_tipo'
-    end
-    object FDMemTable_consultalogin_usuario: TStringField
-      FieldKind = fkCalculated
-      FieldName = 'login_usuario'
-      Calculated = True
-    end
   end
 end

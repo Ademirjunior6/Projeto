@@ -1,0 +1,35 @@
+object Frame1: TFrame1
+  Left = 0
+  Top = 0
+  Width = 693
+  Height = 101
+  TabOrder = 0
+  object Label_produto: TLabel
+    Left = 16
+    Top = 3
+    Width = 56
+    Height = 21
+    Caption = 'Produto'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Edit_produto: TEdit
+    Left = 16
+    Top = 30
+    Width = 321
+    Height = 29
+    AutoSize = False
+    CharCase = ecUpperCase
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+  end
+end

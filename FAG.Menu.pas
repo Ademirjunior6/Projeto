@@ -9,8 +9,9 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, Vcl.Buttons, Vcl.Menus, FAG.CadastroProduto,
+  FireDAC.Comp.Client, Vcl.Buttons, Vcl.Menus, FAG.CadastroProduto, FAG.RelatorioMovimento,
   Vcl.ComCtrls;
+
 
 type
   TForm_Menu = class(TForm)
@@ -31,6 +32,8 @@ type
     procedure FormShow(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Movimentar1Click(Sender: TObject);
+    procedure Movimentao1Click(Sender: TObject);
+
   private
   public
     usuarioLogado: String;
@@ -85,6 +88,17 @@ begin
     Application.Terminate;
 end;
 
+
+procedure TForm_Menu.Movimentao1Click(Sender: TObject);
+begin
+  if not Assigned(Form_RelatorioMovimento) then
+  begin
+    Form_RelatorioMovimento := TForm_RelatorioMovimento.Create(Application);
+  end;
+  Form_RelatorioMovimento.Position := poOwnerFormCenter;
+  Form_RelatorioMovimento.Show;
+end;
+
 procedure TForm_Menu.Movimentar1Click(Sender: TObject);
 begin
   if not Assigned(Form_Movimento) then
@@ -96,6 +110,7 @@ begin
   Form_Movimento.Position := poOwnerFormCenter;
   Form_Movimento.Show;
 end;
+
 
 procedure TForm_Menu.Produto1Click(Sender: TObject);
 begin

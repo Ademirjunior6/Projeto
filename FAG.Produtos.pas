@@ -30,14 +30,17 @@ implementation
 
 {$R *.dfm}
 
-uses FAG.DataModule.Conexao, FAG.Movimento;
+uses FAG.DataModule.Conexao;
 
 procedure TForm_Produtos.DBGrid1DblClick(Sender: TObject);
 begin
-  Form_Movimento.Edit_codigoProduto.Text := Mem_Produtos.FieldByName('prod_id_produto').AsString;
-  Form_Movimento.Edit_descricao.Text := Mem_Produtos.FieldByName('prod_desc').AsString;
-  Form_Movimento.Edit_categoria.Text := Mem_Produtos.FieldByName('cat_desc').AsString;
-  Form_Produtos.Close;
+  // Form_Movimento.Edit_codigoProduto.Text := Mem_Produtos.FieldByName('prod_id_produto').AsString;
+  // Form_Movimento.Edit_descricao.Text := Mem_Produtos.FieldByName('prod_desc').AsString;
+  // Form_Movimento.Edit_categoria.Text := Mem_Produtos.FieldByName('cat_desc').AsString;
+  if Mem_Produtos.IsEmpty then
+    ModalResult := mrAbort
+  else
+    ModalResult := mrOk;
 end;
 
 procedure TForm_Produtos.FormShow(Sender: TObject);

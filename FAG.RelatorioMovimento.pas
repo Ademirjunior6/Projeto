@@ -3,12 +3,13 @@ unit FAG.RelatorioMovimento;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Buttons,
   Vcl.ExtCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FAG.DetalharMovimento;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FAG.DetalharMovimento, FAG.Frame.Produto;
 
 type
   TForm_RelatorioMovimento = class(TForm)
@@ -21,9 +22,9 @@ type
     Edit_codigo: TEdit;
     Edit_produto: TEdit;
     ComboBox_categoria: TComboBox;
-    DateTimePicker1: TDateTimePicker;
+    DateTimePicker_Fim: TDateTimePicker;
     Label_tituloForm: TLabel;
-    DateTimePicker2: TDateTimePicker;
+    DateTimePicker_Ini: TDateTimePicker;
     Label_data_de: TLabel;
     ComboBox_tipoMoviemento: TComboBox;
     Label_tipoMoviemento: TLabel;
@@ -37,11 +38,8 @@ type
     SpeedButton_exibirTodos: TSpeedButton;
     DataSource_consulta: TDataSource;
     FDMemTable_consulta: TFDMemTable;
-    FDMemTable_consultamov_id: TIntegerField;
-    FDMemTable_consultamov_data_movimento: TDateTimeField;
-    FDMemTable_consultamov_tipo: TStringField;
     Panel_resultadoPesquisa: TPanel;
-    FDMemTable_consultalogin_usuario: TStringField;
+    FrProd_Filtro: TFrame_Produto;
     procedure SpeedButton_sairClick(Sender: TObject);
     procedure SpeedButton_limparConsultaClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -49,223 +47,275 @@ type
     procedure SpeedButton_detalharMovClick(Sender: TObject);
     procedure SpeedButton_filtrarClick(Sender: TObject);
     procedure SpeedButton_exibirTodosClick(Sender: TObject);
-
-
-
-
-
+    procedure DBGrid_resultadoPesquisaDblClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
 
   private
-  procedure habilitaPesquisa;
-  procedure limpaCampos;
-  procedure validaCampos;
-  procedure alimentaCategoria;
-  procedure buscaMovimentos;
+    procedure habilitaPesquisa;
+    procedure limpaCampos;
+    // procedure validaCampos;
+    procedure alimentaCategoria;
+    procedure buscaMovimentos;
+    function validaCampos: boolean;
   public
 
   end;
 
 var
   Form_RelatorioMovimento: TForm_RelatorioMovimento;
- hora : string;
+
 implementation
 
 {$R *.dfm}
 
 Uses
-  FAG.Menu, FAG.DataModule.Conexao;
-
+  FAG.Menu, FAG.DataModule.Conexao, System.Math;
 
 procedure TForm_RelatorioMovimento.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-    Action := caFree;
-    Release;
-    Form_RelatorioMovimento := nil;
+  Action := caFree;
+  Release;
+  Form_RelatorioMovimento := nil;
 end;
 
 procedure TForm_RelatorioMovimento.habilitaPesquisa;
 begin
- Edit_codigo.Enabled := true;
- ComboBox_categoria.Enabled := true;
- ComboBox_tipoMoviemento.Enabled := true;
- DateTimePicker1.Enabled := true;
- DateTimePicker2.Enabled := true;
- DateTimePicker1.DateTime := Now;
- DateTimePicker2.DateTime := Now;
+  Edit_codigo.Enabled := true;
+  ComboBox_categoria.Enabled := true;
+  ComboBox_tipoMoviemento.Enabled := true;
+  DateTimePicker_Ini.Enabled := true;
+  DateTimePicker_Fim.Enabled := true;
+  DateTimePicker_Fim.DateTime := Now;
+  DateTimePicker_Ini.DateTime := Now;
 end;
 
 procedure TForm_RelatorioMovimento.limpaCampos;
 begin
- DBGrid_resultadoPesquisa.DataSource := nil;
- Edit_codigo.Clear;
- Edit_produto.Clear;
- ComboBox_categoria.ItemIndex := -1;
- ComboBox_tipoMoviemento.ItemIndex := -1;
- DateTimePicker1.DateTime := Now;
+  FDMemTable_consulta.Open;
+  FDMemTable_consulta.EmptyDataSet;
+  FDMemTable_consulta.Close;
+  FDMemTable_consulta.Open;
 
- end;
+  Edit_codigo.Clear;
+  Edit_produto.Clear;
+  ComboBox_categoria.ItemIndex := 0;
+  ComboBox_tipoMoviemento.ItemIndex := 0;
+  DateTimePicker_Fim.DateTime := Now;
+  Edit_codigo.SetFocus;
 
-procedure TForm_RelatorioMovimento.validaCampos;
+end;
+
+function TForm_RelatorioMovimento.validaCampos: boolean;
 begin
- if TrimLeft(Edit_produto.Text)= '' then
   begin
-   Edit_produto.SetFocus;
-   ShowMessage('Informe o produto.');
+    Result := true;
   end;
-
- if ComboBox_categoria.ItemIndex = -1 then
-  begin
-    ShowMessage('Selecione a categoria.')
-  end;
-
-  if not ComboBox_tipoMoviemento.ItemIndex = 0 and 1  then
-  begin
-   ShowMessage('Selecione o tipo de movimento.');
-  end;
-
- end;
+end;
 
 procedure TForm_RelatorioMovimento.alimentaCategoria;
 var
-exe: TFDMemTable;
-idmax,i : integer;
+  categoria: TFDMemTable;
 
 begin
+  categoria := TFDMemTable.Create(Self);
+
+  try
+    DataModuleConexao.ExecSQL('SELECT cat_desc FROM categoria', categoria);
+    ComboBox_categoria.Items.Add('Todos');
+    categoria.First;
+    while not categoria.Eof do
+    begin
+      ComboBox_categoria.Items.Add(categoria.FieldByName('cat_desc').AsString);
+      categoria.Next;
+    end;
+    ComboBox_categoria.ItemIndex := 0;
+  finally
+    FreeAndNil(categoria);
+  end;
+end;
+
+procedure TForm_RelatorioMovimento.FormCreate(Sender: TObject);
+begin
+  alimentaCategoria;
+  habilitaPesquisa;
+  ComboBox_tipoMoviemento.Items.Add('TODOS');
+  ComboBox_tipoMoviemento.Items.Add('ENTRADA');
+  ComboBox_tipoMoviemento.Items.Add('SAIDA');
+  ComboBox_tipoMoviemento.ItemIndex := 0;
+  DBGrid_resultadoPesquisa.Columns[4].Visible := false;
+  DBGrid_resultadoPesquisa.Columns[5].Visible := false;
+  DBGrid_resultadoPesquisa.Columns[0].FieldName := 'mov_id';
+  DBGrid_resultadoPesquisa.Columns[1].FieldName := 'mov_data_movimento';
+  DBGrid_resultadoPesquisa.Columns[2].FieldName := 'mov_tipo';
+  DBGrid_resultadoPesquisa.Columns[3].FieldName := 'login_usuario';
+end;
+
+procedure TForm_RelatorioMovimento.FormShow(Sender: TObject);
+begin
+  Edit_codigo.SetFocus;
+end;
+
+procedure TForm_RelatorioMovimento.SpeedButton_detalharMovClick
+  (Sender: TObject);
+
+begin
+  if FDMemTable_consulta.IsEmpty = true then
+  begin
+    ShowMessage('Selecione um movimento');
+    Edit_codigo.SetFocus;
+    exit
+  end;
+
+  if not Assigned(Form_detalharMovimento) then
+    Form_detalharMovimento := TForm_detalharMovimento.Create(Self);
+  try
+    Form_detalharMovimento.codigoConsulta := FDMemTable_consulta.FieldByName
+      ('mov_id').AsString;
+
+    if Form_detalharMovimento.ShowModal = mrOK then
+    begin
+
+    end;
+  finally
+    FreeAndNil(Form_detalharMovimento);
+  end;
+
+end;
+
+procedure TForm_RelatorioMovimento.SpeedButton_exibirTodosClick
+  (Sender: TObject);
+var
+  exe: TFDMemTable;
+  idmax, i: integer;
+
+begin
+
   exe := TFDMemTable.Create(Self);
   try
-    DataModuleConexao.ExecSQL('SELECT (MAX(cat_id_categoria)) AS ID FROM categoria',exe);
+    DataModuleConexao.ExecSQL('SELECT (MAX(mov_id)) AS ID FROM movimento', exe);
     idmax := exe.FieldByName('ID').AsInteger;
   finally
     FreeAndNil(exe);
   end;
-
-  for i := 1 to idmax do
-   begin
-   exe := TFDMemTable.Create(Self);
-   DataModuleConexao.ExecSQL('SELECT cat_desc FROM categoria WHERE cat_id_categoria ="'+i.ToString+'"',exe);
-   ComboBox_categoria.Items.Add(i.ToString+' - '+exe.FieldByName('cat_desc').AsString);
-   FreeAndNil(exe);
-   end;
-
-end;
-
-procedure TForm_RelatorioMovimento.FormCreate(Sender: TObject);
-
-begin
-  alimentaCategoria;
-  habilitaPesquisa;
-  ComboBox_tipoMoviemento.Items.Add('1 - ENTRADA');
-  ComboBox_tipoMoviemento.Items.Add('2 - SAÍDA');
-end;
-
-procedure TForm_RelatorioMovimento.SpeedButton_detalharMovClick(
-  Sender: TObject);
-begin
-if not Assigned(Form_detalharMovimento) then
+  i := 1;
+  while i <= idmax do
   begin
-    Form_detalharMovimento := TForm_detalharMovimento.Create(Application);
-    Form_detalharMovimento.BorderStyle := bsNone;
-    Form_detalharMovimento.Position := poOwnerFormCenter;
-  end;
-  Form_detalharMovimento.Position := poOwnerFormCenter;
-  Form_detalharMovimento.Show;
-end;
 
-procedure TForm_RelatorioMovimento.SpeedButton_exibirTodosClick(
-  Sender: TObject);
-var
-exe: TFDMemTable;
-idmax, i : integer;
-begin
-  exe := TFDMemTable.Create(Self);
-  try
-    DataModuleConexao.ExecSQL('SELECT MAX(mov_id) FROM movimento');
-  finally
-    FreeAndNil(exe);
-  end;
-  for i := 1 to idmax do
-  begin
-  exe := TFDMemTable.Create(Self);
-      DataModuleConexao.ExecSQL('SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,l.login_usuario,'
-                             +' p.prod_desc, c.cat_desc'
-                             +' FROM movimento AS m '
-                             +' INNER JOIN login AS l '
-                             +' ON m.login_id = l.login_id '
-                             +' INNER JOIN item_movimento AS im'
-                             +' ON m.mov_id = im.mov_id '
-                             +' INNER JOIN produto AS p '
-                             +' ON im.prod_id_produto = p.prod_id_produto '
-                             +' INNER JOIN categoria AS c'
-                             +' ON p.cat_id_categoria = c.cat_id_categoria'
-                             +' WHERE (m.mov_id = '+i.ToString+');',exe);
+    DataModuleConexao.ExecSQL
+      ('SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,l.login_usuario,' +
+      ' p.prod_desc, c.cat_desc' + ' FROM movimento AS m ' +
+      ' INNER JOIN login AS l ' + ' ON m.login_id = l.login_id ' +
+      ' INNER JOIN item_movimento AS im' + ' ON m.mov_id = im.mov_id ' +
+      ' INNER JOIN produto AS p ' +
+      ' ON im.prod_id_produto = p.prod_id_produto ' +
+      ' INNER JOIN categoria AS c' +
+      ' ON p.cat_id_categoria = c.cat_id_categoria' + ' WHERE m.mov_id = "' +
+      i.ToString + '"', FDMemTable_consulta);
 
+    DBGrid_resultadoPesquisa.Columns[0].FieldName := 'mov_id';
+    DBGrid_resultadoPesquisa.Columns[1].FieldName := 'mov_data_movimento';
+    DBGrid_resultadoPesquisa.Columns[2].FieldName := 'mov_tipo';
+    DBGrid_resultadoPesquisa.Columns[3].FieldName := 'login_usuario';
 
-  end;
+    i := i + 1;
+  end;;
 
 end;
 
 procedure TForm_RelatorioMovimento.buscaMovimentos;
 var
-exe: TFDMemTable;
+  sql: String;
 begin
-  exe := TFDMemTable.Create(Self);
-  try
-    if Edit_codigo.Text = '' then
-    begin
-          DataModuleConexao.ExecSQL('SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,l.login_usuario,'
-                             +' p.prod_desc, c.cat_desc'
-                             +' FROM movimento AS m '
-                             +' INNER JOIN login AS l '
-                             +' ON m.login_id = l.login_id '
-                             +' INNER JOIN item_movimento AS im'
-                             +' ON m.mov_id = im.mov_id '
-                             +' INNER JOIN produto AS p '
-                             +' ON im.prod_id_produto = p.prod_id_produto '
-                             +' INNER JOIN categoria AS c'
-                             +' ON p.cat_id_categoria = c.cat_id_categoria'
-                             +' WHERE (mov_tipo = "'+ ComboBox_tipoMoviemento.Items.ToString +'" )'
-                             +' AND (p.prod_desc = "'+ Edit_produto.Text+'%") AND (c.cat_id_categoria = "'+ ComboBox_categoria.ItemIndex.ToString +'");',exe);
-    end else
-        begin
-         DataModuleConexao.ExecSQL('SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,l.login_usuario,'
-                             +' p.prod_desc, c.cat_desc'
-                             +' FROM movimento AS m '
-                             +' INNER JOIN login AS l '
-                             +' ON m.login_id = l.login_id '
-                             +' INNER JOIN item_movimento AS im'
-                             +' ON m.mov_id = im.mov_id '
-                             +' INNER JOIN produto AS p '
-                             +' ON im.prod_id_produto = p.prod_id_produto '
-                             +' INNER JOIN categoria AS c'
-                             +' ON p.cat_id_categoria = c.cat_id_categoria'
-                             +' WHERE (m.mov_id = "'+ Edit_codigo.Text +'") AND (mov_tipo = "'+ ComboBox_tipoMoviemento.Items.ToString +'" )'
-                             +' AND (p.prod_desc = "'+ Edit_produto.Text+'%") AND (c.cat_id_categoria = "'+ ComboBox_categoria.ItemIndex.ToString +'");',exe);
 
-        end;
+  sql := 'SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,l.login_usuario,' +
+    ' p.prod_desc, c.cat_desc FROM movimento AS m ' +
+    ' INNER JOIN login AS l ON m.login_id = l.login_id ' +
+    ' INNER JOIN item_movimento AS im ON m.mov_id = im.mov_id ' +
+    ' INNER JOIN produto AS p ' + ' ON im.prod_id_produto = p.prod_id_produto '+
+    ' INNER JOIN categoria AS c' +
+    ' ON p.cat_id_categoria = c.cat_id_categoria WHERE 1 > 0 ';
+
+  if Trim(Edit_codigo.Text) <> EmptyStr then
+  begin
+    sql := sql + ' AND m.mov_id = ' + Edit_codigo.Text;
+  end;
+
+  if (DateTimePicker_Ini.Date <> 0) and (DateTimePicker_Fim.Date <> 0) then
+  begin
+    sql := sql + ' AND M.mov_data_movimento BETWEEN("' +
+      FormatDateTime('yyyy-mm-dd', DateTimePicker_Ini.Date) + '")' + ' AND ("' +
+      FormatDateTime('yyyy-mm-dd', DateTimePicker_Fim.Date) + '") ';
+  end;
+
+  if Trim(Edit_produto.Text) <> EmptyStr then
+  begin
+    sql := sql + ' AND (p.prod_desc LIKE "%' + Edit_produto.Text + '%")'
+  end;
+
+  if FrProd_Filtro.Edit_codigoProduto.Text <> EmptyStr then
+  begin
+    sql := sql + ' AND (p.prod_id_produto = ' + FrProd_Filtro.FDMemTable_Produto.FieldByName('prod_id_produto').AsString + ')'
+  end;
+
+  if ComboBox_categoria.ItemIndex <> 0 then
+  begin
+    sql := sql + ' AND (c.cat_id_categoria = ' +
+      ComboBox_categoria.ItemIndex.ToString + ')'
+  end;
+
+  if ComboBox_tipoMoviemento.ItemIndex <> 0 then
+  begin
+    sql := sql + ' AND (mov_tipo = "' + ComboBox_tipoMoviemento.Text + '")'
+  end;
+
+  DataModuleConexao.ExecSQL(sql, FDMemTable_consulta);
+
+end;
+
+procedure TForm_RelatorioMovimento.DBGrid_resultadoPesquisaDblClick
+  (Sender: TObject);
+begin
+  if FDMemTable_consulta.IsEmpty = true then
+  begin
+    ShowMessage('Selecione um movimento');
+    Edit_codigo.SetFocus;
+    exit
+  end;
+
+  if not Assigned(Form_detalharMovimento) then
+    Form_detalharMovimento := TForm_detalharMovimento.Create(Self);
+  try
+    Form_detalharMovimento.codigoConsulta := FDMemTable_consulta.FieldByName
+      ('mov_id').AsString;
+    if Form_detalharMovimento.ShowModal = mrOK then
+      ShowMessage(Form_detalharMovimento.Table_srh.FieldByName
+        ('prod_quantidade').AsString)
+    else
+      ShowMessage('cliquei no voltar');
   finally
-    FreeAndNil(exe);
+    FreeAndNil(Form_detalharMovimento);
+  end;
+end;
+
+procedure TForm_RelatorioMovimento.SpeedButton_filtrarClick(Sender: TObject);
+begin
+  if validaCampos = true then
+  begin
+    buscaMovimentos;
   end;
 
 end;
 
-
-procedure TForm_RelatorioMovimento.SpeedButton_filtrarClick(Sender: TObject);
-begin
- validaCampos;
- buscaMovimentos;
-
-end;
-
-procedure TForm_RelatorioMovimento.SpeedButton_limparConsultaClick(
-  Sender: TObject);
+procedure TForm_RelatorioMovimento.SpeedButton_limparConsultaClick
+  (Sender: TObject);
 begin
   limpaCampos;
 end;
 
 procedure TForm_RelatorioMovimento.SpeedButton_sairClick(Sender: TObject);
 begin
- Form_RelatorioMovimento.Close;
+  Form_RelatorioMovimento.Close;
 end;
 
 end.
