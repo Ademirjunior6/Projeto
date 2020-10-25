@@ -63,7 +63,6 @@ object Form_detalharMovimento: TForm_detalharMovimento
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
-      OnClick = SpeedButton_exportarClick
     end
     object SpeedButton_voltar: TSpeedButton
       Left = 696
@@ -78,6 +77,20 @@ object Form_detalharMovimento: TForm_detalharMovimento
       Font.Style = [fsBold]
       ParentFont = False
       OnClick = SpeedButton_voltarClick
+    end
+    object SpeedButton1: TSpeedButton
+      Left = 512
+      Top = 557
+      Width = 132
+      Height = 33
+      Caption = 'Confirmar'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      OnClick = SpeedButton1Click
     end
     object GroupBox1: TGroupBox
       Left = 19
@@ -186,7 +199,7 @@ object Form_detalharMovimento: TForm_detalharMovimento
           Font.Height = -16
           Font.Name = 'Segoe UI'
           Font.Style = []
-          Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleHotTrack]
+          Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleHotTrack]
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 0
@@ -205,7 +218,7 @@ object Form_detalharMovimento: TForm_detalharMovimento
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 165
+              Width = 168
               Visible = True
             end
             item
@@ -216,7 +229,7 @@ object Form_detalharMovimento: TForm_detalharMovimento
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 123
+              Width = 122
               Visible = True
             end
             item
@@ -227,7 +240,7 @@ object Form_detalharMovimento: TForm_detalharMovimento
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 124
+              Width = 126
               Visible = True
             end
             item
@@ -238,7 +251,7 @@ object Form_detalharMovimento: TForm_detalharMovimento
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 105
+              Width = 108
               Visible = True
             end
             item
@@ -249,7 +262,7 @@ object Form_detalharMovimento: TForm_detalharMovimento
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 76
+              Width = 78
               Visible = True
             end
             item
@@ -260,7 +273,7 @@ object Form_detalharMovimento: TForm_detalharMovimento
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 141
+              Width = 146
               Visible = True
             end>
         end

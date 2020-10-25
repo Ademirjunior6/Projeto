@@ -27,6 +27,7 @@ type
     DataSourc_srh: TDataSource;
     Table_srh: TFDMemTable;
     Panel1: TPanel;
+    SpeedButton1: TSpeedButton;
     SaveDialog1: TSaveDialog;
     procedure SpeedButton_voltarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

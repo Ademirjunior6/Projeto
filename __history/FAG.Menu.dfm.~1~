@@ -64,17 +64,15 @@ object Form_Menu: TForm_Menu
     end
     object ConsultareAlterar1: TMenuItem
       Caption = 'Relat'#243'rio'
-      object Produto: TMenuItem
-        Caption = 'Produto'
-        OnClick = ProdutoClick
+      object CadastrodeProduto1: TMenuItem
+        Caption = 'Cadastro de Produto'
       end
       object Movimentao1: TMenuItem
         Caption = 'Movimenta'#231#227'o'
         OnClick = Movimentao1Click
       end
-      object Usuario1: TMenuItem
-        Caption = 'Usu'#225'rio'
-        OnClick = Usuario1Click
+      object Fornecedores1: TMenuItem
+        Caption = 'Fornecedores'
       end
     end
   end

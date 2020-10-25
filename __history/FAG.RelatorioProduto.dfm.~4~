@@ -1,9 +1,9 @@
-object Form_detalharMovimento: TForm_detalharMovimento
+object Form_RelatorioProduto: TForm_RelatorioProduto
   Left = 0
   Top = 0
   BorderIcons = []
   BorderStyle = bsSingle
-  Caption = 'Movimento Detalhado'
+  Caption = 'Relatorio de Produto'
   ClientHeight = 602
   ClientWidth = 869
   Color = clBtnFace
@@ -16,34 +16,30 @@ object Form_detalharMovimento: TForm_detalharMovimento
   Font.Height = -16
   Font.Name = 'Segoe UI'
   Font.Style = []
+  FormStyle = fsMDIChild
   OldCreateOrder = False
   PopupMode = pmExplicit
   Position = poOwnerFormCenter
+  Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 21
-  object Panel_relatorioMovimento: TPanel
+  object Panel_Principal: TPanel
     Left = 0
     Top = 0
     Width = 869
     Height = 602
     Align = alClient
-    UseDockManager = False
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
     TabOrder = 0
+    ExplicitLeft = 8
+    ExplicitWidth = 861
     object Label_tituloForm: TLabel
-      Left = 264
+      Left = 296
       Top = 24
-      Width = 241
+      Width = 230
       Height = 32
-      Caption = 'Movimento Detalhado'
+      Caption = 'Relatorio de Produtos'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -24
@@ -51,8 +47,36 @@ object Form_detalharMovimento: TForm_detalharMovimento
       Font.Style = []
       ParentFont = False
     end
+    object SpeedButton_exibirTodos: TSpeedButton
+      Left = 20
+      Top = 557
+      Width = 132
+      Height = 33
+      Caption = 'Exibir Todos'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      OnClick = SpeedButton_exibirTodosClick
+    end
+    object SpeedButton_limparConsulta: TSpeedButton
+      Left = 169
+      Top = 557
+      Width = 163
+      Height = 33
+      Caption = 'Limpar Consulta'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      OnClick = SpeedButton_limparConsultaClick
+    end
     object SpeedButton_exportar: TSpeedButton
-      Left = 19
+      Left = 349
       Top = 557
       Width = 149
       Height = 33
@@ -63,27 +87,26 @@ object Form_detalharMovimento: TForm_detalharMovimento
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
-      OnClick = SpeedButton_exportarClick
     end
-    object SpeedButton_voltar: TSpeedButton
-      Left = 696
+    object SpeedButton_sair: TSpeedButton
+      Left = 769
       Top = 557
-      Width = 132
+      Width = 68
       Height = 33
-      Caption = 'Voltar'
+      Caption = 'Sair'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
-      OnClick = SpeedButton_voltarClick
+      OnClick = SpeedButton_sairClick
     end
-    object GroupBox1: TGroupBox
-      Left = 19
-      Top = 74
-      Width = 809
-      Height = 95
+    object GroupBox_consulta: TGroupBox
+      Left = 20
+      Top = 76
+      Width = 817
+      Height = 111
       BiDiMode = bdLeftToRight
       Caption = 'Dados da Consulta'
       Font.Charset = DEFAULT_CHARSET
@@ -94,12 +117,12 @@ object Form_detalharMovimento: TForm_detalharMovimento
       ParentBiDiMode = False
       ParentFont = False
       TabOrder = 0
-      object Label_codigoMov: TLabel
-        Left = 17
-        Top = 29
-        Width = 50
+      object Label_categoria: TLabel
+        Left = 442
+        Top = 35
+        Width = 67
         Height = 21
-        Caption = 'C'#243'digo'
+        Caption = 'Categoria'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -107,12 +130,12 @@ object Form_detalharMovimento: TForm_detalharMovimento
         Font.Style = []
         ParentFont = False
       end
-      object Label_dataMov: TLabel
-        Left = 605
-        Top = 29
-        Width = 138
+      object Label_tipoMoviemento: TLabel
+        Left = 601
+        Top = 35
+        Width = 42
         Height = 21
-        Caption = 'Data do Movimento'
+        Caption = 'Status'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -120,27 +143,21 @@ object Form_detalharMovimento: TForm_detalharMovimento
         Font.Style = []
         ParentFont = False
       end
-      object DateTimePickerMOV: TDateTimePicker
-        Left = 605
-        Top = 51
-        Width = 185
-        Height = 29
-        Date = 44100.000000000000000000
-        Time = 0.354362268517434100
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 0
+      object SpeedButton_filtrar: TSpeedButton
+        Left = 718
+        Top = 55
+        Width = 83
+        Height = 31
+        Caption = 'Filtrar'
+        OnClick = SpeedButton_filtrarClick
       end
-      object Edit_codigo1: TEdit
-        Left = 17
-        Top = 51
-        Width = 112
+      object ComboBox_categoria: TComboBox
+        Left = 442
+        Top = 56
+        Width = 153
         Height = 29
-        AutoSize = False
+        Style = csDropDownList
+        CharCase = ecUpperCase
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -149,14 +166,58 @@ object Form_detalharMovimento: TForm_detalharMovimento
         ParentFont = False
         TabOrder = 1
       end
+      object ComboBox_Status: TComboBox
+        Left = 601
+        Top = 56
+        Width = 111
+        Height = 29
+        Style = csDropDownList
+        CharCase = ecUpperCase
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 2
+      end
+      inline Frame_Produto1: TFrame_Produto
+        Left = 10
+        Top = 32
+        Width = 426
+        Height = 56
+        TabOrder = 0
+        ExplicitLeft = 10
+        ExplicitTop = 32
+        inherited Label2: TLabel
+          Top = 3
+          ExplicitTop = 3
+        end
+        inherited Label3: TLabel
+          Left = 120
+          Top = 3
+          Width = 149
+          Caption = 'Descri'#231#227'o do Produto'
+          ExplicitLeft = 120
+          ExplicitTop = 3
+          ExplicitWidth = 149
+        end
+        inherited Edit_descricao: TEdit
+          Font.Style = []
+        end
+        inherited FDMemTable_Produto: TFDMemTable
+          Left = 320
+          Top = 0
+        end
+      end
     end
-    object GroupBox_produtosMov: TGroupBox
-      Left = 19
-      Top = 175
-      Width = 809
-      Height = 370
+    object GroupBox_grid: TGroupBox
+      Left = 20
+      Top = 194
+      Width = 817
+      Height = 344
       BiDiMode = bdLeftToRight
-      Caption = 'Produtos Movimentados'
+      Caption = 'Resultado da Pesquisa'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -165,22 +226,21 @@ object Form_detalharMovimento: TForm_detalharMovimento
       ParentBiDiMode = False
       ParentFont = False
       TabOrder = 1
-      object Panel1: TPanel
+      object Panel_grid: TPanel
         Left = 17
         Top = 32
-        Width = 775
-        Height = 319
-        Caption = 'Panel1'
+        Width = 784
+        Height = 296
         TabOrder = 0
-        object DBGrid_rP: TDBGrid
+        object DBGrid_Pesquisa: TDBGrid
           Left = 1
           Top = 1
-          Width = 773
-          Height = 317
+          Width = 782
+          Height = 294
           Align = alClient
           BiDiMode = bdLeftToRight
           Color = clWhite
-          DataSource = DataSourc_srh
+          DataSource = DataSource_Consulta
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -16
@@ -198,14 +258,13 @@ object Form_detalharMovimento: TForm_detalharMovimento
           Columns = <
             item
               Expanded = False
-              FieldName = 'mov_data_movimento'
-              Title.Caption = 'Data'
+              Title.Caption = 'C'#243'digo'
               Title.Font.Charset = DEFAULT_CHARSET
               Title.Font.Color = clWindowText
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 165
+              Width = 53
               Visible = True
             end
             item
@@ -216,7 +275,18 @@ object Form_detalharMovimento: TForm_detalharMovimento
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 123
+              Width = 171
+              Visible = True
+            end
+            item
+              Expanded = False
+              Title.Caption = 'Un. Medida'
+              Title.Font.Charset = DEFAULT_CHARSET
+              Title.Font.Color = clWindowText
+              Title.Font.Height = -15
+              Title.Font.Name = 'Segoe UI'
+              Title.Font.Style = []
+              Width = 129
               Visible = True
             end
             item
@@ -227,18 +297,18 @@ object Form_detalharMovimento: TForm_detalharMovimento
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 124
+              Width = 149
               Visible = True
             end
             item
               Expanded = False
-              Title.Caption = 'Entrada/Saida'
+              Title.Caption = 'Data Cadastro'
               Title.Font.Charset = DEFAULT_CHARSET
               Title.Font.Color = clWindowText
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 105
+              Width = 168
               Visible = True
             end
             item
@@ -249,30 +319,19 @@ object Form_detalharMovimento: TForm_detalharMovimento
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 76
-              Visible = True
-            end
-            item
-              Expanded = False
-              Title.Caption = 'Usu'#225'rio'
-              Title.Font.Charset = DEFAULT_CHARSET
-              Title.Font.Color = clWindowText
-              Title.Font.Height = -15
-              Title.Font.Name = 'Segoe UI'
-              Title.Font.Style = []
-              Width = 141
+              Width = 72
               Visible = True
             end>
         end
       end
     end
   end
-  object DataSourc_srh: TDataSource
-    DataSet = Table_srh
-    Left = 435
-    Top = 370
+  object DataSource_Consulta: TDataSource
+    DataSet = FDMemTable_Consulta
+    Left = 548
+    Top = 352
   end
-  object Table_srh: TFDMemTable
+  object FDMemTable_Consulta: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
@@ -280,11 +339,7 @@ object Form_detalharMovimento: TForm_detalharMovimento
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 344
-    Top = 376
-  end
-  object SaveDialog1: TSaveDialog
-    Left = 611
-    Top = 351
+    Left = 388
+    Top = 352
   end
 end
