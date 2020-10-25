@@ -39,7 +39,7 @@ type
     DataSource_consulta: TDataSource;
     FDMemTable_consulta: TFDMemTable;
     Panel_resultadoPesquisa: TPanel;
-    FrProd_Filtro: TFrame_Produto;
+    SaveDialog1: TSaveDialog;
     procedure SpeedButton_sairClick(Sender: TObject);
     procedure SpeedButton_limparConsultaClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -49,14 +49,14 @@ type
     procedure SpeedButton_exibirTodosClick(Sender: TObject);
     procedure DBGrid_resultadoPesquisaDblClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure SpeedButton_exportarClick(Sender: TObject);
 
   private
     procedure habilitaPesquisa;
     procedure limpaCampos;
-    // procedure validaCampos;
     procedure alimentaCategoria;
     procedure buscaMovimentos;
-    function validaCampos: boolean;
+
   public
 
   end;
@@ -69,7 +69,7 @@ implementation
 {$R *.dfm}
 
 Uses
-  FAG.Menu, FAG.DataModule.Conexao, System.Math;
+  FAG.Menu, FAG.DataModule.Conexao, System.Math, ComObj;
 
 procedure TForm_RelatorioMovimento.FormClose(Sender: TObject;
   var Action: TCloseAction);
@@ -104,13 +104,6 @@ begin
   DateTimePicker_Fim.DateTime := Now;
   Edit_codigo.SetFocus;
 
-end;
-
-function TForm_RelatorioMovimento.validaCampos: boolean;
-begin
-  begin
-    Result := true;
-  end;
 end;
 
 procedure TForm_RelatorioMovimento.alimentaCategoria;
@@ -173,10 +166,8 @@ begin
     Form_detalharMovimento.codigoConsulta := FDMemTable_consulta.FieldByName
       ('mov_id').AsString;
 
-    if Form_detalharMovimento.ShowModal = mrOK then
-    begin
+    Form_detalharMovimento.ShowModal;
 
-    end;
   finally
     FreeAndNil(Form_detalharMovimento);
   end;
@@ -186,40 +177,67 @@ end;
 procedure TForm_RelatorioMovimento.SpeedButton_exibirTodosClick
   (Sender: TObject);
 var
-  exe: TFDMemTable;
-  idmax, i: integer;
-
+  sql: String;
 begin
+   sql := 'SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,l.login_usuario,' +
+    ' p.prod_desc, c.cat_desc FROM movimento AS m ' +
+    ' INNER JOIN login AS l ON m.login_id = l.login_id ' +
+    ' INNER JOIN item_movimento AS im ON m.mov_id = im.mov_id ' +
+    ' INNER JOIN produto AS p ' + ' ON im.prod_id_produto = p.prod_id_produto '+
+    ' INNER JOIN categoria AS c' +
+    ' ON p.cat_id_categoria = c.cat_id_categoria WHERE 1 > 0 ';
+    DataModuleConexao.ExecSQL(sql, FDMemTable_consulta);
 
-  exe := TFDMemTable.Create(Self);
+end;
+
+procedure TForm_RelatorioMovimento.SpeedButton_exportarClick(Sender: TObject);
+var
+Planilha :Variant;
+Linha, cont : integer;
+begin
+  cont := FDMemTable_consulta.RecordCount;
+  FDMemTable_consulta.Filtered := false;
+  linha := 1;
+  Planilha := CreateOleObject('Excel.application');
+  Planilha.Caption := 'Exportar';
+  Planilha.Visible := false;
+  Planilha.workbooks.add(1);
+  Planilha.cells[1,1]:= 'Código';
+  Planilha.cells[1,2]:= 'Data';
+  Planilha.cells[1,3]:= 'Tipo de Movimento';
+  Planilha.cells[1,4]:= 'Usuário';
+  linha := 2;
+  FDMemTable_consulta.DisableControls;
   try
-    DataModuleConexao.ExecSQL('SELECT (MAX(mov_id)) AS ID FROM movimento', exe);
-    idmax := exe.FieldByName('ID').AsInteger;
+
+   while not FDMemTable_consulta.Eof do
+   begin
+     Planilha.cells[Linha,1] := FDMemTable_consulta.FieldByName('mov_id').Value;
+     Planilha.cells[Linha,2] := FDMemTable_consulta.FieldByName('mov_data_movimento').Value;
+     Planilha.cells[Linha,3] := FDMemTable_consulta.FieldByName('mov_tipo').AsString;
+     Planilha.cells[Linha,4] := FDMemTable_consulta.FieldByName('login_usuario').AsString;
+     Linha:= linha+1;
+     FDMemTable_consulta.Next;
+   end;
+   Planilha.columns.autofit;
+   try
+    if SaveDialog1.Execute then
+    begin
+    Planilha.ActiveWorkbook.SaveAs(SaveDialog1.FileName+'.xlsx');
+    Planilha.Visible := true;
+    SaveDialog1.HistoryList.Clear;
+    end;
+   except
+    Application.MessageBox ('Tente salvar o arquivo com outro nome','Erro',MB_OK+MB_ICONEXCLAMATION);
+   end;
+
+
   finally
-    FreeAndNil(exe);
+   FDMemTable_consulta.EnableControls;
+   Planilha := Unassigned;
+
   end;
-  i := 1;
-  while i <= idmax do
-  begin
 
-    DataModuleConexao.ExecSQL
-      ('SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,l.login_usuario,' +
-      ' p.prod_desc, c.cat_desc' + ' FROM movimento AS m ' +
-      ' INNER JOIN login AS l ' + ' ON m.login_id = l.login_id ' +
-      ' INNER JOIN item_movimento AS im' + ' ON m.mov_id = im.mov_id ' +
-      ' INNER JOIN produto AS p ' +
-      ' ON im.prod_id_produto = p.prod_id_produto ' +
-      ' INNER JOIN categoria AS c' +
-      ' ON p.cat_id_categoria = c.cat_id_categoria' + ' WHERE m.mov_id = "' +
-      i.ToString + '"', FDMemTable_consulta);
-
-    DBGrid_resultadoPesquisa.Columns[0].FieldName := 'mov_id';
-    DBGrid_resultadoPesquisa.Columns[1].FieldName := 'mov_data_movimento';
-    DBGrid_resultadoPesquisa.Columns[2].FieldName := 'mov_tipo';
-    DBGrid_resultadoPesquisa.Columns[3].FieldName := 'login_usuario';
-
-    i := i + 1;
-  end;;
 
 end;
 
@@ -253,10 +271,10 @@ begin
     sql := sql + ' AND (p.prod_desc LIKE "%' + Edit_produto.Text + '%")'
   end;
 
-  if FrProd_Filtro.Edit_codigoProduto.Text <> EmptyStr then
-  begin
-    sql := sql + ' AND (p.prod_id_produto = ' + FrProd_Filtro.FDMemTable_Produto.FieldByName('prod_id_produto').AsString + ')'
-  end;
+//  if FrProd_Filtro.Edit_codigoProduto.Text <> EmptyStr then
+//  begin
+//    sql := sql + ' AND (p.prod_id_produto = ' + FrProd_Filtro.FDMemTable_Produto.FieldByName('prod_id_produto').AsString + ')'
+//  end;
 
   if ComboBox_categoria.ItemIndex <> 0 then
   begin
@@ -270,6 +288,10 @@ begin
   end;
 
   DataModuleConexao.ExecSQL(sql, FDMemTable_consulta);
+  if FDMemTable_consulta.IsEmpty then
+  begin
+    ShowMessage('Nenhum movimento encontrado!');
+  end;
 
 end;
 
@@ -288,11 +310,8 @@ begin
   try
     Form_detalharMovimento.codigoConsulta := FDMemTable_consulta.FieldByName
       ('mov_id').AsString;
-    if Form_detalharMovimento.ShowModal = mrOK then
-      ShowMessage(Form_detalharMovimento.Table_srh.FieldByName
-        ('prod_quantidade').AsString)
-    else
-      ShowMessage('cliquei no voltar');
+    Form_detalharMovimento.ShowModal;
+
   finally
     FreeAndNil(Form_detalharMovimento);
   end;
@@ -300,11 +319,7 @@ end;
 
 procedure TForm_RelatorioMovimento.SpeedButton_filtrarClick(Sender: TObject);
 begin
-  if validaCampos = true then
-  begin
-    buscaMovimentos;
-  end;
-
+   buscaMovimentos;
 end;
 
 procedure TForm_RelatorioMovimento.SpeedButton_limparConsultaClick

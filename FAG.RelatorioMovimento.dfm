@@ -79,6 +79,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = SpeedButton_exportarClick
     end
     object SpeedButton_detalharMov: TSpeedButton
       Left = 365
@@ -315,15 +316,6 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
         TabOrder = 5
       end
-      inline FrProd_Filtro: TFrame_Produto
-        Left = 320
-        Top = -8
-        Width = 426
-        Height = 56
-        TabOrder = 6
-        ExplicitLeft = 320
-        ExplicitTop = -8
-      end
     end
     object GroupBox2: TGroupBox
       Left = 19
@@ -448,5 +440,9 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
     StoreDefs = True
     Left = 315
     Top = 383
+  end
+  object SaveDialog1: TSaveDialog
+    Left = 640
+    Top = 472
   end
 end

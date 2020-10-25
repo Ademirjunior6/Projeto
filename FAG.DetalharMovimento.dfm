@@ -296,4 +296,8 @@ object Form_detalharMovimento: TForm_detalharMovimento
     Left = 344
     Top = 376
   end
+  object SaveDialog1: TSaveDialog
+    Left = 611
+    Top = 351
+  end
 end

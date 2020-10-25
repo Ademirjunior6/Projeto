@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
   Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
-  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,ComObj,
   FireDAC.Comp.Client;
 
 type
@@ -28,15 +28,18 @@ type
     Table_srh: TFDMemTable;
     Panel1: TPanel;
     SpeedButton1: TSpeedButton;
+    SaveDialog1: TSaveDialog;
     procedure SpeedButton_voltarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure SpeedButton_exportarClick(Sender: TObject);
 
   private
     FcodigoConsulta: String;
     procedure SetcodigoConsulta(const Value: String);
+
     { Private declarations }
   public
     property codigoConsulta: String read FcodigoConsulta
@@ -51,7 +54,9 @@ implementation
 {$R *.dfm}
 
 Uses
-  FAG.Menu, FAG.DataModule.Conexao, FAG.RelatorioMovimento;
+  FAG.Menu, FAG.DataModule.Conexao, FAG.RelatorioMovimento,dbWeb, XMLDoc, XMLIntf;
+
+
 
 procedure TForm_detalharMovimento.FormClose(Sender: TObject;
   var Action: TCloseAction);
@@ -87,6 +92,7 @@ begin
   DBGrid_rP.Columns[3].FieldName := 'mov_tipo';
   DBGrid_rP.Columns[4].FieldName := 'prod_quantidade';
   DBGrid_rP.Columns[5].FieldName := 'login_usuario';
+  DateTimePickerMOV.DateTime := Table_srh.FieldByName('mov_data_movimento').AsDateTime;
 end;
 
 procedure TForm_detalharMovimento.SetcodigoConsulta(const Value: String);
@@ -99,6 +105,52 @@ begin
   ModalResult := mrOk;
 end;
 
+
+
+procedure TForm_detalharMovimento.SpeedButton_exportarClick(Sender: TObject);
+var
+Planilha :Variant;
+Linha, cont : integer;
+begin
+  cont := Table_srh.RecordCount;
+ Table_srh.Filtered := false;
+  linha := 1;
+  Planilha := CreateOleObject('Excel.application');
+  Planilha.Caption := 'Exportacao';
+  Planilha.Visible := false;
+  Planilha.workbooks.add(1);
+  Planilha.cells[1,1]:= 'Código';
+  Planilha.cells[1,2]:= 'Data';
+  Planilha.cells[1,3]:= 'Tipo de Movimento';
+  Planilha.cells[1,4]:= 'Usuário';
+  linha := 2;
+ Table_srh.DisableControls;
+  try
+   while not Table_srh.Eof do
+   begin
+     Planilha.cells[Linha,1] := Table_srh.FieldByName('mov_id').Value;
+     Planilha.cells[Linha,2] := Table_srh.FieldByName('mov_data_movimento').Value;
+     Planilha.cells[Linha,3] := Table_srh.FieldByName('mov_tipo').Value;
+     //Planilha.cells[Linha,4] := FDMemTable_consulta.FieldByName('login_usuario').Value;
+     Linha:= linha+1;
+     Table_srh.Next;
+   end;
+   if SaveDialog1.Execute then
+   begin
+    Planilha.ActiveWorkbook.SaveAs(SaveDialog1.FileName+'.xlsx');
+   end;
+   //Planilha.Workbook.SaveAs(SaveDialog1)
+   //Planilha.ActiveWorkbook.SaveAs('C:\teste\ress.xlsx');
+   Planilha.columns.autofit;
+   Planilha.Visible := true;
+
+  finally
+   Table_srh.EnableControls;
+   Planilha := Unassigned;
+  end;
+
+
+end;
 procedure TForm_detalharMovimento.SpeedButton_voltarClick(Sender: TObject);
 begin
   with Table_srh do
