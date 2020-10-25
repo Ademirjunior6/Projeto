@@ -116,37 +116,47 @@ begin
  Table_srh.Filtered := false;
   linha := 1;
   Planilha := CreateOleObject('Excel.application');
-  Planilha.Caption := 'Exportacao';
+  Planilha.Caption := 'Exportar';
   Planilha.Visible := false;
   Planilha.workbooks.add(1);
-  Planilha.cells[1,1]:= 'Código';
-  Planilha.cells[1,2]:= 'Data';
-  Planilha.cells[1,3]:= 'Tipo de Movimento';
-  Planilha.cells[1,4]:= 'Usuário';
+  Planilha.cells[1,1]:= 'Data';
+  Planilha.cells[1,2]:= 'Descrição';
+  Planilha.cells[1,3]:= 'Categoria';
+  Planilha.cells[1,4]:= 'Tipo de movimento';
+  Planilha.cells[1,5]:= 'Qtd. Atual';
+  Planilha.cells[1,6]:= 'Usuário';
   linha := 2;
- Table_srh.DisableControls;
+  Table_srh.DisableControls;
   try
+
    while not Table_srh.Eof do
    begin
-     Planilha.cells[Linha,1] := Table_srh.FieldByName('mov_id').Value;
-     Planilha.cells[Linha,2] := Table_srh.FieldByName('mov_data_movimento').Value;
-     Planilha.cells[Linha,3] := Table_srh.FieldByName('mov_tipo').Value;
-     //Planilha.cells[Linha,4] := FDMemTable_consulta.FieldByName('login_usuario').Value;
+     Planilha.cells[Linha,1] := Table_srh.FieldByName('mov_data_movimento').AsString;
+     Planilha.cells[Linha,2] := Table_srh.FieldByName('prod_desc').AsString;
+     Planilha.cells[Linha,3] := Table_srh.FieldByName('cat_desc').AsString;
+     Planilha.cells[Linha,4] := Table_srh.FieldByName('mov_tipo').AsString;
+     Planilha.cells[Linha,5] := Table_srh.FieldByName('prod_quantidade').Value;
+     Planilha.cells[Linha,6] := Table_srh.FieldByName('login_usuario').AsString;
      Linha:= linha+1;
      Table_srh.Next;
    end;
-   if SaveDialog1.Execute then
-   begin
-    Planilha.ActiveWorkbook.SaveAs(SaveDialog1.FileName+'.xlsx');
-   end;
-   //Planilha.Workbook.SaveAs(SaveDialog1)
-   //Planilha.ActiveWorkbook.SaveAs('C:\teste\ress.xlsx');
    Planilha.columns.autofit;
-   Planilha.Visible := true;
+   try
+    if SaveDialog1.Execute then
+    begin
+    Planilha.ActiveWorkbook.SaveAs(SaveDialog1.FileName+'.xlsx');
+    Planilha.Visible := true;
+    SaveDialog1.HistoryList.Clear;
+    end;
+   except
+    Application.MessageBox ('Tente salvar o arquivo com outro nome','Erro',MB_OK+MB_ICONEXCLAMATION);
+   end;
+
 
   finally
    Table_srh.EnableControls;
    Planilha := Unassigned;
+
   end;
 
 

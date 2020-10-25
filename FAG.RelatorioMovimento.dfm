@@ -1,6 +1,7 @@
 object Form_RelatorioMovimento: TForm_RelatorioMovimento
   Left = 0
   Top = 0
+  ActiveControl = Edit_produto
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Relatorio de Movimenta'#231#227'o'
@@ -178,7 +179,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
       end
       object Label_categoria: TLabel
-        Left = 360
+        Left = 361
         Top = 93
         Width = 67
         Height = 21
@@ -255,7 +256,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         TabOrder = 3
       end
       object ComboBox_categoria: TComboBox
-        Left = 360
+        Left = 361
         Top = 115
         Width = 153
         Height = 29

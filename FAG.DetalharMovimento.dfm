@@ -63,6 +63,7 @@ object Form_detalharMovimento: TForm_detalharMovimento
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = SpeedButton_exportarClick
     end
     object SpeedButton_voltar: TSpeedButton
       Left = 696
@@ -199,7 +200,7 @@ object Form_detalharMovimento: TForm_detalharMovimento
           Font.Height = -16
           Font.Name = 'Segoe UI'
           Font.Style = []
-          Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleHotTrack]
+          Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleHotTrack]
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 0

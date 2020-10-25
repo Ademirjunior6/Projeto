@@ -92,11 +92,13 @@ end;
 
 procedure TForm_RelatorioMovimento.limpaCampos;
 begin
+  if not FDMemTable_Consulta.IsEmpty  then
+  begin
   FDMemTable_consulta.Open;
   FDMemTable_consulta.EmptyDataSet;
   FDMemTable_consulta.Close;
   FDMemTable_consulta.Open;
-
+  end;
   Edit_codigo.Clear;
   Edit_produto.Clear;
   ComboBox_categoria.ItemIndex := 0;
@@ -155,7 +157,7 @@ procedure TForm_RelatorioMovimento.SpeedButton_detalharMovClick
 begin
   if FDMemTable_consulta.IsEmpty = true then
   begin
-    ShowMessage('Selecione um movimento');
+    Application.MessageBox ('Selecione um movimento','Erro',MB_OK+MB_ICONEXCLAMATION);
     Edit_codigo.SetFocus;
     exit
   end;
@@ -290,7 +292,7 @@ begin
   DataModuleConexao.ExecSQL(sql, FDMemTable_consulta);
   if FDMemTable_consulta.IsEmpty then
   begin
-    ShowMessage('Nenhum movimento encontrado!');
+     Application.MessageBox ('Nenhum registro encontrado','Erro',MB_OK+MB_ICONEXCLAMATION);
   end;
 
 end;

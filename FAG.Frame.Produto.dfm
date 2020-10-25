@@ -429,6 +429,7 @@ object Frame_Produto: TFrame_Produto
     Width = 305
     Height = 29
     TabStop = False
+    CharCase = ecUpperCase
     Enabled = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -451,7 +452,7 @@ object Frame_Produto: TFrame_Produto
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 1
-    OnExit = Edit_codigoProdutoExit
+    OnChange = Edit_codigoProdutoChange
   end
   object FDMemTable_Produto: TFDMemTable
     FetchOptions.AssignedValues = [evMode]

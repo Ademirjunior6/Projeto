@@ -20,7 +20,8 @@ type
     Label3: TLabel;
     FDMemTable_Produto: TFDMemTable;
     procedure Image1Click(Sender: TObject);
-    procedure Edit_codigoProdutoExit(Sender: TObject);
+    procedure Edit_codigoProdutoChange(Sender: TObject);
+
   private
     objPsq: TForm_Produtos;
   public
@@ -45,13 +46,14 @@ begin
 
 end;
 
-procedure TFrame_Produto.Edit_codigoProdutoExit(Sender: TObject);
+procedure TFrame_Produto.Edit_codigoProdutoChange(Sender: TObject);
 var
   fdTmp: TFDMemTable;
   sql: String;
 begin
-  if (Edit_codigoProduto.Text <> EmptyStr) then
-  begin
+  try
+   if (Edit_codigoProduto.Text <> EmptyStr) then
+   begin
     sql := SQL_PRODUTO + ' WHERE prod_id_produto =' + Edit_codigoProduto.Text;
     DataModuleConexao.ExecSQL(sql, FDMemTable_Produto);
     Edit_descricao.Text := FDMemTable_Produto.FieldByName
@@ -59,8 +61,18 @@ begin
     Edit_codigoProduto.Text := FDMemTable_Produto.FieldByName
       ('prod_id_produto').AsString;
 
+   end;
+   if Trim(Edit_codigoProduto.Text) = EmptyStr then
+   begin
+    Edit_descricao.Clear;
+   end;
+   except
+    Application.MessageBox ('Informe apenas números','Erro',MB_OK+MB_ICONEXCLAMATION);
+    Edit_codigoProduto.Clear;
+    Edit_codigoProduto.SetFocus;
   end;
 end;
+
 
 procedure TFrame_Produto.Image1Click(Sender: TObject);
 var
