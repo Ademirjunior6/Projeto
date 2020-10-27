@@ -21,6 +21,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
   PopupMode = pmExplicit
   Position = poOwnerFormCenter
   Visible = True
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -77,6 +78,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = SpeedButton_pesquisarClick
     end
     object SpeedButton_sair: TSpeedButton
       Left = 565
@@ -189,14 +191,14 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
       end
-      object SpeedButton1: TSpeedButton
+      object SpeedButton_unMedida: TSpeedButton
         Left = 523
         Top = 125
         Width = 25
         Height = 28
         Margins.Bottom = 4
         Caption = '+'
-        OnClick = SpeedButton1Click
+        OnClick = SpeedButton_unMedidaClick
       end
       object Label_valor: TLabel
         Left = 572
@@ -211,12 +213,13 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
       end
-      object SpeedButton2: TSpeedButton
+      object SpeedButton_categoria: TSpeedButton
         Left = 352
-        Top = 128
-        Width = 23
-        Height = 22
-        OnClick = SpeedButton2Click
+        Top = 125
+        Width = 25
+        Height = 28
+        Caption = '+'
+        OnClick = SpeedButton_categoriaClick
       end
       object Edit_codigo: TEdit
         Left = 16
@@ -237,13 +240,13 @@ object Form_CadastroProduto: TForm_CadastroProduto
       object ComboBox_status: TComboBox
         Left = 104
         Top = 51
-        Width = 97
+        Width = 105
         Height = 29
         TabOrder = 1
         Text = '1 - Ativo'
       end
       object Edit_descricao: TEdit
-        Left = 224
+        Left = 228
         Top = 51
         Width = 361
         Height = 29

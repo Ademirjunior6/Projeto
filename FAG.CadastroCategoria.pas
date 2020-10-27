@@ -26,6 +26,7 @@ type
     function getUltimoID: String;
     function validarCampos: Boolean;
     function gravar: Boolean;
+    function existeCategoria(codigo: string): Boolean;
   public
     { Public declarations }
   end;
@@ -71,6 +72,20 @@ begin
   end;
 end;
 
+function TForm_CadastroCategoria.existeCategoria(codigo: string): Boolean;
+var
+  excist: TFDMemTable;
+begin
+  excist := TFDMemTable.Create(Self);
+  try
+    DataModuleConexao.ExecSQL('SELECT cat_desc FROM categoria WHERE cat_desc =   ' + '"' +
+      codigo + '"', excist);
+    Result := not excist.IsEmpty;
+  finally
+    FreeAndNil(excist);
+  end;
+end;
+
 function TForm_CadastroCategoria.gravar: Boolean;
 var
   SQL: String;
@@ -80,11 +95,18 @@ begin
     Result := False;
     Exit;
   end;
-  begin
-    SQL := 'INSERT INTO categoria (cat_id_categoria, cat_desc) ' + ' VALUES (' +
-      Edit_codigo.Text + ',"' + Edit_descricao.Text + '")';
+   if existeCategoria(Edit_descricao.Text) then
+      begin
+        ShowMessage('Categoria já cadastrada!');
+        Edit_descricao.SetFocus;
+      end
+      else
+      begin
+    SQL := 'INSERT INTO categoria (cat_id_categoria, cat_desc, cat_data_cadastro) ' + ' VALUES (' +
+      Edit_codigo.Text + ',"' + Edit_descricao.Text + '",NOW())';
     DataModuleConexao.ExecSQL(SQL);
     ShowMessage('Salvo com Sucesso.');
+
   end;
 end;
 

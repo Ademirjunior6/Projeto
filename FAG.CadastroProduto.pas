@@ -46,12 +46,14 @@ type
     procedure Edit_valorChange(Sender: TObject);
     procedure SpeedButton_categoriaClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure SpeedButton_pesquisarClick(Sender: TObject);
   private
     { Private declarations }
     function getUltimoID: String;
     function cancelar: Boolean;
+    procedure loadTela(id: string);
   public
-  function carregaCategoria: Boolean;
+    function carregaCategoria: Boolean;
   end;
 
 var
@@ -62,7 +64,8 @@ implementation
 {$R *.dfm}
 
 Uses
-  FAG.Menu, FAG.DataModule.Conexao, FAG.CadastroUnMedida, FAG.CadastroCategoria;
+  FAG.Menu, FAG.DataModule.Conexao, FAG.CadastroUnMedida, FAG.CadastroCategoria,
+  FAG.ConsultarProduto;
 
 procedure TForm_CadastroProduto.Edit_valorChange(Sender: TObject);
 var
@@ -105,7 +108,7 @@ end;
 
 procedure TForm_CadastroProduto.FormActivate(Sender: TObject);
 begin
-carregaCategoria;
+  carregaCategoria;
 end;
 
 procedure TForm_CadastroProduto.FormClose(Sender: TObject;
@@ -157,6 +160,38 @@ begin
   finally
     Form_CadastroCategoria.Free;
   end;
+end;
+
+procedure TForm_CadastroProduto.SpeedButton_pesquisarClick(Sender: TObject);
+begin
+  Form_ConsultarProduto := TForm_ConsultarProduto.Create(Self);
+  try
+    if Form_ConsultarProduto.ShowModal = mrOk then
+      loadTela(Form_ConsultarProduto.FDMemTable_consultaProduto.FieldByName('prod_id_produto')
+        .AsString);
+  finally
+    FreeAndNil(Form_ConsultarProduto)
+  end;
+end;
+
+procedure TForm_CadastroProduto.loadTela(id: string);
+var
+  carrega: TFDMemTable;
+begin
+  carrega := TFDMemTable.Create(Self);
+  try
+    DataModuleConexao.ExecSQL('SELECT * FROM usuario WHERE ID = '
+      + id, carrega);
+    edit_codigo.Text := carrega.FieldByName('prod_id_produto').AsString;
+    ComboBox_status.ItemIndex := carrega.FieldByName('status').AsInteger;
+    edit_descricao.Text := carrega.FieldByName('prod_desc').AsString;
+    Frame_generico1.ComboBox_Informacao.ItemIndex := carrega.FieldByName('cat_id_categoria').AsInteger;
+    ComboBox_status.ItemIndex := carrega.FieldByName('status').AsInteger;
+   // DateTimePicker1 := carrega.FieldByName('prod_data_cadastro').AsDate;
+  finally
+    FreeAndNil(carrega);
+  end;
+
 end;
 
 procedure TForm_CadastroProduto.SpeedButton_cancelarClick(Sender: TObject);

@@ -2,7 +2,7 @@ object Form_Produtos: TForm_Produtos
   Left = 0
   Top = 0
   Caption = 'Form_Produtos'
-  ClientHeight = 290
+  ClientHeight = 288
   ClientWidth = 614
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,11 +20,18 @@ object Form_Produtos: TForm_Produtos
     Width = 617
     Height = 297
     DataSource = ds_Produtos
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    ParentFont = False
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
-    TitleFont.Height = -11
-    TitleFont.Name = 'Tahoma'
+    TitleFont.Height = -18
+    TitleFont.Name = 'Segoe UI'
     TitleFont.Style = []
     OnDblClick = DBGrid1DblClick
     Columns = <
@@ -47,7 +54,7 @@ object Form_Produtos: TForm_Produtos
         Title.Font.Height = -16
         Title.Font.Name = 'Segoe UI'
         Title.Font.Style = []
-        Width = 351
+        Width = 330
         Visible = True
       end
       item

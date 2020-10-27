@@ -9,8 +9,9 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, Vcl.Buttons, Vcl.Menus, FAG.CadastroProduto,
+  FireDAC.Comp.Client, Vcl.Buttons, Vcl.Menus, FAG.CadastroProduto, FAG.RelatorioMovimento,
   Vcl.ComCtrls;
+
 
 type
   TForm_Menu = class(TForm)
@@ -22,15 +23,19 @@ type
     MovimentarEstoque1: TMenuItem;
     ConsultareAlterar1: TMenuItem;
     Movimentar1: TMenuItem;
-    CadastrodeProduto1: TMenuItem;
+    Produto: TMenuItem;
     Movimentao1: TMenuItem;
-    Fornecedores1: TMenuItem;
+    Usuario1: TMenuItem;
     StatusBar1: TStatusBar;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Produto1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Movimentar1Click(Sender: TObject);
+    procedure Movimentao1Click(Sender: TObject);
+    procedure ProdutoClick(Sender: TObject);
+    procedure Usuario1Click(Sender: TObject);
+
   private
   public
     usuarioLogado: String;
@@ -45,7 +50,7 @@ implementation
 
 {$R *.dfm}
 
-uses FAG.Login, FAG.DataModule.Conexao, FAG.Movimento;
+uses FAG.Login, FAG.DataModule.Conexao, FAG.Movimento,FAG.RelatorioProduto, FAG.RelatorioUsuario ;
 
 procedure TForm_Menu.Button1Click(Sender: TObject);
 begin
@@ -57,6 +62,8 @@ begin
   ShowMessage('TESTE');
 
 end;
+
+
 
 procedure TForm_Menu.CreateParams(var Params: TCreateParams);
 begin
@@ -84,6 +91,35 @@ begin
   if Form_Login <> nil then
     Application.Terminate;
 end;
+procedure TForm_Menu.Usuario1Click(Sender: TObject);
+begin
+  if not Assigned(Form_RelatorioUsuario) then
+  begin
+   Form_RelatorioUsuario := TForm_RelatorioUsuario.Create(Application);
+  end;
+  Form_RelatorioUsuario.Position := poOwnerFormCenter;
+  Form_RelatorioUsuario.Show;
+end;
+
+procedure TForm_Menu.ProdutoClick(Sender: TObject);
+begin
+  if not Assigned(Form_RelatorioProduto) then
+  begin
+    Form_RelatorioProduto := TForm_RelatorioProduto.Create(Application);
+  end;
+  Form_RelatorioProduto.Position := poOwnerFormCenter;
+  Form_RelatorioProduto.Show;
+end;
+
+procedure TForm_Menu.Movimentao1Click(Sender: TObject);
+begin
+  if not Assigned(Form_RelatorioMovimento) then
+  begin
+    Form_RelatorioMovimento := TForm_RelatorioMovimento.Create(Application);
+  end;
+  Form_RelatorioMovimento.Position := poOwnerFormCenter;
+  Form_RelatorioMovimento.Show;
+end;
 
 procedure TForm_Menu.Movimentar1Click(Sender: TObject);
 begin
@@ -96,6 +132,7 @@ begin
   Form_Movimento.Position := poOwnerFormCenter;
   Form_Movimento.Show;
 end;
+
 
 procedure TForm_Menu.Produto1Click(Sender: TObject);
 begin

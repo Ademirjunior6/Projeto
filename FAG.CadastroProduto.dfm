@@ -78,6 +78,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = SpeedButton_pesquisarClick
     end
     object SpeedButton_sair: TSpeedButton
       Left = 565
@@ -239,13 +240,13 @@ object Form_CadastroProduto: TForm_CadastroProduto
       object ComboBox_status: TComboBox
         Left = 104
         Top = 51
-        Width = 97
+        Width = 105
         Height = 29
         TabOrder = 1
         Text = '1 - Ativo'
       end
       object Edit_descricao: TEdit
-        Left = 224
+        Left = 228
         Top = 51
         Width = 361
         Height = 29
