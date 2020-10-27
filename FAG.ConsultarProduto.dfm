@@ -28,10 +28,6 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    ExplicitLeft = -234
-    ExplicitTop = -177
-    ExplicitWidth = 869
-    ExplicitHeight = 604
     object Label_ConsultarProd: TLabel
       Left = 312
       Top = 24
@@ -240,22 +236,17 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
           Columns = <
             item
               Expanded = False
+              Width = 203
               Visible = True
             end
             item
               Expanded = False
+              Width = 281
               Visible = True
             end
             item
               Expanded = False
-              Visible = True
-            end
-            item
-              Expanded = False
-              Visible = True
-            end
-            item
-              Expanded = False
+              Width = 268
               Visible = True
             end>
         end

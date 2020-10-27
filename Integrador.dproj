@@ -147,6 +147,14 @@
             <Form>Form_ConsultarProduto</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="FAG.RelatorioProduto.pas">
+            <Form>Form_RelatorioProduto</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FAG.RelatorioUsuario.pas">
+            <Form>Form_RelatorioUsuario</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <RcItem Include="C:\libmysql.dll">
             <ContainerId>ResourceItem</ContainerId>
             <ResourceType>RCDATA</ResourceType>

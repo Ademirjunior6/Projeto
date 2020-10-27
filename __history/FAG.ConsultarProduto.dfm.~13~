@@ -11,6 +11,7 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Panel_relatorioMovimento: TPanel
@@ -56,6 +57,7 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = SpeedButton_exibirTodosClick
     end
     object SpeedButton_limparConsulta: TSpeedButton
       Left = 339
@@ -220,7 +222,7 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
           Align = alClient
           BiDiMode = bdLeftToRight
           Color = clWhite
-          DataSource = DataSource_consulta
+          DataSource = DataSource_consultaProduto
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -16
@@ -238,56 +240,22 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
           Columns = <
             item
               Expanded = False
-              Title.Caption = 'C'#243'digo'
-              Title.Font.Charset = DEFAULT_CHARSET
-              Title.Font.Color = clWindowText
-              Title.Font.Height = -13
-              Title.Font.Name = 'Segoe UI'
-              Title.Font.Style = []
-              Width = 152
               Visible = True
             end
             item
               Expanded = False
-              Title.Caption = 'Data'
-              Title.Font.Charset = DEFAULT_CHARSET
-              Title.Font.Color = clWindowText
-              Title.Font.Height = -13
-              Title.Font.Name = 'Segoe UI'
-              Title.Font.Style = []
-              Width = 195
               Visible = True
             end
             item
               Expanded = False
-              Title.Caption = 'Tipo de Movimento'
-              Title.Font.Charset = DEFAULT_CHARSET
-              Title.Font.Color = clWindowText
-              Title.Font.Height = -13
-              Title.Font.Name = 'Segoe UI'
-              Title.Font.Style = []
-              Width = 202
               Visible = True
             end
             item
               Expanded = False
-              Title.Caption = 'Usu'#225'rio'
-              Title.Font.Charset = DEFAULT_CHARSET
-              Title.Font.Color = clWindowText
-              Title.Font.Height = -13
-              Title.Font.Name = 'Segoe UI'
-              Title.Font.Style = []
-              Width = 186
               Visible = True
             end
             item
               Expanded = False
-              Width = 2
-              Visible = True
-            end
-            item
-              Expanded = False
-              Width = 2
               Visible = True
             end>
         end
@@ -298,7 +266,7 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
     Left = 607
     Top = 399
   end
-  object FDMemTable_consulta: TFDMemTable
+  object FDMemTable_consultaProduto: TFDMemTable
     FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
@@ -309,11 +277,11 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 315
+    Left = 203
     Top = 383
   end
-  object DataSource_consulta: TDataSource
-    DataSet = FDMemTable_consulta
+  object DataSource_consultaProduto: TDataSource
+    DataSet = FDMemTable_consultaProduto
     Left = 448
     Top = 384
   end

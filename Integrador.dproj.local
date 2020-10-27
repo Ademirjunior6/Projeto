@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2020/10/27 14:17:23.101,=C:\ProjetoIntegrador\Unit1.pas</Transaction>
-    <Transaction>2020/10/27 14:18:16.812,C:\ProjetoIntegrador\FAG.ConsultarProduto.pas=C:\ProjetoIntegrador\Unit1.pas</Transaction>
-    <Transaction>2020/10/27 14:18:16.812,C:\ProjetoIntegrador\FAG.ConsultarProduto.dfm=C:\ProjetoIntegrador\Unit1.dfm</Transaction>
+	<Transactions>
+    <Transaction>2020/10/27 14:17:23.000.101,=C:\ProjetoIntegrador\Unit1.pas</Transaction>
+    <Transaction>2020/10/27 14:18:16.000.812,C:\ProjetoIntegrador\FAG.ConsultarProduto.pas=C:\ProjetoIntegrador\Unit1.pas</Transaction>
+    <Transaction>2020/10/27 14:18:16.000.812,C:\ProjetoIntegrador\FAG.ConsultarProduto.dfm=C:\ProjetoIntegrador\Unit1.dfm</Transaction>
+    <Transaction>2020/10/27 16:45:22.000.723,=C:\ProjetoIntegrador\FAG.RelatorioUsuario.pas</Transaction>
+    <Transaction>2020/10/27 16:45:22.000.661,=C:\ProjetoIntegrador\FAG.RelatorioProduto.pas</Transaction>
   </Transactions>
 </BorlandProject>

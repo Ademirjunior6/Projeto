@@ -16,9 +16,7 @@ uses
   FAG.DetalharMovimento in 'FAG.DetalharMovimento.pas' {Form_detalharMovimento},
   FAG.RelatorioMovimento in 'FAG.RelatorioMovimento.pas' {Form_RelatorioMovimento},
   FAG.Frame.Produto in 'FAG.Frame.Produto.pas' {Frame_Produto: TFrame},
-  FAG.ConsultarProduto in 'FAG.ConsultarProduto.pas' {Form_ConsultarProduto},
-  FAG.RelatorioProduto in 'FAG.RelatorioProduto.pas' {Form_RelatorioProduto},
-  FAG.RelatorioUsuario in 'FAG.RelatorioUsuario.pas' {Form_RelatorioUsuario};
+  FAG.ConsultarProduto in 'FAG.ConsultarProduto.pas' {Form_ConsultarProduto};
 
 {$R *.res}
 
@@ -27,5 +25,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDataModuleConexao, DataModuleConexao);
   Application.CreateForm(TForm_Menu, Form_Menu);
+  Application.CreateForm(TForm_ConsultarProduto, Form_ConsultarProduto);
   Application.Run;
 end.
