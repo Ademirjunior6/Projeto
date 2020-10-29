@@ -18,7 +18,8 @@ uses
   FAG.Frame.Produto in 'FAG.Frame.Produto.pas' {Frame_Produto: TFrame},
   FAG.ConsultarProduto in 'FAG.ConsultarProduto.pas' {Form_ConsultarProduto},
   FAG.RelatorioProduto in 'FAG.RelatorioProduto.pas' {Form_RelatorioProduto},
-  FAG.RelatorioUsuario in 'FAG.RelatorioUsuario.pas' {Form_RelatorioUsuario};
+  FAG.RelatorioUsuario in 'FAG.RelatorioUsuario.pas' {Form_RelatorioUsuario},
+  FAG.Frame.UnMedida in 'FAG.Frame.UnMedida.pas' {Frame_UnMedida: TFrame};
 
 {$R *.res}
 

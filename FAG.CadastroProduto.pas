@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, Vcl.Buttons, Vcl.ComCtrls, FAG.Frame.Generico;
+  FireDAC.Comp.Client, Vcl.Buttons, Vcl.ComCtrls, FAG.Frame.Generico, FAG.Frame.UnMedida;
 
 type
   TForm_CadastroProduto = class(TForm)
@@ -24,17 +24,17 @@ type
     Label_data: TLabel;
     Edit_descricao: TEdit;
     Label_descricao: TLabel;
-    ComboBox_unMedida: TComboBox;
-    Label_unMedida: TLabel;
     SpeedButton_salvar: TSpeedButton;
     SpeedButton_pesquisar: TSpeedButton;
     SpeedButton_sair: TSpeedButton;
     SpeedButton_cancelar: TSpeedButton;
-    SpeedButton_unMedida: TSpeedButton;
     Label_valor: TLabel;
     Frame_Generico1: TFrame_Generico;
     Edit_valor: TEdit;
     SpeedButton_categoria: TSpeedButton;
+    FDMemTable1: TFDMemTable;
+    Frame_UnMedida: TFrame_UnMedida;
+    SpeedButton1: TSpeedButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure SpeedButton_sairClick(Sender: TObject);
@@ -54,6 +54,7 @@ type
     procedure loadTela(id: string);
   public
     function carregaCategoria: Boolean;
+    function carregaUnMedida: Boolean;
   end;
 
 var
@@ -122,6 +123,7 @@ end;
 procedure TForm_CadastroProduto.FormCreate(Sender: TObject);
 begin
   carregaCategoria;
+  carregaUnMedida;
   // SetWindowLong(Handle, GWL_STYLE,
   // GetWindowLong(Handle,GWL_STYLE) and not WS_CAPTION);
   // Height := ClientHeight;
@@ -129,6 +131,8 @@ begin
   ComboBox_status.Items.Add('1 - Ativo');
   ComboBox_status.Items.Add('2 - Inativo');
 end;
+
+
 
 procedure TForm_CadastroProduto.Frame_Generico1Exit(Sender: TObject);
 begin
@@ -153,12 +157,14 @@ end;
 
 procedure TForm_CadastroProduto.SpeedButton_categoriaClick(Sender: TObject);
 begin
-  Form_CadastroCategoria := TForm_CadastroCategoria.Create(Self);
+  Form_CadastroUnMedida := TForm_CadastroUnMedida.Create(Self);
   try
-    if Form_CadastroCategoria.ShowModal = mrOk then
-      carregaCategoria;
+    if Form_CadastroUnMedida.ShowModal = mrOk then
+      carregaUnMedida;
+      Frame_UnMedida.ComboBox_Informacao.ItemIndex :=
+      StrToInt(Form_CadastroUnMedida.Edit_codigoUnMedida.Text) - 1;
   finally
-    Form_CadastroCategoria.Free;
+    Form_CadastroUnMedida.Free;
   end;
 end;
 
@@ -167,8 +173,8 @@ begin
   Form_ConsultarProduto := TForm_ConsultarProduto.Create(Self);
   try
     if Form_ConsultarProduto.ShowModal = mrOk then
-      loadTela(Form_ConsultarProduto.FDMemTable_consultaProduto.FieldByName('prod_id_produto')
-        .AsString);
+      loadTela(Form_ConsultarProduto.FDMemTable_consultaProduto.FieldByName
+        ('Código').AsString);
   finally
     FreeAndNil(Form_ConsultarProduto)
   end;
@@ -180,14 +186,16 @@ var
 begin
   carrega := TFDMemTable.Create(Self);
   try
-    DataModuleConexao.ExecSQL('SELECT * FROM usuario WHERE ID = '
+    DataModuleConexao.ExecSQL
+      ('SELECT prod_id_produto,  prod_desc, cat_id_categoria, prod_valor  FROM produto WHERE prod_id_produto  = '
       + id, carrega);
-    edit_codigo.Text := carrega.FieldByName('prod_id_produto').AsString;
-    ComboBox_status.ItemIndex := carrega.FieldByName('status').AsInteger;
-    edit_descricao.Text := carrega.FieldByName('prod_desc').AsString;
-    Frame_generico1.ComboBox_Informacao.ItemIndex := carrega.FieldByName('cat_id_categoria').AsInteger;
-    ComboBox_status.ItemIndex := carrega.FieldByName('status').AsInteger;
-   // DateTimePicker1 := carrega.FieldByName('prod_data_cadastro').AsDate;
+    Edit_codigo.Text := carrega.FieldByName('prod_id_produto').AsString;
+    // ComboBox_status.ItemIndex := carrega.FieldByName('status').AsInteger;
+    Edit_descricao.Text := carrega.FieldByName('prod_desc').AsString;
+    Frame_Generico1.ComboBox_Informacao.ItemIndex :=
+      carrega.FieldByName('cat_id_categoria').AsInteger - 1;
+    // DateTimePicker1 := carrega.FieldByName('prod_data_cadastro').AsDate;
+    Edit_valor.Text := carrega.FieldByName('prod_valor').AsString;
   finally
     FreeAndNil(carrega);
   end;
@@ -208,8 +216,6 @@ function TForm_CadastroProduto.cancelar: Boolean;
 begin
   Edit_codigo.Text := getUltimoID;
   Edit_descricao.clear;
-  ComboBox_unMedida.clear;
-
 end;
 
 function TForm_CadastroProduto.getUltimoID: String;
@@ -235,6 +241,17 @@ begin
   Frame_Generico1.condicao := '';
   Frame_Generico1.titulo := 'Categorias';
   Frame_Generico1.carregaFrame := True;
+end;
+
+function TForm_CadastroProduto.carregaUnMedida: Boolean;
+begin
+  Frame_UnMedida.tabela := 'un_medida';
+  Frame_UnMedida.campoChave := 'un_medida_id';
+  Frame_UnMedida.campoDescricao := 'un_medida_desc';
+  Frame_UnMedida.camposExtras := 'un_medida_sigla';
+  Frame_UnMedida.condicao := '';
+  Frame_UnMedida.titulo := 'UnMedida';
+  Frame_UnMedida.carregaFrame := True;
 end;
 
 end.

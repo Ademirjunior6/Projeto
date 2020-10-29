@@ -216,23 +216,16 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
           Width = 772
           Height = 287
           Align = alClient
-          BiDiMode = bdLeftToRight
           Color = clWhite
           DataSource = DataSource_consultaProduto
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Segoe UI'
-          Font.Style = []
           Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleHotTrack]
-          ParentBiDiMode = False
-          ParentFont = False
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
-          TitleFont.Height = -15
+          TitleFont.Height = -16
           TitleFont.Name = 'Segoe UI'
-          TitleFont.Style = []
+          TitleFont.Style = [fsBold]
+          OnDblClick = DBGrid_resultadoPesquisaDblClick
           Columns = <
             item
               Expanded = False
@@ -273,7 +266,7 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
   end
   object DataSource_consultaProduto: TDataSource
     DataSet = FDMemTable_consultaProduto
-    Left = 448
+    Left = 368
     Top = 384
   end
 end

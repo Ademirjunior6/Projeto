@@ -78,7 +78,7 @@ var
 begin
   excist := TFDMemTable.Create(Self);
   try
-    DataModuleConexao.ExecSQL('SELECT cat_desc FROM categoria WHERE cat_desc =   ' + '"' +
+    DataModuleConexao.ExecSQL('SELECT cat_id_categoria , cat_desc FROM categoria WHERE cat_desc =   ' + '"' +
       codigo + '"', excist);
     Result := not excist.IsEmpty;
   finally
@@ -98,7 +98,6 @@ begin
    if existeCategoria(Edit_descricao.Text) then
       begin
         ShowMessage('Categoria já cadastrada!');
-        Edit_descricao.SetFocus;
       end
       else
       begin

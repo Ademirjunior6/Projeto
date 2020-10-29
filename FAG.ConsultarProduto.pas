@@ -31,6 +31,7 @@ type
     DBGrid_resultadoPesquisa: TDBGrid;
     procedure SpeedButton_exibirTodosClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure DBGrid_resultadoPesquisaDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -48,6 +49,12 @@ Uses
 
 FAG.DataModule.Conexao;
 
+
+procedure TForm_ConsultarProduto.DBGrid_resultadoPesquisaDblClick(Sender: TObject);
+begin
+  if not FDMemTable_consultaProduto.IsEmpty then
+    ModalResult := mrOk;
+end;
 
 procedure TForm_ConsultarProduto.FormCreate(Sender: TObject);
 begin

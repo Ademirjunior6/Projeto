@@ -21,7 +21,6 @@ object Form_CadastroProduto: TForm_CadastroProduto
   PopupMode = pmExplicit
   Position = poOwnerFormCenter
   Visible = True
-  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -178,31 +177,9 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
       end
-      object Label_unMedida: TLabel
-        Left = 411
-        Top = 103
-        Width = 79
-        Height = 21
-        Caption = 'Un. medida'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
-      object SpeedButton_unMedida: TSpeedButton
-        Left = 523
-        Top = 125
-        Width = 25
-        Height = 28
-        Margins.Bottom = 4
-        Caption = '+'
-        OnClick = SpeedButton_unMedidaClick
-      end
       object Label_valor: TLabel
-        Left = 572
-        Top = 98
+        Left = 643
+        Top = 106
         Width = 36
         Height = 21
         Caption = 'Valor'
@@ -214,8 +191,16 @@ object Form_CadastroProduto: TForm_CadastroProduto
         ParentFont = False
       end
       object SpeedButton_categoria: TSpeedButton
-        Left = 352
-        Top = 125
+        Left = 288
+        Top = 126
+        Width = 25
+        Height = 28
+        Caption = '+'
+        OnClick = SpeedButton_categoriaClick
+      end
+      object SpeedButton1: TSpeedButton
+        Left = 518
+        Top = 126
         Width = 25
         Height = 28
         Caption = '+'
@@ -246,7 +231,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Text = '1 - Ativo'
       end
       object Edit_descricao: TEdit
-        Left = 228
+        Left = 224
         Top = 51
         Width = 361
         Height = 29
@@ -259,13 +244,6 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
         TabOrder = 2
-      end
-      object ComboBox_unMedida: TComboBox
-        Left = 411
-        Top = 125
-        Width = 114
-        Height = 29
-        TabOrder = 3
       end
       object DateTimePicker1: TDateTimePicker
         Left = 611
@@ -281,10 +259,10 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 4
+        TabOrder = 3
       end
       inline Frame_Generico1: TFrame_Generico
-        Left = 163
+        Left = 91
         Top = 102
         Width = 191
         Height = 60
@@ -294,19 +272,20 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 4
         OnExit = Frame_Generico1Exit
-        ExplicitLeft = 163
+        ExplicitLeft = 91
         ExplicitTop = 102
         ExplicitWidth = 191
         inherited ComboBox_Informacao: TComboBox
           Width = 190
+          Style = csDropDownList
           ExplicitWidth = 190
         end
       end
       object Edit_valor: TEdit
-        Left = 572
-        Top = 125
+        Left = 643
+        Top = 133
         Width = 91
         Height = 29
         BiDiMode = bdRightToLeft
@@ -317,10 +296,40 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentBiDiMode = False
         ParentFont = False
-        TabOrder = 6
+        TabOrder = 5
         OnChange = Edit_valorChange
         OnKeyPress = Edit_valorKeyPress
       end
+      inline Frame_UnMedida: TFrame_UnMedida
+        Left = 327
+        Top = 100
+        Width = 185
+        Height = 62
+        TabOrder = 6
+        ExplicitLeft = 327
+        ExplicitTop = 100
+        ExplicitWidth = 185
+        inherited ComboBox_Informacao: TComboBox
+          Top = 25
+          Width = 185
+          ExplicitTop = 25
+          ExplicitWidth = 185
+        end
+        inherited TableTemp: TFDMemTable
+          Top = 16
+        end
+      end
     end
+  end
+  object FDMemTable1: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 736
+    Top = 32
   end
 end

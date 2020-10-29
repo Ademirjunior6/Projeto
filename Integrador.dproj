@@ -155,6 +155,11 @@
             <Form>Form_RelatorioUsuario</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="FAG.Frame.UnMedida.pas">
+            <Form>Frame_UnMedida</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <RcItem Include="C:\libmysql.dll">
             <ContainerId>ResourceItem</ContainerId>
             <ResourceType>RCDATA</ResourceType>
