@@ -52,61 +52,6 @@ object Form_CadastroProduto: TForm_CadastroProduto
       Font.Style = []
       ParentFont = False
     end
-    object SpeedButton_salvar: TSpeedButton
-      Left = 174
-      Top = 528
-      Width = 109
-      Height = 33
-      Caption = 'Salvar'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object SpeedButton_pesquisar: TSpeedButton
-      Left = 435
-      Top = 528
-      Width = 109
-      Height = 33
-      Caption = 'Pesquisar'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      OnClick = SpeedButton_pesquisarClick
-    end
-    object SpeedButton_sair: TSpeedButton
-      Left = 565
-      Top = 528
-      Width = 109
-      Height = 33
-      Caption = 'Sair'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      OnClick = SpeedButton_sairClick
-    end
-    object SpeedButton_cancelar: TSpeedButton
-      Left = 304
-      Top = 528
-      Width = 109
-      Height = 33
-      Caption = 'Cancelar'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      OnClick = SpeedButton_cancelarClick
-    end
     object GroupBox1: TGroupBox
       Left = 19
       Top = 130
@@ -127,7 +72,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         199)
       object Label_codigo: TLabel
         Left = 16
-        Top = 29
+        Top = 27
         Width = 50
         Height = 21
         Caption = 'C'#243'digo'
@@ -140,10 +85,10 @@ object Form_CadastroProduto: TForm_CadastroProduto
       end
       object Label_status: TLabel
         Left = 104
-        Top = 29
-        Width = 42
+        Top = 27
+        Width = 59
         Height = 21
-        Caption = 'Status'
+        Caption = 'Situa'#231#227'o'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -153,7 +98,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
       end
       object Label_data: TLabel
         Left = 611
-        Top = 29
+        Top = 27
         Width = 32
         Height = 21
         Caption = 'Data'
@@ -166,7 +111,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
       end
       object Label_descricao: TLabel
         Left = 224
-        Top = 29
+        Top = 27
         Width = 67
         Height = 21
         Caption = 'Descri'#231#227'o'
@@ -178,8 +123,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
         ParentFont = False
       end
       object Label_valor: TLabel
-        Left = 643
-        Top = 106
+        Left = 579
+        Top = 98
         Width = 36
         Height = 21
         Caption = 'Valor'
@@ -228,7 +173,6 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Width = 105
         Height = 29
         TabOrder = 1
-        Text = '1 - Ativo'
       end
       object Edit_descricao: TEdit
         Left = 224
@@ -261,7 +205,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         ParentFont = False
         TabOrder = 3
       end
-      inline Frame_Generico1: TFrame_Generico
+      inline Frame_Categoria: TFrame_Generico
         Left = 91
         Top = 102
         Width = 191
@@ -273,7 +217,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
         TabOrder = 4
-        OnExit = Frame_Generico1Exit
+        OnExit = Frame_CategoriaExit
         ExplicitLeft = 91
         ExplicitTop = 102
         ExplicitWidth = 191
@@ -284,8 +228,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
         end
       end
       object Edit_valor: TEdit
-        Left = 643
-        Top = 133
+        Left = 579
+        Top = 125
         Width = 91
         Height = 29
         BiDiMode = bdRightToLeft
@@ -300,24 +244,106 @@ object Form_CadastroProduto: TForm_CadastroProduto
         OnChange = Edit_valorChange
         OnKeyPress = Edit_valorKeyPress
       end
-      inline Frame_UnMedida: TFrame_UnMedida
-        Left = 327
-        Top = 100
-        Width = 185
-        Height = 62
+      inline Frame_UnMedida: TFrame_Generico
+        Left = 319
+        Top = 102
+        Width = 193
+        Height = 60
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 6
-        ExplicitLeft = 327
-        ExplicitTop = 100
-        ExplicitWidth = 185
+        ExplicitLeft = 319
+        ExplicitTop = 102
+        ExplicitWidth = 193
         inherited ComboBox_Informacao: TComboBox
-          Top = 25
           Width = 185
-          ExplicitTop = 25
+          Style = csDropDownList
           ExplicitWidth = 185
         end
-        inherited TableTemp: TFDMemTable
-          Top = 16
+      end
+    end
+    object GroupBox2: TGroupBox
+      Left = 19
+      Top = 448
+      Width = 814
+      Height = 137
+      TabOrder = 1
+      object SpeedButton_cancelar: TSpeedButton
+        Left = 272
+        Top = 56
+        Width = 109
+        Height = 33
+        Caption = 'Cancelar'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = SpeedButton_cancelarClick
+      end
+      object SpeedButton_pesquisar: TSpeedButton
+        Left = 403
+        Top = 56
+        Width = 109
+        Height = 33
+        Caption = 'Pesquisar'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = SpeedButton_pesquisarClick
+      end
+      object SpeedButton_sair: TSpeedButton
+        Left = 533
+        Top = 56
+        Width = 109
+        Height = 33
+        Caption = 'Sair'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = SpeedButton_sairClick
+      end
+      object Panel1: TPanel
+        Left = 56
+        Top = 25
+        Width = 185
+        Height = 41
+        Caption = 'Panel1'
+        TabOrder = 0
+        object SpeedButton_salvar: TSpeedButton
+          Left = 48
+          Top = 0
+          Width = 109
+          Height = 33
+          Caption = 'Salvar'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          OnClick = SpeedButton_salvarClick
         end
+      end
+      object BitBtn1: TBitBtn
+        Left = 112
+        Top = 80
+        Width = 75
+        Height = 25
+        Caption = 'BitBtn1'
+        TabOrder = 1
+        OnClick = BitBtn1Click
       end
     end
   end

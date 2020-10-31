@@ -265,8 +265,8 @@ object Form_Movimento: TForm_Movimento
           ParentBackground = False
           TabOrder = 0
           object SpeedButton_Adicionar: TSpeedButton
-            Left = 427
-            Top = 4
+            Left = 291
+            Top = 5
             Width = 109
             Height = 37
             Caption = 'Adicionar'
@@ -279,8 +279,8 @@ object Form_Movimento: TForm_Movimento
             OnClick = SpeedButton_AdicionarClick
           end
           object SpeedButton_remover: TSpeedButton
-            Left = 312
-            Top = 4
+            Left = 420
+            Top = 5
             Width = 109
             Height = 37
             Caption = 'Remover'

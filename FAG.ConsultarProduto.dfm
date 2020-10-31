@@ -229,17 +229,17 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
           Columns = <
             item
               Expanded = False
-              Width = 203
+              Width = 96
               Visible = True
             end
             item
               Expanded = False
-              Width = 281
+              Width = 172
               Visible = True
             end
             item
               Expanded = False
-              Width = 268
+              Width = 435
               Visible = True
             end>
         end

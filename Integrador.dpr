@@ -19,7 +19,8 @@ uses
   FAG.ConsultarProduto in 'FAG.ConsultarProduto.pas' {Form_ConsultarProduto},
   FAG.RelatorioProduto in 'FAG.RelatorioProduto.pas' {Form_RelatorioProduto},
   FAG.RelatorioUsuario in 'FAG.RelatorioUsuario.pas' {Form_RelatorioUsuario},
-  FAG.Frame.UnMedida in 'FAG.Frame.UnMedida.pas' {Frame_UnMedida: TFrame};
+  FAG.Frame.UnMedida in 'FAG.Frame.UnMedida.pas' {Frame_UnMedida: TFrame},
+  FAG.Utils in 'FAG.Utils.pas';
 
 {$R *.res}
 
