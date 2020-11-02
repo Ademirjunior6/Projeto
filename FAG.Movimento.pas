@@ -86,9 +86,7 @@ begin
   Table_Itens.FieldByName('prod_id_produto').AsInteger := StrToInt(Edit_codigoProduto.Text);
   Table_Itens.FieldByName('pro_desc').AsString := Edit_descricao.Text;
   //Table_Itens.FieldByName('un_medida_sigla').AsString;
-  Table_Itens.FieldByName('saldo').AsString :=
-
-  Table_Itens.Post;
+  //Table_Itens.FieldByName('saldo').AsString := Table_Itens.Post;
 end;
 
 function TForm_Movimento.delItem: Boolean;

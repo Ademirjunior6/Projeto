@@ -9,7 +9,8 @@ uses
   Vcl.ExtCtrls,
   Vcl.Buttons, Vcl.Mask, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  FAG.Frame.Generico;
 
 type
   TForm_CadastroUsuario = class(TForm)
@@ -18,8 +19,6 @@ type
     Label_tituloForm: TLabel;
     Edit_codigo: TEdit;
     Label_codigo: TLabel;
-    Label_status: TLabel;
-    ComboBox_status: TComboBox;
     Label_NomeCompleto: TLabel;
     Edit_nomecompleto: TEdit;
     Label_CPF: TLabel;
@@ -64,9 +63,8 @@ type
     Edit_email: TEdit;
     Edit_confirmasenha: TEdit;
     Edit_login: TEdit;
-    Label_Titulo: TLabel;
-    ComboBox_Informacao: TComboBox;
-    TableTemp: TFDMemTable;
+    Frame_Pessoa: TFrame_Generico;
+    Frame_Status: TFrame_Generico;
     procedure FormCreate(Sender: TObject);
     procedure SpeedButton_salvarClick(Sender: TObject);
     procedure SpeedButton_SairClick(Sender: TObject);
@@ -75,6 +73,11 @@ type
   private
     function inserirdados: Boolean;
     function inserirendereco: Boolean;
+    function carregaStatus :Boolean;
+    function senha: Boolean;
+    function EncryptSTR(const key, texto: String): String;
+    function getUltimoId : String;
+
   public
     function carregatppessoa: Boolean;
   end;
@@ -86,18 +89,46 @@ implementation
 
 {$R *.dfm}
 
-uses FAG.DataModule.Conexao, FAG.Frame.Generico;
+uses FAG.DataModule.Conexao, FAG.Utils;
+
+function TForm_CadastroUsuario.carregaStatus: Boolean;
+begin
+  Frame_Status.tabela := 'situacao';
+  Frame_Status.campoChave := 'sit_id';
+  Frame_Status.campoDescricao := 'sit_descricao';
+  Frame_Status.camposExtras := '';
+  Frame_Status.condicao := '';
+  Frame_Status.titulo := 'Status';
+  Frame_Status.primeiraOpcao := 'Escolha';
+  Frame_Status.carregaFrame := True;
+end;
 
 function TForm_CadastroUsuario.carregatppessoa: Boolean;
 begin
+  Frame_Pessoa.tabela := 'tipopessoa';
+  Frame_Pessoa.campoChave := 'id_tipoPessoa';
+  Frame_Pessoa.campoDescricao := 'tipopessoa_desc';
+  Frame_Pessoa.camposExtras := '';
+  Frame_Pessoa.condicao := '';
+  Frame_Pessoa.titulo := 'Tipo Pessoa';
+  Frame_Pessoa.primeiraOpcao := 'Escolha';
+  Frame_Pessoa.carregaFrame := True;
+end;
 
-  Frame_Generico1.tabela := 'tipopessoa';
-  Frame_Generico1.campoChave := 'id_tipoPessoa';
-  Frame_Generico1.campoDescricao := 'tipopessoa_desc';
-  Frame_Generico1.camposExtras := 'cat_data_cadastro, cat_data_alterado';
-  Frame_Generico1.condicao := '';
-  Frame_Generico1.titulo := 'Tipo pessoa';
-  Frame_Generico1.carregaFrame := True;
+function TForm_CadastroUsuario.EncryptSTR(const key, texto: String): String;
+var
+  I: Integer;
+  C: Byte;
+begin
+  Result := '';
+  for I := 1 to Length(texto) do
+  begin
+    if Length(key) > 0 then
+      C := Byte(key[1 + ((I - 1) mod Length(key))]) xor Byte(texto[I])
+    else
+      C := Byte(texto[I]);
+    Result := Result + AnsiLowerCase(IntToHex(C, 2));
+  end;
 end;
 
 procedure TForm_CadastroUsuario.FormClose(Sender: TObject;
@@ -111,6 +142,23 @@ end;
 procedure TForm_CadastroUsuario.FormCreate(Sender: TObject);
 begin
   Date_Nascimento.datetime := now;
+  carregatppessoa;
+  carregaStatus;
+   Edit_codigo.Text := getUltimoId;
+end;
+
+function TForm_CadastroUsuario.getUltimoId: String;
+var
+  excist: TFDMemTable;
+begin
+  excist := TFDMemTable.Create(Self);
+  try
+    DataModuleConexao.ExecSQL
+      ('SELECT COALESCE(MAX(pes_id_pessoa)+1, 1) AS ID FROM pessoa', excist);
+    Result := excist.FieldByName('ID').AsString;
+  finally
+    FreeAndNil(excist);
+  end;
 end;
 
 function TForm_CadastroUsuario.inserirdados: Boolean;
@@ -119,9 +167,10 @@ var
 
 begin
 
-  sql := 'INSERT INTO pessoa (pes_nome, pes_cpf, pes_rg, pes_celular)' +
+  sql := 'INSERT INTO pessoa (pes_nome, pes_cpf, pes_rg, pes_celular, pes_nascimento)' +
     'VALUES ("' + Edit_nomecompleto.Text + '","' + Mask_CPF.Text + '","' +
-    Edit_RG.Text + '","' + Edit_Celular.Text + '")';
+    Edit_RG.Text + '","' + Edit_Celular.Text + '",' +
+        DateTimeToSQL(Date_Nascimento.DateTime) + ')';
   DataModuleConexao.ExecSQL(sql);
   ShowMessage('Salvo com Sucesso.');
 
@@ -140,6 +189,16 @@ begin
 
 end;
 
+function TForm_CadastroUsuario.senha: Boolean;
+var
+  sql: String;
+begin
+  sql := 'INSERT INTO login (login_usuario,login_senha )' + 'values ("' +
+    Edit_login.Text + '","' + EncryptSTR(Edit_senha.Text,
+    Edit_login.Text) + '")';
+  DataModuleConexao.ExecSQL(sql);
+end;
+
 procedure TForm_CadastroUsuario.SpeedButton_SairClick(Sender: TObject);
 begin
   Form_CadastroUsuario.Close;
@@ -150,6 +209,7 @@ procedure TForm_CadastroUsuario.SpeedButton_salvarClick(Sender: TObject);
 begin
   inserirdados;
   inserirendereco;
+  senha;
 end;
 
 end.

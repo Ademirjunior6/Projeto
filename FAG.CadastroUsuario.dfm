@@ -105,19 +105,6 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Style = []
         ParentFont = False
       end
-      object Label_status: TLabel
-        Left = 104
-        Top = 29
-        Width = 42
-        Height = 21
-        Caption = 'Status'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
       object Label_NomeCompleto: TLabel
         Left = 16
         Top = 83
@@ -222,19 +209,6 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Style = []
         ParentFont = False
       end
-      object Label_Titulo: TLabel
-        Left = 217
-        Top = 24
-        Width = 20
-        Height = 21
-        Caption = '%s'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
       object Edit_codigo: TEdit
         Left = 16
         Top = 50
@@ -248,20 +222,6 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
         TabOrder = 0
       end
-      object ComboBox_status: TComboBox
-        Left = 104
-        Top = 50
-        Width = 97
-        Height = 29
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 1
-        Text = '1 - Ativo'
-      end
       object Edit_nomecompleto: TEdit
         Left = 16
         Top = 106
@@ -273,7 +233,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 2
+        TabOrder = 1
       end
       object Edit_RG: TEdit
         Left = 527
@@ -286,7 +246,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 2
       end
       object Date_Nascimento: TDateTimePicker
         Left = 136
@@ -301,7 +261,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 4
+        TabOrder = 3
       end
       object Edit_Matricula: TEdit
         Left = 671
@@ -314,7 +274,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 4
       end
       object ComboBox_Sexo: TComboBox
         Left = 16
@@ -327,7 +287,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 6
+        TabOrder = 5
       end
       object Edit_Celular: TEdit
         Left = 288
@@ -340,7 +300,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 7
+        TabOrder = 6
       end
       object Edit_Telefone: TEdit
         Left = 464
@@ -353,14 +313,38 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 8
+        TabOrder = 7
       end
-      object ComboBox_Informacao: TComboBox
-        Left = 217
-        Top = 48
-        Width = 104
-        Height = 29
-        TabOrder = 9
+      inline Frame_Pessoa: TFrame_Generico
+        Left = 226
+        Top = 29
+        Width = 295
+        Height = 60
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 8
+        ExplicitLeft = 226
+        ExplicitTop = 29
+        inherited Label_Titulo: TLabel
+          Left = 16
+          Top = -4
+          ExplicitLeft = 16
+          ExplicitTop = -4
+        end
+        inherited ComboBox_Informacao: TComboBox
+          Left = 0
+          Width = 140
+          ExplicitLeft = 0
+          ExplicitWidth = 140
+        end
+        inherited TableTemp: TFDMemTable
+          Left = 192
+          Top = 8
+        end
       end
     end
     object Mask_CPF: TMaskEdit
@@ -694,6 +678,30 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       end
     end
   end
+  inline Frame_Status: TFrame_Generico
+    Left = 121
+    Top = 99
+    Width = 119
+    Height = 60
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+    ExplicitLeft = 121
+    ExplicitTop = 99
+    ExplicitWidth = 119
+    inherited ComboBox_Informacao: TComboBox
+      Width = 104
+      ExplicitWidth = 104
+    end
+    inherited TableTemp: TFDMemTable
+      Left = 16
+      Top = 65528
+    end
+  end
   object FDMemTable1: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -703,17 +711,6 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     Left = 808
-    Top = 16
-  end
-  object TableTemp: TFDMemTable
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    Left = 744
     Top = 16
   end
 end

@@ -51,7 +51,7 @@ type
       Shift: TShiftState; X, Y: Integer);
 
   private
-    { Private declarations }
+    function EncryptSTR(const Key, texto: String): String;
   public
 
   end;
@@ -91,6 +91,22 @@ begin
 
 end;
 
+function TForm_Login.EncryptSTR(const Key, texto: String): String;
+var
+  I: Integer;
+  C: Byte;
+begin
+  Result := '';
+  for I := 1 to Length(texto) do
+  begin
+    if Length(Key) > 0 then
+      C := Byte(Key[1 + ((I - 1) mod Length(Key))]) xor Byte(texto[I])
+    else
+      C := Byte(texto[I]);
+    Result := Result + AnsiLowerCase(IntToHex(C, 2));
+  end;
+end;
+
 procedure TForm_Login.Edit_senhaKeyPress(Sender: TObject; var Key: Char);
 begin
   if Key = #13 then
@@ -119,7 +135,8 @@ begin
   try
     DataModuleConexao.ExecSQL
       ('SELECT login_usuario, login_senha FROM login WHERE login_usuario = "' +
-      codigo + '" AND login_senha ="' + Edit_senha.Text + '"', excist);
+      codigo + '" AND login_senha ="' + EncryptSTR(Edit_senha.Text,
+      Edit_usuario.Text) + '"', excist);
     Result := not excist.IsEmpty;
   finally
     FreeAndNil(excist);

@@ -108,7 +108,7 @@ var
   sql: String;
 begin
   Label_Titulo.Caption := titulo;
-  sql := 'SELECT ' + campoChave + ',' + campoDescricao + ',' + camposExtras +
+  sql := 'SELECT ' + campoChave + ',' + campoDescricao + ' ' + camposExtras +
     ' FROM ' + tabela + ' ' + condicao;
   DataModuleConexao.ExecSQL(sql, TableTemp);
   TableTemp.First;
@@ -126,7 +126,8 @@ end;
 
 procedure TFrame_Generico.Setcondicao(const Value: String);
 begin
-  Fcondicao := ' WHERE 1 > 0 ' + Value;
+ // Fcondicao := ' WHERE 1 > 0 ' + Value;
+  Fcondicao := Value;
 end;
 
 procedure TFrame_Generico.SetindexCombo(const Value: String);

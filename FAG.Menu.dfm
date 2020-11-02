@@ -53,6 +53,7 @@ object Form_Menu: TForm_Menu
       end
       object Usurio1: TMenuItem
         Caption = 'Usu'#225'rio'
+        OnClick = Usurio1Click
       end
     end
     object MovimentarEstoque1: TMenuItem

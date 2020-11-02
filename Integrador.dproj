@@ -161,6 +161,10 @@
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="FAG.Utils.pas"/>
+        <DCCReference Include="FAG.CadastroUsuario.pas">
+            <Form>Form_CadastroUsuario</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <RcItem Include="C:\libmysql.dll">
             <ContainerId>ResourceItem</ContainerId>
             <ResourceType>RCDATA</ResourceType>

@@ -35,6 +35,7 @@ type
     procedure Movimentao1Click(Sender: TObject);
     procedure ProdutoClick(Sender: TObject);
     procedure Usuario1Click(Sender: TObject);
+    procedure Usurio1Click(Sender: TObject);
 
   private
   public
@@ -50,7 +51,8 @@ implementation
 
 {$R *.dfm}
 
-uses FAG.Login, FAG.DataModule.Conexao, FAG.Movimento,FAG.RelatorioProduto, FAG.RelatorioUsuario ;
+uses FAG.Login, FAG.DataModule.Conexao, FAG.Movimento,FAG.RelatorioProduto, FAG.RelatorioUsuario ,
+  FAG.CadastroUsuario;
 
 procedure TForm_Menu.Button1Click(Sender: TObject);
 begin
@@ -99,6 +101,16 @@ begin
   end;
   Form_RelatorioUsuario.Position := poOwnerFormCenter;
   Form_RelatorioUsuario.Show;
+end;
+
+procedure TForm_Menu.Usurio1Click(Sender: TObject);
+begin
+     if not Assigned(Form_CadastroUsuario) then
+  begin
+    Form_CadastroUsuario := TForm_CadastroUsuario.Create(Application);
+  end;
+  Form_CadastroUsuario.Position := poOwnerFormCenter;
+  Form_CadastroUsuario.Show;
 end;
 
 procedure TForm_Menu.ProdutoClick(Sender: TObject);

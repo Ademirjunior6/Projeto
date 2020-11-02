@@ -346,7 +346,7 @@ begin
   Frame_Categoria.tabela := 'categoria';
   Frame_Categoria.campoChave := 'cat_id_categoria';
   Frame_Categoria.campoDescricao := 'cat_desc';
-  Frame_Categoria.camposExtras := 'cat_data_cadastro, cat_data_alterado';
+  Frame_Categoria.camposExtras := ',cat_data_cadastro, cat_data_alterado';
   Frame_Categoria.condicao := '';
   Frame_Categoria.titulo := 'Categorias';
   Frame_Categoria.primeiraOpcao := 'Escolha';
@@ -358,7 +358,7 @@ begin
   Frame_UnMedida.tabela := 'un_medida';
   Frame_UnMedida.campoChave := 'un_medida_id';
   Frame_UnMedida.campoDescricao := 'un_medida_desc';
-  Frame_UnMedida.camposExtras := 'un_medida_sigla';
+  Frame_UnMedida.camposExtras := ',un_medida_sigla';
   Frame_UnMedida.condicao := '';
   Frame_UnMedida.titulo := 'UnMedida';
   Frame_UnMedida.primeiraOpcao := 'Escolha';
