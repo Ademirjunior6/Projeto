@@ -9,9 +9,9 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, Vcl.Buttons, Vcl.Menus, FAG.CadastroProduto, FAG.RelatorioMovimento,
+  FireDAC.Comp.Client, Vcl.Buttons, Vcl.Menus, FAG.CadastroProduto,
+  FAG.RelatorioMovimento,
   Vcl.ComCtrls;
-
 
 type
   TForm_Menu = class(TForm)
@@ -51,7 +51,8 @@ implementation
 
 {$R *.dfm}
 
-uses FAG.Login, FAG.DataModule.Conexao, FAG.Movimento,FAG.RelatorioProduto, FAG.RelatorioUsuario ,
+uses FAG.Login, FAG.DataModule.Conexao, FAG.Movimento, FAG.RelatorioProduto,
+  FAG.RelatorioUsuario,
   FAG.CadastroUsuario;
 
 procedure TForm_Menu.Button1Click(Sender: TObject);
@@ -64,8 +65,6 @@ begin
   ShowMessage('TESTE');
 
 end;
-
-
 
 procedure TForm_Menu.CreateParams(var Params: TCreateParams);
 begin
@@ -93,11 +92,12 @@ begin
   if Form_Login <> nil then
     Application.Terminate;
 end;
+
 procedure TForm_Menu.Usuario1Click(Sender: TObject);
 begin
   if not Assigned(Form_RelatorioUsuario) then
   begin
-   Form_RelatorioUsuario := TForm_RelatorioUsuario.Create(Application);
+    Form_RelatorioUsuario := TForm_RelatorioUsuario.Create(Application);
   end;
   Form_RelatorioUsuario.Position := poOwnerFormCenter;
   Form_RelatorioUsuario.Show;
@@ -105,7 +105,7 @@ end;
 
 procedure TForm_Menu.Usurio1Click(Sender: TObject);
 begin
-     if not Assigned(Form_CadastroUsuario) then
+  if not Assigned(Form_CadastroUsuario) then
   begin
     Form_CadastroUsuario := TForm_CadastroUsuario.Create(Application);
   end;
@@ -144,7 +144,6 @@ begin
   Form_Movimento.Position := poOwnerFormCenter;
   Form_Movimento.Show;
 end;
-
 
 procedure TForm_Menu.Produto1Click(Sender: TObject);
 begin

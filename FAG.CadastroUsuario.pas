@@ -73,10 +73,10 @@ type
   private
     function inserirdados: Boolean;
     function inserirendereco: Boolean;
-    function carregaStatus :Boolean;
+    function carregaStatus: Boolean;
     function senha: Boolean;
     function EncryptSTR(const key, texto: String): String;
-    function getUltimoId : String;
+    function getUltimoId: String;
 
   public
     function carregatppessoa: Boolean;
@@ -144,7 +144,7 @@ begin
   Date_Nascimento.datetime := now;
   carregatppessoa;
   carregaStatus;
-   Edit_codigo.Text := getUltimoId;
+  Edit_codigo.Text := getUltimoId;
 end;
 
 function TForm_CadastroUsuario.getUltimoId: String;
@@ -167,10 +167,10 @@ var
 
 begin
 
-  sql := 'INSERT INTO pessoa (pes_nome, pes_cpf, pes_rg, pes_celular, pes_nascimento)' +
-    'VALUES ("' + Edit_nomecompleto.Text + '","' + Mask_CPF.Text + '","' +
+  sql := 'INSERT INTO pessoa (pes_nome, pes_cpf, pes_rg, pes_celular, pes_nascimento)'
+    + 'VALUES ("' + Edit_nomecompleto.Text + '","' + Mask_CPF.Text + '","' +
     Edit_RG.Text + '","' + Edit_Celular.Text + '",' +
-        DateTimeToSQL(Date_Nascimento.DateTime) + ')';
+    DateTimeToSQL(Date_Nascimento.datetime) + ')';
   DataModuleConexao.ExecSQL(sql);
   ShowMessage('Salvo com Sucesso.');
 
