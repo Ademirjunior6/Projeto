@@ -39,6 +39,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
     Font.Style = []
     ParentFont = False
     TabOrder = 0
+    ExplicitLeft = 8
     object Label_tituloForm: TLabel
       Left = 330
       Top = 32
@@ -214,7 +215,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
       object Edit_valor: TEdit
         Left = 579
         Top = 125
-        Width = 91
+        Width = 102
         Height = 29
         BiDiMode = bdRightToLeft
         Font.Charset = DEFAULT_CHARSET
@@ -222,6 +223,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 10
         ParentBiDiMode = False
         ParentFont = False
         TabOrder = 5
@@ -229,7 +231,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         OnKeyPress = Edit_valorKeyPress
       end
       inline Frame_UnMedida: TFrame_Generico
-        Left = 319
+        Left = 334
         Top = 102
         Width = 193
         Height = 60
@@ -240,7 +242,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
         TabOrder = 6
-        ExplicitLeft = 319
+        ExplicitLeft = 334
         ExplicitTop = 102
         ExplicitWidth = 193
         inherited ComboBox_Informacao: TComboBox
@@ -259,7 +261,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         OnClick = BitBtn_categoriaClick
       end
       object BitBtn_unMedida: TBitBtn
-        Left = 511
+        Left = 526
         Top = 128
         Width = 26
         Height = 25

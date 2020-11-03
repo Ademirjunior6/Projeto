@@ -61,7 +61,7 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
     ParentFont = False
   end
   object BitBtn_cancelar: TBitBtn
-    Left = 192
+    Left = 184
     Top = 112
     Width = 75
     Height = 33
@@ -70,7 +70,7 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
     OnClick = BitBtn_cancelarClick
   end
   object BitBtn_salvar: TBitBtn
-    Left = 96
+    Left = 88
     Top = 112
     Width = 75
     Height = 33

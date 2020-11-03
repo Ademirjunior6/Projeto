@@ -70,6 +70,7 @@ type
 var
   Form_CadastroProduto: TForm_CadastroProduto;
 
+
 implementation
 
 {$R *.dfm}
@@ -77,6 +78,8 @@ implementation
 Uses
   FAG.Menu, FAG.DataModule.Conexao, FAG.CadastroUnMedida, FAG.CadastroCategoria,
   FAG.ConsultarProduto, FAG.Utils;
+
+
 
 procedure TForm_CadastroProduto.Edit_valorChange(Sender: TObject);
 var
@@ -189,7 +192,7 @@ begin
     Frame_Categoria.ComboBox_Informacao.ItemIndex := carrega.FieldByName('cat_id_categoria').AsInteger;
      DateTimePicker1.Date := carrega.FieldByName('prod_data_cadastro').Value;
     Frame_UnMedida.ComboBox_Informacao.ItemIndex := carrega.FieldByName('un_medida_id').AsInteger;
-    Edit_valor.Text := carrega.FieldByName('prod_valor').AsString;
+    Edit_valor.Text := FormatFloat('###,##0.00', carrega.FieldByName('prod_valor').Value);
   finally
     FreeAndNil(carrega);
   end;
@@ -278,7 +281,7 @@ begin
         ', cat_id_categoria = ' + StrToSQL(Frame_Categoria.indexCombo) + ',' +
         ' un_medida_id = ' + StrToSQL(Frame_UnMedida.indexCombo) + ',' +
         ' prod_valor = ' + VirgulaPorPonto(Edit_valor.Text) + ',' +
-        ' prod_userInclude = ' + Form_Menu.usuarioLogado +
+        ' prod_userInclude = "' + Form_Menu.usuarioLogado + '"' +
         ' WHERE prod_id_produto = ' + Edit_codigo.Text + '');
       DataModuleConexao.ExecSQL(sql);
       ShowMessage('Alterado com Sucesso.');
@@ -286,13 +289,14 @@ begin
     else
     begin
       sql := ('INSERT INTO produto (prod_id_produto, prod_desc, cat_id_categoria, un_medida_id'
-        + ', prod_data_cadastro, prod_ativo, prod_valor) VALUES (' +
+        + ', prod_data_cadastro, prod_ativo, prod_valor, prod_userInclude) VALUES (' +
         Edit_codigo.Text + ',' + StrToSQL(Edit_descricao.Text) + ',' +
         StrToSQL(Frame_Categoria.indexCombo) + ',' +
         StrToSQL(Frame_UnMedida.indexCombo) + ',' +
         DateTimeToSQL(DateTimePicker1.DateTime) + ',' +
         IntToSQL(ComboBox_status.ItemIndex) + ',' +
-        VirgulaPorPonto(Edit_valor.Text) + ')');
+        VirgulaPorPonto(Edit_valor.Text) + ',"' +
+        Form_Menu.usuarioLogado +'")');
       DataModuleConexao.ExecSQL(sql);
       ShowMessage('Salvo com Sucesso.');
     end;
@@ -311,7 +315,7 @@ begin
   try
     if Form_CadastroCategoria.ShowModal = mrOk then
       carregaCategoria;
-    Frame_Categoria.ComboBox_Informacao.ItemIndex := StrToInt(Form_CadastroCategoria.Edit_codigo.Text) - 1;
+    Frame_Categoria.ComboBox_Informacao.ItemIndex := StrToInt(Form_CadastroCategoria.Edit_codigo.Text);
   finally
     Form_CadastroCategoria.Free;
   end;
@@ -324,7 +328,7 @@ begin
     if Form_CadastroUnMedida.ShowModal = mrOk then
       carregaUnMedida;
     Frame_UnMedida.ComboBox_Informacao.ItemIndex :=
-      StrToInt(Form_CadastroUnMedida.Edit_codigoUnMedida.Text) - 1;
+      StrToInt(Form_CadastroUnMedida.Edit_codigoUnMedida.Text);
   finally
     Form_CadastroUnMedida.Free;
   end;
