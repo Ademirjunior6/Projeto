@@ -20,6 +20,8 @@ type
     FDMemTable1: TFDMemTable;
     BitBtn_salvar: TBitBtn;
     BitBtn_cancelar: TBitBtn;
+    Edit_sigla: TEdit;
+    Label_sigla: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure BitBtn_cancelarClick(Sender: TObject);
     procedure BitBtn_salvarClick(Sender: TObject);
@@ -46,7 +48,7 @@ begin
   Result := False;
   if Edit_descricaoUnMedida.Text = '' then
   begin
-    ShowMessage('Informe uma descrição da para Unidade!');
+    ShowMessage('Informe uma descrição para unidade.');
     Edit_descricaoUnMedida.SetFocus;
   end
   else
@@ -65,10 +67,10 @@ begin
     Exit;
   end;
   begin
-    SQL := 'INSERT INTO un_medida (un_medida_id, un_medida_desc) ' + ' VALUES ('
-      + Edit_codigoUnMedida.Text + ',"' + Edit_descricaoUnMedida.Text + '")';
+    SQL := 'INSERT INTO un_medida (un_medida_id, un_medida_desc, un_medida_sigla,un_data_cadastro, un_userInclude) ' + ' VALUES ('
+      + Edit_codigoUnMedida.Text + ',"' + Edit_descricaoUnMedida.Text + '","' + Edit_sigla.Text + '",NOW(),"' + Form_Menu.usuarioLogado + '")';
     DataModuleConexao.ExecSQL(SQL);
-    ShowMessage('Salvo com Sucesso.');
+    ShowMessage('Salvo com sucesso.');
   end;
 end;
 

@@ -88,21 +88,6 @@ begin
   indexCombo := '0';
 end;
 
-procedure TFrame_Generico.SetcampoDescricao(const Value: String);
-begin
-  FcampoDescricao := Value;
-end;
-
-procedure TFrame_Generico.Setcampos(const Value: String);
-begin
-  FcampoChave := Value;
-end;
-
-procedure TFrame_Generico.SetcamposExtras(const Value: String);
-begin
-  FcamposExtras := Value;
-end;
-
 procedure TFrame_Generico.SetcarregaFrame(const Value: Boolean);
 var
   sql: String;
@@ -148,6 +133,22 @@ end;
 procedure TFrame_Generico.Settitulo(const Value: String);
 begin
   Ftitulo := Value;
+end;
+
+procedure TFrame_Generico.SetcampoDescricao(const Value: String);
+begin
+  FcampoDescricao := Value;
+end;
+
+
+procedure TFrame_Generico.Setcampos(const Value: String);
+begin
+  FcampoChave := Value;
+end;
+
+procedure TFrame_Generico.SetcamposExtras(const Value: String);
+begin
+  FcamposExtras := Value;
 end;
 
 end.

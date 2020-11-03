@@ -155,11 +155,6 @@
             <Form>Form_RelatorioUsuario</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="FAG.Frame.UnMedida.pas">
-            <Form>Frame_UnMedida</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
         <DCCReference Include="FAG.Utils.pas"/>
         <DCCReference Include="FAG.CadastroUsuario.pas">
             <Form>Form_CadastroUsuario</Form>
