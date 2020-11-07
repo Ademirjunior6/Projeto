@@ -221,10 +221,11 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        OnExit = Edit_codigoExit
       end
       object Edit_nomecompleto: TEdit
         Left = 16
-        Top = 106
+        Top = 104
         Width = 354
         Height = 29
         Font.Charset = ANSI_CHARSET
@@ -246,7 +247,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 2
+        TabOrder = 3
       end
       object Date_Nascimento: TDateTimePicker
         Left = 136
@@ -261,7 +262,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 2
       end
       object Edit_Matricula: TEdit
         Left = 671
@@ -330,15 +331,15 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ExplicitLeft = 226
         ExplicitTop = 29
         inherited Label_Titulo: TLabel
-          Left = 16
+          Left = 3
           Top = -4
-          ExplicitLeft = 16
+          ExplicitLeft = 3
           ExplicitTop = -4
         end
         inherited ComboBox_Informacao: TComboBox
-          Left = 0
+          Left = 4
           Width = 140
-          ExplicitLeft = 0
+          ExplicitLeft = 4
           ExplicitWidth = 140
         end
         inherited TableTemp: TFDMemTable
@@ -360,7 +361,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       Font.Style = []
       MaxLength = 14
       ParentFont = False
-      TabOrder = 1
+      TabOrder = 2
       Text = '   .   .   -  '
     end
     object GroupBox2: TGroupBox
@@ -375,7 +376,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 2
+      TabOrder = 1
       object Label1: TLabel
         Left = 16
         Top = 19
@@ -712,5 +713,9 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
     UpdateOptions.AutoCommitUpdates = True
     Left = 808
     Top = 16
+  end
+  object FDQuery1: TFDQuery
+    Left = 620
+    Top = 78
   end
 end
