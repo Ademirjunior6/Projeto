@@ -6,7 +6,9 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids,
-  Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Mask;
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Mask, frxClass, frxExportBaseDialog, frxExportCSV, frxDBSet, FireDAC.Stan.Async,
+  FireDAC.DApt, FireDAC.UI.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef,
+  FireDAC.VCLUI.Wait, frxExportPDF, frxExportRTF, frxExportText;
 
 type
   TForm_RelatorioUsuario = class(TForm)
@@ -29,6 +31,19 @@ type
     Label_filtro: TLabel;
     Label_pesquisa: TLabel;
     MaskEdit_pesquisa: TMaskEdit;
+    frxReportExport: TfrxReport;
+    FDMemTable_Consultapes_id_pessoa: TIntegerField;
+    FDMemTable_Consultapes_nome: TWideStringField;
+    FDMemTable_Consultapes_cpf: TWideStringField;
+    FDMemTable_Consultapes_nascimento: TDateField;
+    FDMemTable_Consultapes_email: TWideStringField;
+    FDMemTable_Consultapes_celular: TWideStringField;
+    FDMemTable_Consultapes_ativo: TIntegerField;
+    frxDBDatasetExport: TfrxDBDataset;
+    exportTXT: TfrxSimpleTextExport;
+    exportWORD: TfrxRTFExport;
+    exportPDF: TfrxPDFExport;
+    exportEXCEL: TfrxCSVExport;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButton_sairClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -37,6 +52,10 @@ type
     procedure ComboBox_filtroSelect(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure SpeedButton_exibirTodosClick(Sender: TObject);
+    procedure SpeedButton_exportarClick(Sender: TObject);
+
+
+
   private
     { Private declarations }
   public
@@ -73,7 +92,7 @@ begin
  if ComboBox_filtro.ItemIndex = 2 then
  begin
   MaskEdit_pesquisa.Clear;
-  MaskEdit_pesquisa.EditMask := '000\.000\.000\-00;';
+  MaskEdit_pesquisa.EditMask := '999\.999\.999\-99;';
   MaskEdit_pesquisa.SetFocus;
  end;
 
@@ -86,6 +105,7 @@ begin
 
 
 end;
+
 
 procedure TForm_RelatorioUsuario.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -117,12 +137,14 @@ begin
   DBGrid_Pesquisa.Columns[5].FieldName := 'pes_celular';
   DBGrid_Pesquisa.Columns[6].FieldName := 'pes_ativo';
 
+
 end;
 
 procedure TForm_RelatorioUsuario.FormShow(Sender: TObject);
 begin
 MaskEdit_pesquisa.SetFocus;
 end;
+
 
 procedure TForm_RelatorioUsuario.SpeedButton_exibirTodosClick(Sender: TObject);
 var
@@ -132,18 +154,37 @@ begin
    DataModuleConexao.ExecSQL(sql, FDMemTable_Consulta);
 end;
 
+procedure TForm_RelatorioUsuario.SpeedButton_exportarClick(Sender: TObject);
+begin
+ // frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorio.fr3');
+  if FDMemTable_Consulta.IsEmpty then
+  begin
+   Application.MessageBox ('Realize uma pesquisa para exportar','Erro',MB_OK+MB_ICONEXCLAMATION);
+   exit
+  end;
+    //frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorioUsuario.fr3') ;
+    frxReportExport.ShowReport();
+end;
+
 procedure TForm_RelatorioUsuario.SpeedButton_filtrarClick(Sender: TObject);
 var
   sql: String;
 begin
-  if MaskEdit_pesquisa.Text = EmptyStr then
+  if (MaskEdit_pesquisa.Text = EmptyStr) AND (ComboBox_Status.ItemIndex = 0) then
   begin
    Application.MessageBox ('Preencha a pesquisa','Erro',MB_OK+MB_ICONEXCLAMATION);
    MaskEdit_pesquisa.SetFocus;
    exit
   end;
 
-  sql := 'SELECT pes_id_pessoa, pes_nome, pes_cpf, pes_nascimento,pes_email, pes_celular,pes_ativo FROM pessoa WHERE 1 > 0' ;
+  if ComboBox_filtro.ItemIndex = 3 then
+  begin
+    sql := 'SELECT pes_id_pessoa, pes_nome, pes_cnpj, pes_nascimento,pes_email, pes_celular,pes_ativo FROM pessoa WHERE 1 > 0' ;
+  end
+   else
+  begin
+    sql := 'SELECT pes_id_pessoa, pes_nome, pes_cpf, pes_nascimento,pes_email, pes_celular,pes_ativo FROM pessoa WHERE 1 > 0' ;
+  end;
 
   if MaskEdit_pesquisa.Text <> EmptyStr then
   begin
@@ -162,6 +203,7 @@ begin
     if ComboBox_filtro.ItemIndex = 3 then
     begin
       sql := sql + ' AND (pes_cnpj = "' + MaskEdit_pesquisa.Text + '")'
+
     end;
   end;
 
@@ -170,7 +212,15 @@ begin
     sql := sql + ' AND (pes_ativo = "' + ComboBox_Status.ItemIndex.ToString + '")'
   end;
 
+
   DataModuleConexao.ExecSQL(sql, FDMemTable_Consulta);
+
+  if FDMemTable_Consulta.FieldByName('pes_ativo').AsInteger = 1 then
+  begin
+
+    ShowMessage('teste');
+
+  end;
 
   if FDMemTable_Consulta.IsEmpty then
   begin

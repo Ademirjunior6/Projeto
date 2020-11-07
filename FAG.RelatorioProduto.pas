@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FAG.Frame.Produto, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Data.DB, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, frxExportCSV, frxClass, frxExportBaseDialog, frxExportPDF,
+  frxDBSet, frxExportRTF, frxExportText;
 
 type
   TForm_RelatorioProduto = class(TForm)
@@ -28,12 +29,19 @@ type
     DBGrid_Pesquisa: TDBGrid;
     DataSource_Consulta: TDataSource;
     FDMemTable_Consulta: TFDMemTable;
+    frxReportExport: TfrxReport;
+    frxDBDatasetExport: TfrxDBDataset;
+    exportPDF: TfrxPDFExport;
+    exportEXCEL: TfrxCSVExport;
+    exportTXT: TfrxSimpleTextExport;
+    exportWORD: TfrxRTFExport;
     procedure SpeedButton_sairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButton_limparConsultaClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure SpeedButton_filtrarClick(Sender: TObject);
     procedure SpeedButton_exibirTodosClick(Sender: TObject);
+    procedure SpeedButton_exportarClick(Sender: TObject);
   private
     procedure alimentaCategoria;
     procedure buscaMovimento;
@@ -109,7 +117,7 @@ procedure TForm_RelatorioProduto.FormClose(Sender: TObject;
 var Action: TCloseAction);
 begin
   Action := caFree;
-  Release;
+
   Form_RelatorioProduto := nil;
 end;
 
@@ -137,6 +145,18 @@ begin
   +'INNER JOIN un_medida AS un ON p.un_medida_id = un.un_medida_id WHERE  1 > 0 ';
 
   DataModuleConexao.ExecSQL(sql, FDMemTable_Consulta);
+end;
+
+procedure TForm_RelatorioProduto.SpeedButton_exportarClick(Sender: TObject);
+begin
+ // frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorio.fr3');
+  if FDMemTable_Consulta.IsEmpty then
+  begin
+   Application.MessageBox ('Realize uma pesquisa para exportar','Erro',MB_OK+MB_ICONEXCLAMATION);
+   exit
+  end;
+    //frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorioUsuario.fr3') ;
+    frxReportExport.ShowReport();
 end;
 
 procedure TForm_RelatorioProduto.SpeedButton_filtrarClick(Sender: TObject);
