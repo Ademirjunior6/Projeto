@@ -33,8 +33,6 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
     Height = 602
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 8
-    ExplicitWidth = 861
     object Label_tituloForm: TLabel
       Left = 296
       Top = 24
@@ -81,13 +79,14 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
       Top = 557
       Width = 149
       Height = 33
-      Caption = 'Exportar Excel'
+      Caption = 'Exportar'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = SpeedButton_exportarClick
     end
     object SpeedButton_sair: TSpeedButton
       Left = 769
@@ -281,7 +280,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
             end
             item
               Expanded = False
-              Title.Caption = 'CPF'
+              Title.Caption = 'CPF/CNPJ'
               Title.Font.Charset = DEFAULT_CHARSET
               Title.Font.Color = clWindowText
               Title.Font.Height = -15
@@ -339,10 +338,11 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
   end
   object DataSource_Consulta: TDataSource
     DataSet = FDMemTable_Consulta
-    Left = 452
-    Top = 370
+    Left = 460
+    Top = 298
   end
   object FDMemTable_Consulta: TFDMemTable
+    Active = True
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
@@ -350,7 +350,442 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 252
-    Top = 370
+    Left = 300
+    Top = 298
+    object FDMemTable_Consultapes_id_pessoa: TIntegerField
+      FieldName = 'pes_id_pessoa'
+    end
+    object FDMemTable_Consultapes_nome: TWideStringField
+      FieldName = 'pes_nome'
+      Size = 255
+    end
+    object FDMemTable_Consultapes_cpf: TWideStringField
+      FieldName = 'pes_cpf'
+      Size = 255
+    end
+    object FDMemTable_Consultapes_nascimento: TDateField
+      FieldName = 'pes_nascimento'
+    end
+    object FDMemTable_Consultapes_email: TWideStringField
+      FieldName = 'pes_email'
+      Size = 255
+    end
+    object FDMemTable_Consultapes_celular: TWideStringField
+      FieldName = 'pes_celular'
+      Size = 255
+    end
+    object FDMemTable_Consultapes_ativo: TIntegerField
+      FieldName = 'pes_ativo'
+    end
+  end
+  object frxReportExport: TfrxReport
+    Version = '6.2.1'
+    DataSetName = 'frxUserDataSet1'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbExport, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 44130.771658877300000000
+    ReportOptions.LastChange = 44141.329629467600000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 564
+    Top = 18
+    Datasets = <
+      item
+        DataSet = frxDBDatasetExport
+        DataSetName = 'frxDBDataset1'
+      end>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 290.000000000000000000
+      PaperSize = 256
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+      object ReportTitle1: TfrxReportTitle
+        FillType = ftBrush
+        Frame.Typ = []
+        Height = 50.724490000000000000
+        Top = 18.897650000000000000
+        Width = 718.110700000000000000
+        object Memo1: TfrxMemoView
+          AllowVectorExport = True
+          Left = 0.078850000000000000
+          Top = 1.456710000000000000
+          Width = 717.850650000000000000
+          Height = 46.370130000000000000
+          AutoWidth = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Relat'#243'rio de Usu'#225'rio')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo9: TfrxMemoView
+          AllowVectorExport = True
+          Left = 671.000000000000000000
+          Top = 1.102350000000000000
+          Width = 46.488250000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Pagina [Page]')
+          ParentFont = False
+        end
+      end
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        Frame.Typ = []
+        Height = 18.897650000000000000
+        Top = 170.078850000000000000
+        Width = 718.110700000000000000
+        DataSet = frxDBDatasetExport
+        DataSetName = 'frxDBDataset1'
+        RowCount = 0
+        object frxDBDataset1pes_id_pessoa: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Width = 45.354360000000000000
+          Height = 18.897650000000000000
+          DataField = 'pes_id_pessoa'
+          DataSet = frxDBDatasetExport
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."pes_id_pessoa"]')
+          ParentFont = False
+        end
+        object frxDBDataset1pes_nome: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 45.354360000000000000
+          Width = 128.504020000000000000
+          Height = 18.897650000000000000
+          DataField = 'pes_nome'
+          DataSet = frxDBDatasetExport
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."pes_nome"]')
+          ParentFont = False
+        end
+        object frxDBDataset1pes_cpf: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 173.858380000000000000
+          Width = 124.724490000000000000
+          Height = 18.897650000000000000
+          DataField = 'pes_cpf'
+          DataSet = frxDBDatasetExport
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."pes_cpf"]')
+          ParentFont = False
+        end
+        object frxDBDataset1pes_nascimento: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 298.582870000000000000
+          Width = 75.590600000000000000
+          Height = 18.897650000000000000
+          DataField = 'pes_nascimento'
+          DataSet = frxDBDatasetExport
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."pes_nascimento"]')
+          ParentFont = False
+        end
+        object frxDBDataset1pes_email: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 374.173470000000000000
+          Width = 181.417440000000000000
+          Height = 18.897650000000000000
+          DataField = 'pes_email'
+          DataSet = frxDBDatasetExport
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."pes_email"]')
+          ParentFont = False
+        end
+        object frxDBDataset1pes_celular: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 555.590910000000000000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          DataField = 'pes_celular'
+          DataSet = frxDBDatasetExport
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."pes_celular"]')
+          ParentFont = False
+        end
+        object frxDBDataset1pes_ativo: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 650.079160000000000000
+          Width = 68.031540000000000000
+          Height = 18.897650000000000000
+          DataField = 'pes_ativo'
+          DataSet = frxDBDatasetExport
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."pes_ativo"]')
+          ParentFont = False
+        end
+      end
+      object PageHeader1: TfrxPageHeader
+        FillType = ftBrush
+        Frame.Typ = []
+        Height = 18.897650000000000000
+        Top = 90.708720000000000000
+        Width = 718.110700000000000000
+        object Memo2: TfrxMemoView
+          AllowVectorExport = True
+          Width = 45.354360000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            'C'#243'digo')
+          ParentFont = False
+        end
+        object Memo3: TfrxMemoView
+          AllowVectorExport = True
+          Left = 45.354360000000000000
+          Width = 128.504020000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            'Nome')
+          ParentFont = False
+        end
+        object Memo4: TfrxMemoView
+          AllowVectorExport = True
+          Left = 173.858380000000000000
+          Width = 124.724490000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            'CPF/CNPJ')
+          ParentFont = False
+        end
+        object Memo5: TfrxMemoView
+          AllowVectorExport = True
+          Left = 298.582870000000000000
+          Width = 75.590600000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            'Data Nasc.')
+          ParentFont = False
+        end
+        object Memo6: TfrxMemoView
+          AllowVectorExport = True
+          Left = 374.173470000000000000
+          Width = 181.417440000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            'E-mail')
+          ParentFont = False
+        end
+        object Memo7: TfrxMemoView
+          AllowVectorExport = True
+          Left = 555.590910000000000000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            'Celular')
+          ParentFont = False
+        end
+        object Memo8: TfrxMemoView
+          AllowVectorExport = True
+          Left = 650.079160000000000000
+          Width = 68.031540000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            'Status')
+          ParentFont = False
+        end
+      end
+    end
+  end
+  object frxDBDatasetExport: TfrxDBDataset
+    UserName = 'frxDBDataset1'
+    CloseDataSource = False
+    DataSet = FDMemTable_Consulta
+    BCDToCurrency = False
+    Left = 684
+    Top = 21
+  end
+  object exportTXT: TfrxSimpleTextExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    Frames = False
+    EmptyLines = False
+    OEMCodepage = False
+    OpenAfterExport = False
+    DeleteEmptyColumns = True
+    Left = 96
+    Top = 24
+  end
+  object exportWORD: TfrxRTFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    PictureType = gpPNG
+    OpenAfterExport = False
+    Wysiwyg = True
+    Creator = 'FastReport'
+    SuppressPageHeadersFooters = False
+    HeaderFooterMode = hfText
+    AutoSize = False
+    Left = 24
+    Top = 24
+  end
+  object exportPDF: TfrxPDFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    OpenAfterExport = False
+    PrintOptimized = False
+    Outline = False
+    Background = False
+    HTMLTags = True
+    Quality = 95
+    Transparency = False
+    Author = 'FastReport'
+    Subject = 'FastReport PDF export'
+    ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
+    HideToolbar = False
+    HideMenubar = False
+    HideWindowUI = False
+    FitWindow = False
+    CenterWindow = False
+    PrintScaling = False
+    PdfA = False
+    Left = 160
+    Top = 24
+  end
+  object exportEXCEL: TfrxCSVExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    Separator = ';'
+    OEMCodepage = False
+    UTF8 = False
+    OpenAfterExport = False
+    NoSysSymbols = True
+    ForcedQuotes = False
+    Left = 232
+    Top = 24
   end
 end

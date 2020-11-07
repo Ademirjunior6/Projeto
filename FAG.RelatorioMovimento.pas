@@ -9,7 +9,8 @@ uses
   Vcl.ExtCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FAG.DetalharMovimento, FAG.Frame.Produto;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FAG.DetalharMovimento, FAG.Frame.Produto, frxExportCSV, frxExportPDF, frxExportText,
+  frxClass, frxExportBaseDialog, frxExportRTF, frxDBSet;
 
 type
   TForm_RelatorioMovimento = class(TForm)
@@ -39,7 +40,18 @@ type
     DataSource_consulta: TDataSource;
     FDMemTable_consulta: TFDMemTable;
     Panel_resultadoPesquisa: TPanel;
-    SaveDialog1: TSaveDialog;
+    frxReportExport: TfrxReport;
+    frxDBDatasetExport: TfrxDBDataset;
+    exportWORD: TfrxRTFExport;
+    exportTXT: TfrxSimpleTextExport;
+    exportPDF: TfrxPDFExport;
+    exportEXCEL: TfrxCSVExport;
+    FDMemTable_consultamov_id: TIntegerField;
+    FDMemTable_consultamov_data_movimento: TDateTimeField;
+    FDMemTable_consultamov_tipo: TWideStringField;
+    FDMemTable_consultalogin_usuario: TWideStringField;
+    FDMemTable_consultaprod_desc: TWideStringField;
+    FDMemTable_consultacat_desc: TWideStringField;
     procedure SpeedButton_sairClick(Sender: TObject);
     procedure SpeedButton_limparConsultaClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -136,7 +148,7 @@ begin
   habilitaPesquisa;
   ComboBox_tipoMoviemento.Items.Add('TODOS');
   ComboBox_tipoMoviemento.Items.Add('ENTRADA');
-  ComboBox_tipoMoviemento.Items.Add('SAIDA');
+  ComboBox_tipoMoviemento.Items.Add('SAÍDA');
   ComboBox_tipoMoviemento.ItemIndex := 0;
   DBGrid_resultadoPesquisa.Columns[4].Visible := false;
   DBGrid_resultadoPesquisa.Columns[5].Visible := false;
@@ -180,67 +192,30 @@ procedure TForm_RelatorioMovimento.SpeedButton_exibirTodosClick
   (Sender: TObject);
 var
   sql: String;
+
 begin
-   sql := 'SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,l.login_usuario,' +
-    ' p.prod_desc, c.cat_desc FROM movimento AS m ' +
-    ' INNER JOIN login AS l ON m.login_id = l.login_id ' +
-    ' INNER JOIN item_movimento AS im ON m.mov_id = im.mov_id ' +
-    ' INNER JOIN produto AS p ' + ' ON im.prod_id_produto = p.prod_id_produto '+
-    ' INNER JOIN categoria AS c' +
-    ' ON p.cat_id_categoria = c.cat_id_categoria WHERE 1 > 0 ';
-    DataModuleConexao.ExecSQL(sql, FDMemTable_consulta);
+  sql := 'SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,l.login_usuario,' +
+  ' p.prod_desc, c.cat_desc FROM movimento AS m ' +
+  ' INNER JOIN login AS l ON m.login_id = l.login_id ' +
+  ' INNER JOIN item_movimento AS im ON m.mov_id = im.mov_id ' +
+  ' INNER JOIN produto AS p ' + ' ON im.prod_id_produto = p.prod_id_produto '+
+  ' INNER JOIN categoria AS c' +
+  ' ON p.cat_id_categoria = c.cat_id_categoria WHERE 1 > 0 ';
+
+  DataModuleConexao.ExecSQL(sql, FDMemTable_consulta);
 
 end;
 
 procedure TForm_RelatorioMovimento.SpeedButton_exportarClick(Sender: TObject);
-var
-Planilha :Variant;
-Linha, cont : integer;
 begin
-  cont := FDMemTable_consulta.RecordCount;
-  FDMemTable_consulta.Filtered := false;
-  linha := 1;
-  Planilha := CreateOleObject('Excel.application');
-  Planilha.Caption := 'Exportar';
-  Planilha.Visible := false;
-  Planilha.workbooks.add(1);
-  Planilha.cells[1,1]:= 'Código';
-  Planilha.cells[1,2]:= 'Data';
-  Planilha.cells[1,3]:= 'Tipo de Movimento';
-  Planilha.cells[1,4]:= 'Usuário';
-  linha := 2;
-  FDMemTable_consulta.DisableControls;
-  try
-
-   while not FDMemTable_consulta.Eof do
-   begin
-     Planilha.cells[Linha,1] := FDMemTable_consulta.FieldByName('mov_id').Value;
-     Planilha.cells[Linha,2] := FDMemTable_consulta.FieldByName('mov_data_movimento').Value;
-     Planilha.cells[Linha,3] := FDMemTable_consulta.FieldByName('mov_tipo').AsString;
-     Planilha.cells[Linha,4] := FDMemTable_consulta.FieldByName('login_usuario').AsString;
-     Linha:= linha+1;
-     FDMemTable_consulta.Next;
-   end;
-   Planilha.columns.autofit;
-   try
-    if SaveDialog1.Execute then
-    begin
-    Planilha.ActiveWorkbook.SaveAs(SaveDialog1.FileName+'.xlsx');
-    Planilha.Visible := true;
-    SaveDialog1.HistoryList.Clear;
-    end;
-   except
-    Application.MessageBox ('Tente salvar o arquivo com outro nome','Erro',MB_OK+MB_ICONEXCLAMATION);
-   end;
-
-
-  finally
-   FDMemTable_consulta.EnableControls;
-   Planilha := Unassigned;
-
+ // frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorio.fr3');
+  if FDMemTable_consulta.IsEmpty then
+  begin
+   Application.MessageBox ('Realize uma pesquisa para exportar','Erro',MB_OK+MB_ICONEXCLAMATION);
+   exit
   end;
-
-
+    //frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorioUsuario.fr3') ;
+    frxReportExport.ShowReport();
 end;
 
 procedure TForm_RelatorioMovimento.buscaMovimentos;
