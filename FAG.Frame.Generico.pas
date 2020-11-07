@@ -41,8 +41,7 @@ type
     // Campo id chave da tabela
     property campoChave: String read FcampoChave write Setcampos;
     // campo descricao da tabela
-    property campoDescricao: String read FcampoDescricao
-      write SetcampoDescricao;
+    property campoDescricao: String read FcampoDescricao write SetcampoDescricao;
     // campo1, campo2, campo3
     property camposExtras: String read FcamposExtras write SetcamposExtras;
     // campo = "1" AND campo2 = "teste"
@@ -86,6 +85,21 @@ begin
   titulo := emptyStr;
   primeiraOpcao := emptyStr;
   indexCombo := '0';
+end;
+
+procedure TFrame_Generico.SetcampoDescricao(const Value: String);
+begin
+  FcampoDescricao := Value;
+end;
+
+procedure TFrame_Generico.Setcampos(const Value: String);
+begin
+  FcampoChave := Value;
+end;
+
+procedure TFrame_Generico.SetcamposExtras(const Value: String);
+begin
+  FcamposExtras := Value;
 end;
 
 procedure TFrame_Generico.SetcarregaFrame(const Value: Boolean);
@@ -133,22 +147,6 @@ end;
 procedure TFrame_Generico.Settitulo(const Value: String);
 begin
   Ftitulo := Value;
-end;
-
-procedure TFrame_Generico.SetcampoDescricao(const Value: String);
-begin
-  FcampoDescricao := Value;
-end;
-
-
-procedure TFrame_Generico.Setcampos(const Value: String);
-begin
-  FcampoChave := Value;
-end;
-
-procedure TFrame_Generico.SetcamposExtras(const Value: String);
-begin
-  FcamposExtras := Value;
 end;
 
 end.

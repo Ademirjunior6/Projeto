@@ -39,7 +39,6 @@ object Form_CadastroProduto: TForm_CadastroProduto
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    ExplicitLeft = 8
     object Label_tituloForm: TLabel
       Left = 330
       Top = 32
@@ -136,6 +135,22 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
       end
+      object SpeedButton_categoria: TSpeedButton
+        Left = 288
+        Top = 126
+        Width = 25
+        Height = 28
+        Caption = '+'
+        OnClick = SpeedButton_categoriaClick
+      end
+      object SpeedButton1: TSpeedButton
+        Left = 518
+        Top = 126
+        Width = 25
+        Height = 28
+        Caption = '+'
+        OnClick = SpeedButton_categoriaClick
+      end
       object Edit_codigo: TEdit
         Left = 16
         Top = 51
@@ -215,7 +230,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
       object Edit_valor: TEdit
         Left = 579
         Top = 125
-        Width = 102
+        Width = 91
         Height = 29
         BiDiMode = bdRightToLeft
         Font.Charset = DEFAULT_CHARSET
@@ -223,7 +238,6 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
-        MaxLength = 10
         ParentBiDiMode = False
         ParentFont = False
         TabOrder = 5
@@ -231,7 +245,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         OnKeyPress = Edit_valorKeyPress
       end
       inline Frame_UnMedida: TFrame_Generico
-        Left = 334
+        Left = 319
         Top = 102
         Width = 193
         Height = 60
@@ -242,7 +256,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
         TabOrder = 6
-        ExplicitLeft = 334
+        ExplicitLeft = 319
         ExplicitTop = 102
         ExplicitWidth = 193
         inherited ComboBox_Informacao: TComboBox
@@ -250,24 +264,6 @@ object Form_CadastroProduto: TForm_CadastroProduto
           Style = csDropDownList
           ExplicitWidth = 185
         end
-      end
-      object BitBtn_categoria: TBitBtn
-        Left = 287
-        Top = 128
-        Width = 26
-        Height = 25
-        Caption = '+'
-        TabOrder = 7
-        OnClick = BitBtn_categoriaClick
-      end
-      object BitBtn_unMedida: TBitBtn
-        Left = 526
-        Top = 128
-        Width = 26
-        Height = 25
-        Caption = '+'
-        TabOrder = 8
-        OnClick = BitBtn_unMedidaClick
       end
     end
     object GroupBox2: TGroupBox
@@ -318,19 +314,35 @@ object Form_CadastroProduto: TForm_CadastroProduto
         ParentFont = False
         OnClick = SpeedButton_sairClick
       end
-      object BitBtn1: TBitBtn
-        Left = 144
-        Top = 56
-        Width = 109
-        Height = 33
-        Caption = 'Salvar'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
-        ParentFont = False
+      object Panel1: TPanel
+        Left = 56
+        Top = 25
+        Width = 185
+        Height = 41
+        Caption = 'Panel1'
         TabOrder = 0
+        object SpeedButton_salvar: TSpeedButton
+          Left = 48
+          Top = 0
+          Width = 109
+          Height = 33
+          Caption = 'Salvar'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          OnClick = SpeedButton_salvarClick
+        end
+      end
+      object BitBtn1: TBitBtn
+        Left = 112
+        Top = 80
+        Width = 75
+        Height = 25
+        Caption = 'BitBtn1'
+        TabOrder = 1
         OnClick = BitBtn1Click
       end
     end

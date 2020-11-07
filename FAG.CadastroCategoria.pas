@@ -22,7 +22,6 @@ type
     procedure BitBtn_cancelarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BitBtn_salvarClick(Sender: TObject);
-    procedure Edit_siglaKeyPress(Sender: TObject; var Key: Char);
   private
     function getUltimoID: String;
     function validarCampos: Boolean;
@@ -51,16 +50,6 @@ procedure TForm_CadastroCategoria.BitBtn_salvarClick(Sender: TObject);
 begin
   gravar;
   ModalResult := mrOk;
-end;
-
-
-procedure TForm_CadastroCategoria.Edit_siglaKeyPress(Sender: TObject; var Key: Char);
-begin
-    if (Key in ['0' .. '9', '<', '>', '¹', '²', '³', '£', '¢', '¬', '#', '$', '¨',
-    '(', ')', '%', '&', '=', ',', '~', '^', '`', '´', '.', '+', '_', '-', '*',
-    '/', '"', '''', ':', ';', '}', '{', '[', ']', '?', '/', '°', 'º', 'ª', '§',
-    '!', '@', '\', '|']) then
-    Key := #0;
 end;
 
 procedure TForm_CadastroCategoria.FormCreate(Sender: TObject);
@@ -112,8 +101,8 @@ begin
       end
       else
       begin
-    SQL := 'INSERT INTO categoria (cat_id_categoria, cat_desc, cat_sigla, cat_data_cadastro) ' + ' VALUES (' +
-      Edit_codigo.Text + ',"' + Edit_descricao.Text + '","' + Edit_descricao.Text + '",NOW())';
+    SQL := 'INSERT INTO categoria (cat_id_categoria, cat_desc, cat_data_cadastro) ' + ' VALUES (' +
+      Edit_codigo.Text + ',"' + Edit_descricao.Text + '",NOW())';
     DataModuleConexao.ExecSQL(SQL);
     ShowMessage('Salvo com Sucesso.');
 

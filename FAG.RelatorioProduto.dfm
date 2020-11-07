@@ -4,7 +4,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Relatorio de Produto'
-  ClientHeight = 602
+  ClientHeight = 604
   ClientWidth = 869
   Color = clBtnFace
   Constraints.MaxHeight = 633
@@ -29,11 +29,9 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
     Left = 0
     Top = 0
     Width = 869
-    Height = 602
+    Height = 604
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 8
-    ExplicitTop = -8
     object Label_tituloForm: TLabel
       Left = 296
       Top = 24
@@ -80,14 +78,13 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
       Top = 557
       Width = 149
       Height = 33
-      Caption = 'Exportar'
+      Caption = 'Exportar Excel'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
-      OnClick = SpeedButton_exportarClick
     end
     object SpeedButton_sair: TSpeedButton
       Left = 769
@@ -185,7 +182,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
       inline Frame_Produto1: TFrame_Produto
         Left = 10
         Top = 32
-        Width = 428
+        Width = 426
         Height = 56
         TabOrder = 0
         ExplicitLeft = 10
@@ -208,6 +205,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
         end
         inherited Edit_codigoProduto: TEdit
           Font.Style = []
+          OnChange = Frame_Produto1Edit_codigoProdutoChange
         end
         inherited FDMemTable_Produto: TFDMemTable
           Left = 320
@@ -345,378 +343,5 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
     UpdateOptions.AutoCommitUpdates = True
     Left = 388
     Top = 352
-  end
-  object frxReportExport: TfrxReport
-    Version = '6.2.1'
-    DataSetName = 'frxUserDataSet1'
-    DotMatrixReport = False
-    IniFile = '\Software\Fast Reports'
-    PreviewOptions.Buttons = [pbPrint, pbExport, pbExportQuick]
-    PreviewOptions.Zoom = 1.000000000000000000
-    PrintOptions.Printer = 'Default'
-    PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 44130.771658877300000000
-    ReportOptions.LastChange = 44141.421249050900000000
-    ScriptLanguage = 'PascalScript'
-    ScriptText.Strings = (
-      'begin'
-      ''
-      'end.')
-    Left = 576
-    Top = 8
-    Datasets = <
-      item
-        DataSet = frxDBDatasetExport
-        DataSetName = 'frxDBDataset1'
-      end>
-    Variables = <>
-    Style = <>
-    object Data: TfrxDataPage
-      Height = 1000.000000000000000000
-      Width = 1000.000000000000000000
-    end
-    object Page1: TfrxReportPage
-      PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
-      PaperSize = 9
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
-      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-      object ReportTitle1: TfrxReportTitle
-        FillType = ftBrush
-        Frame.Typ = []
-        Height = 60.472480000000000000
-        Top = 18.897650000000000000
-        Width = 718.110700000000000000
-        object Memo1: TfrxMemoView
-          AllowVectorExport = True
-          Left = 226.771800000000000000
-          Top = 11.338590000000000000
-          Width = 298.582870000000000000
-          Height = 41.574830000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -24
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          Memo.UTF8W = (
-            'Relat'#243'rio de Produtos')
-          ParentFont = False
-        end
-      end
-      object MasterData1: TfrxMasterData
-        FillType = ftBrush
-        Frame.Typ = []
-        Height = 18.897650000000000000
-        Top = 181.417440000000000000
-        Width = 718.110700000000000000
-        DataSet = frxDBDatasetExport
-        DataSetName = 'frxDBDataset1'
-        RowCount = 0
-        object frxDBDataset1prod_id_produto: TfrxMemoView
-          IndexTag = 1
-          Align = baWidth
-          AllowVectorExport = True
-          Top = -0.417440000000000000
-          Width = 55.000000000000000000
-          Height = 18.897650000000000000
-          DataField = 'prod_id_produto'
-          DataSet = frxDBDatasetExport
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            '[frxDBDataset1."prod_id_produto"]')
-          ParentFont = False
-        end
-        object frxDBDataset1prod_desc: TfrxMemoView
-          IndexTag = 1
-          Align = baWidth
-          AllowVectorExport = True
-          Left = 55.000000000000000000
-          Top = -0.417440000000000000
-          Width = 162.519685040000000000
-          Height = 18.897650000000000000
-          DataField = 'prod_desc'
-          DataSet = frxDBDatasetExport
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            '[frxDBDataset1."prod_desc"]')
-          ParentFont = False
-        end
-        object frxDBDataset1un_medida_desc: TfrxMemoView
-          IndexTag = 1
-          Align = baWidth
-          AllowVectorExport = True
-          Left = 217.519685040000000000
-          Top = -0.417440000000000000
-          Width = 127.748031500000000000
-          Height = 18.897650000000000000
-          DataField = 'un_medida_desc'
-          DataSet = frxDBDatasetExport
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            '[frxDBDataset1."un_medida_desc"]')
-          ParentFont = False
-        end
-        object frxDBDataset1cat_desc: TfrxMemoView
-          IndexTag = 1
-          Align = baWidth
-          AllowVectorExport = True
-          Left = 345.267716540000000000
-          Top = -0.417440000000000000
-          Width = 161.251968500000000000
-          Height = 18.897650000000000000
-          DataField = 'cat_desc'
-          DataSet = frxDBDatasetExport
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            '[frxDBDataset1."cat_desc"]')
-          ParentFont = False
-        end
-        object frxDBDataset1prod_quantidade: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 641.000000000000000000
-          Top = -0.417440000000000000
-          Width = 76.724409450000000000
-          Height = 18.897650000000000000
-          DataField = 'prod_quantidade'
-          DataSet = frxDBDatasetExport
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            '[frxDBDataset1."prod_quantidade"]')
-          ParentFont = False
-        end
-        object frxDBDataset1prod_data_cadastro: TfrxMemoView
-          IndexTag = 1
-          Align = baWidth
-          AllowVectorExport = True
-          Left = 506.519685040000000000
-          Top = -0.417440000000000000
-          Width = 134.480314960000000000
-          Height = 18.897650000000000000
-          DataField = 'prod_data_cadastro'
-          DataSet = frxDBDatasetExport
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            '[frxDBDataset1."prod_data_cadastro"]')
-          ParentFont = False
-        end
-      end
-      object PageHeader1: TfrxPageHeader
-        FillType = ftBrush
-        Frame.Typ = []
-        Height = 18.897650000000000000
-        Top = 102.047310000000000000
-        Width = 718.110700000000000000
-        object Memo2: TfrxMemoView
-          Align = baWidth
-          AllowVectorExport = True
-          Width = 55.133890000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            'C'#243'digo')
-          ParentFont = False
-        end
-        object Memo3: TfrxMemoView
-          Align = baWidth
-          AllowVectorExport = True
-          Left = 55.133890000000000000
-          Width = 162.504020000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            'Descri'#231#227'o')
-          ParentFont = False
-        end
-        object Memo4: TfrxMemoView
-          Align = baWidth
-          AllowVectorExport = True
-          Left = 217.637910000000000000
-          Width = 127.724490000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            'Un. Medida')
-          ParentFont = False
-        end
-        object Memo5: TfrxMemoView
-          Align = baWidth
-          AllowVectorExport = True
-          Left = 345.362400000000000000
-          Width = 160.370130000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            'Categoria')
-          ParentFont = False
-        end
-        object Memo6: TfrxMemoView
-          Align = baWidth
-          AllowVectorExport = True
-          Left = 505.732530000000000000
-          Width = 135.519790000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            'Data de Cadastro')
-          ParentFont = False
-        end
-        object Memo7: TfrxMemoView
-          AllowVectorExport = True
-          Left = 641.252320000000000000
-          Width = 76.858380000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            'Quantidade')
-          ParentFont = False
-        end
-      end
-    end
-  end
-  object frxDBDatasetExport: TfrxDBDataset
-    UserName = 'frxDBDataset1'
-    CloseDataSource = False
-    DataSet = FDMemTable_Consulta
-    BCDToCurrency = False
-    Left = 696
-    Top = 16
-  end
-  object exportPDF: TfrxPDFExport
-    UseFileCache = True
-    ShowProgress = True
-    OverwritePrompt = False
-    DataOnly = False
-    OpenAfterExport = False
-    PrintOptimized = False
-    Outline = False
-    Background = False
-    HTMLTags = True
-    Quality = 95
-    Transparency = False
-    Author = 'FastReport'
-    Subject = 'FastReport PDF export'
-    ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
-    HideToolbar = False
-    HideMenubar = False
-    HideWindowUI = False
-    FitWindow = False
-    CenterWindow = False
-    PrintScaling = False
-    PdfA = False
-    Left = 176
-    Top = 32
-  end
-  object exportEXCEL: TfrxCSVExport
-    UseFileCache = True
-    ShowProgress = True
-    OverwritePrompt = False
-    DataOnly = False
-    Separator = ';'
-    OEMCodepage = False
-    UTF8 = False
-    OpenAfterExport = False
-    NoSysSymbols = True
-    ForcedQuotes = False
-    Left = 248
-    Top = 32
-  end
-  object exportTXT: TfrxSimpleTextExport
-    UseFileCache = True
-    ShowProgress = True
-    OverwritePrompt = False
-    DataOnly = False
-    Frames = False
-    EmptyLines = False
-    OEMCodepage = False
-    OpenAfterExport = False
-    DeleteEmptyColumns = True
-    Left = 112
-    Top = 32
-  end
-  object exportWORD: TfrxRTFExport
-    UseFileCache = True
-    ShowProgress = True
-    OverwritePrompt = False
-    DataOnly = False
-    PictureType = gpPNG
-    OpenAfterExport = False
-    Wysiwyg = True
-    Creator = 'FastReport'
-    SuppressPageHeadersFooters = False
-    HeaderFooterMode = hfText
-    AutoSize = False
-    Left = 40
-    Top = 32
   end
 end

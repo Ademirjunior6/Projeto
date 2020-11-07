@@ -5,12 +5,12 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
   BorderStyle = bsSingle
   Caption = 'Cadastro de Un. Medida'
   ClientHeight = 171
-  ClientWidth = 344
+  ClientWidth = 281
   Color = clBtnFace
   Constraints.MaxHeight = 200
-  Constraints.MaxWidth = 350
+  Constraints.MaxWidth = 287
   Constraints.MinHeight = 200
-  Constraints.MinWidth = 350
+  Constraints.MinWidth = 287
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -16
@@ -22,7 +22,7 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
   PixelsPerInch = 96
   TextHeight = 21
   object Label_codigoUnMedida: TLabel
-    Left = 9
+    Left = 25
     Top = 24
     Width = 50
     Height = 21
@@ -35,7 +35,7 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
     ParentFont = False
   end
   object Label_descricaoUnMedida: TLabel
-    Left = 96
+    Left = 112
     Top = 24
     Width = 67
     Height = 21
@@ -47,21 +47,8 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
     Font.Style = []
     ParentFont = False
   end
-  object Label_sigla: TLabel
-    Left = 265
-    Top = 24
-    Width = 34
-    Height = 21
-    Caption = 'Sigla'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-  end
   object BitBtn_cancelar: TBitBtn
-    Left = 184
+    Left = 152
     Top = 112
     Width = 75
     Height = 33
@@ -70,7 +57,7 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
     OnClick = BitBtn_cancelarClick
   end
   object BitBtn_salvar: TBitBtn
-    Left = 88
+    Left = 56
     Top = 112
     Width = 75
     Height = 33
@@ -79,7 +66,7 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
     OnClick = BitBtn_salvarClick
   end
   object Edit_codigoUnMedida: TEdit
-    Left = 9
+    Left = 25
     Top = 51
     Width = 65
     Height = 29
@@ -93,7 +80,7 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
     TabOrder = 2
   end
   object Edit_descricaoUnMedida: TEdit
-    Left = 96
+    Left = 112
     Top = 51
     Width = 145
     Height = 29
@@ -106,20 +93,6 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
     ParentFont = False
     TabOrder = 3
   end
-  object Edit_sigla: TEdit
-    Left = 265
-    Top = 51
-    Width = 65
-    Height = 29
-    CharCase = ecUpperCase
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 4
-  end
   object FDMemTable1: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -128,7 +101,6 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 296
-    Top = 120
+    Left = 256
   end
 end
