@@ -67,6 +67,7 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = SpeedButton_limparConsultaClick
     end
     object SpeedButton_Voltar: TSpeedButton
       Left = 491
@@ -80,6 +81,7 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = SpeedButton_VoltarClick
     end
     object GroupBox1: TGroupBox
       Left = 19
@@ -99,22 +101,9 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
       object Label_produto: TLabel
         Left = 193
         Top = 42
-        Width = 56
+        Width = 44
         Height = 21
-        Caption = 'Produto'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Label_categoria: TLabel
-        Left = 537
-        Top = 42
-        Width = 67
-        Height = 21
-        Caption = 'Categoria'
+        Caption = 'Dados'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -128,6 +117,7 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
         Width = 83
         Height = 30
         Caption = 'Filtrar'
+        OnClick = SpeedButton_filtrarClick
       end
       object Label_filtro: TLabel
         Left = 17
@@ -157,13 +147,12 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
         ParentFont = False
         TabOrder = 0
       end
-      object ComboBox_categoria: TComboBox
-        Left = 537
+      object ComboBox_filtro: TComboBox
+        Left = 16
         Top = 64
         Width = 153
         Height = 29
         Style = csDropDownList
-        CharCase = ecUpperCase
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -172,13 +161,11 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
         ParentFont = False
         TabOrder = 1
       end
-      object ComboBox_filtro: TComboBox
-        Left = 16
-        Top = 64
-        Width = 153
-        Height = 29
-        Style = csDropDownList
-        CharCase = ecUpperCase
+      inline Frame_categoria: TFrame_Generico
+        Left = 520
+        Top = 37
+        Width = 175
+        Height = 59
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -186,6 +173,25 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
         Font.Style = []
         ParentFont = False
         TabOrder = 2
+        ExplicitLeft = 520
+        ExplicitTop = 37
+        ExplicitWidth = 175
+        ExplicitHeight = 59
+        inherited Label_Titulo: TLabel
+          Left = 9
+          Top = 0
+          ExplicitLeft = 9
+          ExplicitTop = 0
+        end
+        inherited ComboBox_Informacao: TComboBox
+          Left = 9
+          Top = 27
+          Width = 163
+          OnExit = Frame_categoriaComboBox_InformacaoExit
+          ExplicitLeft = 9
+          ExplicitTop = 27
+          ExplicitWidth = 163
+        end
       end
     end
     object GroupBox2: TGroupBox
@@ -247,8 +253,8 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
     end
   end
   object SaveDialog1: TSaveDialog
-    Left = 607
-    Top = 399
+    Left = 503
+    Top = 391
   end
   object FDMemTable_consultaProduto: TFDMemTable
     FieldDefs = <>

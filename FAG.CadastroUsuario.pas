@@ -91,9 +91,7 @@ type
 var
   Form_CadastroUsuario: TForm_CadastroUsuario;
 
-implementation
-
-const
+  const
 SQL_UPDATE_PESSOA : String = 'UPDATE Pessoa SET ' +
   ' pes_nome =  %s, ' +
   ' pes_rg =  %s, ' +
@@ -112,6 +110,10 @@ SQL_UPDATE_PESSOA : String = 'UPDATE Pessoa SET ' +
   ' pes_inscricao_estadual = %s, ' +
   ' pes_ativo = %s ' +
   ' WHERE pes_id_pessoa = %s';
+
+
+
+implementation
 
 
 {$R *.dfm}

@@ -151,9 +151,9 @@ begin
   begin
     Form_CadastroProduto := TForm_CadastroProduto.Create(Application);
     Form_CadastroProduto.BorderStyle := bsNone;
-    Form_CadastroProduto.Position := poOwnerFormCenter;
+   // Form_CadastroProduto.Position := poOwnerFormCenter;
   end;
-  Form_CadastroProduto.Position := poOwnerFormCenter;
+//  Form_CadastroProduto.Position := poOwnerFormCenter;
   Form_CadastroProduto.Show;
 end;
 

@@ -13,9 +13,6 @@ Coordinates=10,10,97,105
 [Panel_relatorioMovimento]
 Coordinates=474,10,143,51
 
-[ComboBox_categoria]
-Coordinates=130,10,120,105
-
 [GroupBox2]
 Coordinates=385,10,70,51
 
@@ -44,14 +41,11 @@ Coordinates=452,212,142,33
 [SpeedButton_Voltar]
 Coordinates=312,212,113,33
 
-[Label_categoria]
-Coordinates=520,140,92,51
-
 [GroupBox1]
 Coordinates=10,144,70,51
 
 []
-Coordinates=288,80,82,33
+Coordinates=130,10,120,105
 
 [DataSource_consultaProduto]
 Coordinates=263,144,159,51
