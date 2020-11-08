@@ -279,7 +279,7 @@ begin
     begin
       sql := ('INSERT INTO produto (prod_id_produto, prod_desc, cat_id_categoria, un_medida_id'
         + ', prod_data_cadastro, prod_ativo, prod_valor, prod_userInclude) VALUES (' +
-        Edit_codigo.Text + ',' + StrToSQL(Edit_descricao.Text) + ',' +
+        StrToSQL(Edit_codigo.Text) + ',' + StrToSQL(Edit_descricao.Text) + ',' +
         StrToSQL(Frame_Categoria.indexCombo) + ',' +
         StrToSQL(Frame_UnMedida.indexCombo) + ',' +
         DateTimeToSQL(DateTimePicker1.DateTime) + ',' +

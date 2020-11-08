@@ -96,6 +96,7 @@ object Form_CadastroCategoria: TForm_CadastroCategoria
     Top = 51
     Width = 145
     Height = 29
+    CharCase = ecUpperCase
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -16

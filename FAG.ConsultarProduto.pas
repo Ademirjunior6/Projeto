@@ -111,7 +111,7 @@ begin
     ' FROM produto AS A ' +
     ' INNER JOIN categoria as B ON A.cat_id_categoria = B.cat_id_categoria ' +
     ' INNER JOIN un_medida as C ON A.un_medida_id = C.un_medida_id WHERE A.cat_id_categoria = "'
-    + Frame_categoria.indexCombo + '"';
+    + Frame_categoria.indexCombo + '" ORDER BY prod_id_produto';
   DataModuleConexao.ExecSQL(sql, FDMemTable_consultaProduto);
 end;
 
@@ -125,7 +125,7 @@ begin
     ' FROM produto AS A ' +
     ' INNER JOIN categoria as B ON A.cat_id_categoria = B.cat_id_categoria ' +
     ' INNER JOIN un_medida as C ON A.un_medida_id = C.un_medida_id ' +
-    ' WHERE prod_id_produto = "' + Edit_produto.Text + '"';
+    ' WHERE prod_id_produto = "' + Edit_produto.Text + '" ORDER BY prod_id_produto';
   DataModuleConexao.ExecSQL(sql, FDMemTable_consultaProduto);
 end;
 
@@ -139,7 +139,7 @@ begin
     ' FROM produto AS A ' +
     ' INNER JOIN categoria as B ON A.cat_id_categoria = B.cat_id_categoria ' +
     ' INNER JOIN un_medida as C ON A.un_medida_id = C.un_medida_id WHERE prod_desc LIKE "%'
-    + Edit_produto.Text + '%"';
+    + Edit_produto.Text + '%" ORDER BY prod_id_produto';
   DataModuleConexao.ExecSQL(sql, FDMemTable_consultaProduto);
 end;
 
@@ -149,7 +149,7 @@ var
 begin
   sql := 'SELECT ' + 'prod_id_produto AS Código,' + 'prod_desc AS Descrição, ' +
     'B.cat_desc AS Categoria ' + ' FROM produto AS A ' +
-    ' INNER JOIN categoria as B ON A.cat_id_categoria = B.cat_id_categoria';
+    ' INNER JOIN categoria as B ON A.cat_id_categoria = B.cat_id_categoria ORDER BY prod_id_produto';
   DataModuleConexao.ExecSQL(sql, FDMemTable_consultaProduto);
 end;
 
