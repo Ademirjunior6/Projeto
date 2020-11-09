@@ -9,7 +9,8 @@ uses
   Vcl.Imaging.pngimage, Vcl.ComCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids,
   Vcl.Buttons, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.Stan.Async, FireDAC.DApt,
+  Vcl.Mask;
 
 type
   TForm_Movimento = class(TForm)
@@ -22,16 +23,11 @@ type
     Label_data: TLabel;
     DateTimePicker1: TDateTimePicker;
     SpeedButton_salvar: TSpeedButton;
-    SpeedButton_cancelar: TSpeedButton;
     SpeedButton_sair: TSpeedButton;
     Label_tituloForm: TLabel;
     Panel2: TPanel;
     DBGrid1: TDBGrid;
-    Table_Itens: TFDMemTable;
     ds_Itens: TDataSource;
-    Table_Itensprod_id_produto: TIntegerField;
-    Table_Itenspro_desc: TStringField;
-    Table_Itensun_medida_sigla: TStringField;
     GroupBox2: TGroupBox;
     Panel3: TPanel;
     SpeedButton_Adicionar: TSpeedButton;
@@ -46,10 +42,14 @@ type
     Edit_descricao: TEdit;
     Edit_categoria: TEdit;
     Edit_quantidade: TEdit;
-    Table_Itensquantidade: TFloatField;
-    Table_Itenssaldo: TFloatField;
-    Table_Itensmov_valor_produto: TFloatField;
     FDMemTable1: TFDMemTable;
+    FDMemTable2: TFDMemTable;
+    Table_Itens: TFDMemTable;
+    Table_Itensprod_id_produto: TIntegerField;
+    Table_Itensprod_desc: TWideStringField;
+    Table_Itensprod_quantidade: TIntegerField;
+    Table_Itensmov_tipo: TStringField;
+    Table_Itensun_medida_desc: TStringField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure SpeedButton_removerClick(Sender: TObject);
@@ -58,12 +58,15 @@ type
     procedure SpeedButton_salvarClick(Sender: TObject);
     procedure Image1Click(Sender: TObject);
     procedure SpeedButton_sairClick(Sender: TObject);
+    procedure Edit_codigoProdutoExit(Sender: TObject);
   private
+    unidadeMedida: String;
     function addItem: Boolean;
     function validaItem: Boolean;
     function delItem: Boolean;
     function saveLancamento: Boolean;
-   // function gravar : Boolean;
+    procedure limpar;
+    function alterarQuantidade: Boolean;
   public
     { Public declarations }
   end;
@@ -74,7 +77,7 @@ var
 implementation
 
 uses
-  FAG.DataModule.Conexao, FAG.Produtos;
+  FAG.DataModule.Conexao, FAG.Produtos, FAG.Menu;
 
 {$R *.dfm}
 
@@ -85,10 +88,44 @@ begin
   else
     Table_Itens.Append;
 
-  Table_Itens.FieldByName('prod_id_produto').AsInteger := StrToInt(Edit_codigoProduto.Text);
-  Table_Itens.FieldByName('pro_desc').AsString := Edit_descricao.Text;
-  //Table_Itens.FieldByName('un_medida_sigla').AsString;
-  //Table_Itens.FieldByName('saldo').AsString := Table_Itens.Post;
+  Table_Itens.FieldByName('prod_id_produto').AsInteger :=
+    StrToInt(Edit_codigoProduto.Text);
+
+  Table_Itens.FieldByName('prod_desc').AsString := Edit_descricao.Text;
+
+  Table_Itens.FieldByName('un_medida_sigla').AsString;
+
+  Table_Itens.FieldByName('mov_tipo').AsString := ComboBox_tipoMovimento.Text;
+
+  Table_Itens.FieldByName('prod_quantidade').AsInteger :=
+    StrToInt(Edit_quantidade.Text);
+
+  Table_Itens.FieldByName('un_medida_sigla').AsString := unidadeMedida;
+
+  Table_Itens.Post;
+
+end;
+
+function TForm_Movimento.alterarQuantidade: Boolean;
+var
+sql: String;
+resultado: TFDMemTable;
+soma: Double;
+begin
+
+  sql := 'SELECT prod_quantidade from produto where prod_id_produto';
+
+  DataModuleConexao.ExecSQL(sql, resultado);
+
+  if Table_Itens.FieldByName('mov_tipo').AsString = 'ENTRADA' then
+  begin
+    resultado.FieldByName('prod_quantidade').AsString;
+  end
+  else if Table_Itens.FieldByName('mov_tipo').AsString = 'SAÍDA' then
+  begin
+
+  end;
+
 end;
 
 function TForm_Movimento.delItem: Boolean;
@@ -98,6 +135,24 @@ begin
   begin
     Table_Itens.Delete;
   end;
+end;
+
+procedure TForm_Movimento.Edit_codigoProdutoExit(Sender: TObject);
+begin
+  DataModuleConexao.ExecSQL
+    ('SELECT prod_desc, cat_desc, un_medida_sigla FROM produto INNER JOIN categoria USING (cat_id_categoria) INNER JOIN un_medida USING (un_medida_id) WHERE prod_id_produto = "'
+    + Edit_codigoProduto.Text + '"', FDMemTable2);
+
+  if FDMemTable2.IsEmpty then
+  begin
+    Application.MessageBox('Esse código não existe', 'Produto não cadastrado',
+      MB_ICONWARNING + MB_TASKMODAL + MB_OK);
+  end;
+
+  Edit_descricao.Text := FDMemTable2.FieldByName('prod_desc').AsString;
+  Edit_categoria.Text := FDMemTable2.FieldByName('cat_desc').AsString;
+  unidadeMedida := FDMemTable2.FieldByName('un_medida_sigla').AsString;
+
 end;
 
 procedure TForm_Movimento.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -112,7 +167,6 @@ var
   codigo: String;
 begin
   Table_Itens.CreateDataSet;
-
   DataModuleConexao.ExecSQL('SELECT MAX(mov_id)+1 FROM movimento', FDMemTable1);
   codigo := FDMemTable1.FieldByName('MAX(mov_id)+1').AsString;
   Edit_codigo.Text := codigo;
@@ -135,58 +189,118 @@ procedure TForm_Movimento.Image1Click(Sender: TObject);
 begin
   try
     Form_Produtos := TForm_Produtos.Create(nil);
-    Form_Produtos.ShowModal;
+
+    if Form_Produtos.ShowModal = mrOk then
+    begin
+      Edit_codigoProduto.Text := Form_Produtos.Mem_Produtos.FieldByName
+        ('prod_id_produto').AsString;
+      Edit_descricao.Text := Form_Produtos.Mem_Produtos.FieldByName
+        ('prod_desc').AsString;
+      Edit_categoria.Text := Form_Produtos.Mem_Produtos.FieldByName
+        ('cat_desc').AsString;
+      unidadeMedida := Form_Produtos.Mem_Produtos.FieldByName
+        ('un_medida_sigla').AsString;
+    end;
   finally
     Form_Produtos.Release;
   end;
 end;
 
-  function TForm_Movimento.saveLancamento: Boolean;
-  var
-    sql: String;
-  begin
-    while not Table_Itens.Eof do
-    begin
-      sql := 'INSERT INTO Item_Movimento(pro_id_codigo) VALUES (' +
-        Table_Itens.FieldByName('pro_id_codigo').AsString + ')';
-
-    end;
-  end;
-
-  procedure TForm_Movimento.SpeedButton_AdicionarClick(Sender: TObject);
-  begin
-    if validaItem then
-      addItem;
-  end;
-
-  procedure TForm_Movimento.SpeedButton_removerClick(Sender: TObject);
-  begin
-    delItem;
-  end;
-
-  procedure TForm_Movimento.SpeedButton_sairClick(Sender: TObject);
+procedure TForm_Movimento.limpar;
 begin
-  close;
+  Edit_codigoProduto.Clear;
+  Edit_descricao.Clear;
+  Edit_categoria.Clear;
+  Edit_quantidade.Clear;
+
 end;
 
+function TForm_Movimento.saveLancamento: Boolean;
+var
+  sql: String;
+  sql2: String;
+  codigo: String;
+begin
+
+  Table_Itens.First;
+  while not Table_Itens.Eof do
+  begin
+    DataModuleConexao.ExecSQL('SELECT MAX(mov_id)+1 FROM movimento',
+      FDMemTable1);
+
+    codigo := FDMemTable1.FieldByName('MAX(mov_id)+1').AsString;
+
+    sql := 'INSERT INTO movimento (mov_tipo, usuario, mov_data_movimento) VALUES ("'
+      + Table_Itens.FieldByName('mov_tipo').AsString + ' ","' +
+      Form_Menu.usuarioLogado + '", now())';
+
+    sql2 := 'INSERT INTO item_movimento (mov_id, prod_id_produto, mov_quantidade) VALUES ('
+      + codigo + ',' + Table_Itens.FieldByName('prod_id_produto').AsString + ','
+      + Table_Itens.FieldByName('prod_quantidade').AsString + ')';
+
+    DataModuleConexao.ExecSQL(sql);
+    DataModuleConexao.ExecSQL(sql2);
+
+    Table_Itens.Next;
+  end;
+
+  Application.MessageBox('Movimento realizado com sucesso', 'Sucesso',
+    MB_ICONINFORMATION + MB_TASKMODAL + MB_OK);
+
+  Form_Movimento.Close;
+
+end;
+
+procedure TForm_Movimento.SpeedButton_AdicionarClick(Sender: TObject);
+begin
+  if validaItem then
+    addItem;
+end;
+
+procedure TForm_Movimento.SpeedButton_removerClick(Sender: TObject);
+begin
+  delItem;
+end;
+
+procedure TForm_Movimento.SpeedButton_sairClick(Sender: TObject);
+begin
+  Form_Movimento.Close;
+end;
 
 procedure TForm_Movimento.SpeedButton_salvarClick(Sender: TObject);
-  begin
-    saveLancamento;
-  end;
+begin
+  saveLancamento;
+end;
 
-  function TForm_Movimento.validaItem: Boolean;
+function TForm_Movimento.validaItem: Boolean;
+begin
+  Result := False;
+  if Edit_codigoProduto.Text = EmptyStr then
   begin
-    Result := False;
-    if Edit_codigoProduto.Text = EmptyStr then
-    begin
-      showmessage('Favor informar o item');
-      Edit_codigoProduto.SetFocus;
-    end
-    else
-    begin
-      Result := True;
-    end;
+    Application.MessageBox('Código do produto não informado', 'Campo em branco',
+      MB_ICONWARNING + MB_TASKMODAL + MB_OK);
+    Edit_codigoProduto.SetFocus;
+  end
+  else if Edit_descricao.Text = '' then
+  begin
+    Application.MessageBox('Descrição do produto não informada',
+      'Campo em branco', MB_ICONWARNING + MB_TASKMODAL + MB_OK);
+  end
+  else if Edit_categoria.Text = '' then
+  begin
+    Application.MessageBox('Categoria do produto não informada',
+      'Campo em branco', MB_ICONWARNING + MB_TASKMODAL + MB_OK);
+  end
+  else if Edit_quantidade.Text = '' then
+  begin
+    Application.MessageBox('Quantidade do produto não informada',
+      'Campo em branco', MB_ICONWARNING + MB_TASKMODAL + MB_OK);
+    Edit_quantidade.SetFocus;
+  end
+  else
+  begin
+    Result := True;
   end;
+end;
 
 end.

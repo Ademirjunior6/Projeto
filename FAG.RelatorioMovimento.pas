@@ -40,18 +40,18 @@ type
     DataSource_consulta: TDataSource;
     FDMemTable_consulta: TFDMemTable;
     Panel_resultadoPesquisa: TPanel;
-    frxReportExport: TfrxReport;
-    frxDBDatasetExport: TfrxDBDataset;
-    exportWORD: TfrxRTFExport;
-    exportTXT: TfrxSimpleTextExport;
-    exportPDF: TfrxPDFExport;
-    exportEXCEL: TfrxCSVExport;
     FDMemTable_consultamov_id: TIntegerField;
     FDMemTable_consultamov_data_movimento: TDateTimeField;
     FDMemTable_consultamov_tipo: TWideStringField;
     FDMemTable_consultalogin_usuario: TWideStringField;
     FDMemTable_consultaprod_desc: TWideStringField;
     FDMemTable_consultacat_desc: TWideStringField;
+    exportTXT: TfrxSimpleTextExport;
+    exportWORD: TfrxRTFExport;
+    exportPDF: TfrxPDFExport;
+    exportEXCEL: TfrxCSVExport;
+    frxReportExport: TfrxReport;
+    frxDBDatasetExport: TfrxDBDataset;
     procedure SpeedButton_sairClick(Sender: TObject);
     procedure SpeedButton_limparConsultaClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -155,7 +155,7 @@ begin
   DBGrid_resultadoPesquisa.Columns[0].FieldName := 'mov_id';
   DBGrid_resultadoPesquisa.Columns[1].FieldName := 'mov_data_movimento';
   DBGrid_resultadoPesquisa.Columns[2].FieldName := 'mov_tipo';
-  DBGrid_resultadoPesquisa.Columns[3].FieldName := 'login_usuario';
+  DBGrid_resultadoPesquisa.Columns[3].FieldName := 'usuario';
 end;
 
 procedure TForm_RelatorioMovimento.FormShow(Sender: TObject);
@@ -194,9 +194,8 @@ var
   sql: String;
 
 begin
-  sql := 'SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,l.login_usuario,' +
+  sql := 'SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,m.usuario,' +
   ' p.prod_desc, c.cat_desc FROM movimento AS m ' +
-  ' INNER JOIN login AS l ON m.login_id = l.login_id ' +
   ' INNER JOIN item_movimento AS im ON m.mov_id = im.mov_id ' +
   ' INNER JOIN produto AS p ' + ' ON im.prod_id_produto = p.prod_id_produto '+
   ' INNER JOIN categoria AS c' +
@@ -223,9 +222,8 @@ var
   sql: String;
 begin
 
-  sql := 'SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,l.login_usuario,' +
+  sql := 'SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,m.usuario,' +
     ' p.prod_desc, c.cat_desc FROM movimento AS m ' +
-    ' INNER JOIN login AS l ON m.login_id = l.login_id ' +
     ' INNER JOIN item_movimento AS im ON m.mov_id = im.mov_id ' +
     ' INNER JOIN produto AS p ' + ' ON im.prod_id_produto = p.prod_id_produto '+
     ' INNER JOIN categoria AS c' +

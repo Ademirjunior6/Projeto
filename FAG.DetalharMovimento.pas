@@ -77,8 +77,7 @@ begin
   begin
     DataModuleConexao.ExecSQL('SELECT m.mov_data_movimento, p.prod_desc,' +
       ' c.cat_desc, m.mov_tipo, p.prod_quantidade, ' +
-      'l.login_usuario FROM movimento AS m INNER JOIN' +
-      ' login AS l ON m.login_id = l.login_id INNER JOIN ' +
+      'm.usuario FROM movimento AS m INNER JOIN ' +
       'item_movimento AS im ON m.mov_id = im.mov_id INNER ' +
       'JOIN produto AS p ON im.prod_id_produto = p.prod_id_produto ' +
       'INNER JOIN categoria AS c ON p.cat_id_categoria = c.cat_id_categoria ' +
@@ -90,7 +89,7 @@ begin
   DBGrid_rP.Columns[2].FieldName := 'cat_desc';
   DBGrid_rP.Columns[3].FieldName := 'mov_tipo';
   DBGrid_rP.Columns[4].FieldName := 'prod_quantidade';
-  DBGrid_rP.Columns[5].FieldName := 'login_usuario';
+  DBGrid_rP.Columns[5].FieldName := 'usuario';
   DateTimePickerMOV.DateTime := Table_srh.FieldByName('mov_data_movimento').AsDateTime;
 end;
 
@@ -135,7 +134,7 @@ begin
      Planilha.cells[Linha,3] := Table_srh.FieldByName('cat_desc').AsString;
      Planilha.cells[Linha,4] := Table_srh.FieldByName('mov_tipo').AsString;
      Planilha.cells[Linha,5] := Table_srh.FieldByName('prod_quantidade').Value;
-     Planilha.cells[Linha,6] := Table_srh.FieldByName('login_usuario').AsString;
+     Planilha.cells[Linha,6] := Table_srh.FieldByName('usuario').AsString;
      Linha:= linha+1;
      Table_srh.Next;
    end;
