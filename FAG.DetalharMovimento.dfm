@@ -4,7 +4,7 @@ object Form_detalharMovimento: TForm_detalharMovimento
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Movimento Detalhado'
-  ClientHeight = 602
+  ClientHeight = 604
   ClientWidth = 869
   Color = clBtnFace
   Constraints.MaxHeight = 633
@@ -28,7 +28,7 @@ object Form_detalharMovimento: TForm_detalharMovimento
     Left = 0
     Top = 0
     Width = 869
-    Height = 602
+    Height = 604
     Align = alClient
     UseDockManager = False
     Font.Charset = DEFAULT_CHARSET

@@ -1,6 +1,7 @@
 object Form_Movimento: TForm_Movimento
   Left = 0
   Top = 0
+  BorderIcons = []
   Caption = 'Movimento de Estoque'
   ClientHeight = 594
   ClientWidth = 859
@@ -12,6 +13,7 @@ object Form_Movimento: TForm_Movimento
   Font.Style = []
   FormStyle = fsMDIChild
   OldCreateOrder = False
+  Position = poMainFormCenter
   Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
@@ -38,19 +40,6 @@ object Form_Movimento: TForm_Movimento
       Font.Style = [fsBold]
       ParentFont = False
       OnClick = SpeedButton_salvarClick
-    end
-    object SpeedButton_cancelar: TSpeedButton
-      Left = 145
-      Top = 556
-      Width = 109
-      Height = 33
-      Caption = 'Cancelar'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
     end
     object SpeedButton_sair: TSpeedButton
       Left = 737
@@ -99,8 +88,8 @@ object Form_Movimento: TForm_Movimento
         830
         525)
       object Label_codigo: TLabel
-        Left = 3
-        Top = 29
+        Left = 11
+        Top = 27
         Width = 134
         Height = 21
         Caption = 'C'#243'digo Movimento'
@@ -112,8 +101,8 @@ object Form_Movimento: TForm_Movimento
         ParentFont = False
       end
       object Label1: TLabel
-        Left = 152
-        Top = 30
+        Left = 160
+        Top = 28
         Width = 114
         Height = 21
         Caption = 'Tipo Movimento'
@@ -138,8 +127,8 @@ object Form_Movimento: TForm_Movimento
         ParentFont = False
       end
       object Edit_codigo: TEdit
-        Left = 3
-        Top = 52
+        Left = 11
+        Top = 50
         Width = 134
         Height = 29
         Anchors = [akLeft, akTop, akRight]
@@ -154,10 +143,11 @@ object Form_Movimento: TForm_Movimento
         TabOrder = 0
       end
       object ComboBox_tipoMovimento: TComboBox
-        Left = 152
-        Top = 52
+        Left = 160
+        Top = 50
         Width = 118
         Height = 27
+        Style = csDropDownList
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -168,7 +158,7 @@ object Form_Movimento: TForm_Movimento
       end
       object DateTimePicker1: TDateTimePicker
         Left = 637
-        Top = 51
+        Top = 50
         Width = 185
         Height = 29
         Date = 44112.000000000000000000
@@ -198,7 +188,7 @@ object Form_Movimento: TForm_Movimento
           DataSource = ds_Itens
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -13
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
@@ -213,37 +203,35 @@ object Form_Movimento: TForm_Movimento
               Expanded = False
               FieldName = 'prod_id_produto'
               Title.Caption = 'C'#243'digo'
-              Width = 56
+              Width = 68
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Descri'#231#227'o'
-              Width = 351
+              FieldName = 'prod_desc'
+              Title.Caption = 'Descri'#231#227'o'
+              Width = 285
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Unidade'
+              FieldName = 'un_medida_sigla'
+              Title.Caption = 'Un. Medida'
+              Width = 100
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Entrada / Sa'#237'da'
-              Width = 118
+              FieldName = 'mov_tipo'
+              Title.Caption = 'Entrada / Sa'#237'da'
+              Width = 156
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'quantidade'
+              FieldName = 'prod_quantidade'
               Title.Caption = 'Quantidade'
               Width = 88
-              Visible = True
-            end
-            item
-              Expanded = False
-              Title.Caption = 'Saldo'
-              Width = 83
               Visible = True
             end>
         end
@@ -266,8 +254,8 @@ object Form_Movimento: TForm_Movimento
           ParentBackground = False
           TabOrder = 0
           object SpeedButton_Adicionar: TSpeedButton
-            Left = 291
-            Top = 5
+            Left = 427
+            Top = 4
             Width = 109
             Height = 37
             Caption = 'Adicionar'
@@ -280,8 +268,8 @@ object Form_Movimento: TForm_Movimento
             OnClick = SpeedButton_AdicionarClick
           end
           object SpeedButton_remover: TSpeedButton
-            Left = 420
-            Top = 5
+            Left = 312
+            Top = 4
             Width = 109
             Height = 37
             Caption = 'Remover'
@@ -711,7 +699,7 @@ object Form_Movimento: TForm_Movimento
             OnClick = Image1Click
           end
           object Label3: TLabel
-            Left = 124
+            Left = 118
             Top = -1
             Width = 127
             Height = 21
@@ -724,7 +712,7 @@ object Form_Movimento: TForm_Movimento
             ParentFont = False
           end
           object Label5: TLabel
-            Left = 462
+            Left = 461
             Top = -1
             Width = 67
             Height = 21
@@ -737,7 +725,7 @@ object Form_Movimento: TForm_Movimento
             ParentFont = False
           end
           object Label4: TLabel
-            Left = 573
+            Left = 683
             Top = -1
             Width = 81
             Height = 21
@@ -763,11 +751,12 @@ object Form_Movimento: TForm_Movimento
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 0
+            OnExit = Edit_codigoProdutoExit
           end
           object Edit_descricao: TEdit
             Left = 118
             Top = 24
-            Width = 305
+            Width = 323
             Height = 29
             Anchors = [akLeft, akTop, akRight]
             AutoSize = False
@@ -781,9 +770,9 @@ object Form_Movimento: TForm_Movimento
             TabOrder = 1
           end
           object Edit_categoria: TEdit
-            Left = 440
+            Left = 461
             Top = 24
-            Width = 114
+            Width = 215
             Height = 29
             Anchors = [akLeft, akTop, akRight]
             AutoSize = False
@@ -797,9 +786,9 @@ object Form_Movimento: TForm_Movimento
             TabOrder = 2
           end
           object Edit_quantidade: TEdit
-            Left = 568
+            Left = 683
             Top = 24
-            Width = 240
+            Width = 128
             Height = 29
             Anchors = [akLeft, akTop, akRight]
             AutoSize = False
@@ -813,37 +802,6 @@ object Form_Movimento: TForm_Movimento
           end
         end
       end
-    end
-  end
-  object Table_Itens: TFDMemTable
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    Left = 456
-    Top = 352
-    object Table_Itensprod_id_produto: TIntegerField
-      FieldName = 'prod_id_produto'
-    end
-    object Table_Itenspro_desc: TStringField
-      FieldName = 'pro_desc'
-      Size = 255
-    end
-    object Table_Itensun_medida_sigla: TStringField
-      FieldName = 'un_medida_sigla'
-      Size = 255
-    end
-    object Table_Itensquantidade: TFloatField
-      FieldName = 'mov_quantidade'
-    end
-    object Table_Itenssaldo: TFloatField
-      FieldName = 'saldo'
-    end
-    object Table_Itensmov_valor_produto: TFloatField
-      FieldName = 'mov_valor_produto'
     end
   end
   object ds_Itens: TDataSource
@@ -861,5 +819,45 @@ object Form_Movimento: TForm_Movimento
     UpdateOptions.AutoCommitUpdates = True
     Left = 528
     Top = 60
+  end
+  object FDMemTable2: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 408
+    Top = 60
+  end
+  object Table_Itens: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 408
+    Top = 328
+    object Table_Itensprod_id_produto: TIntegerField
+      FieldName = 'prod_id_produto'
+    end
+    object Table_Itensprod_desc: TWideStringField
+      FieldName = 'prod_desc'
+      Size = 255
+    end
+    object Table_Itensun_medida_desc: TStringField
+      FieldName = 'un_medida_sigla'
+      Size = 255
+    end
+    object Table_Itensmov_tipo: TStringField
+      FieldName = 'mov_tipo'
+      Size = 255
+    end
+    object Table_Itensprod_quantidade: TIntegerField
+      FieldName = 'prod_quantidade'
+    end
   end
 end

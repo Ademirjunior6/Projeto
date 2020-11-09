@@ -7,9 +7,6 @@ Coordinates=386,10,78,58
 [DateTimePicker1]
 Coordinates=297,212,113,58
 
-[SpeedButton_cancelar]
-Coordinates=457,280,145,36
-
 [SpeedButton_salvar]
 Coordinates=317,280,130,36
 
@@ -33,7 +30,7 @@ Coordinates=111,144,111,58
 Visible=True
 
 []
-Coordinates=295,144,53,58
+Coordinates=457,280,145,36
 
 [ComboBox_tipoMovimento]
 Coordinates=10,10,141,124

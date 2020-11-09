@@ -34,9 +34,6 @@ uses FAG.DataModule.Conexao;
 
 procedure TForm_Produtos.DBGrid1DblClick(Sender: TObject);
 begin
-  // Form_Movimento.Edit_codigoProduto.Text := Mem_Produtos.FieldByName('prod_id_produto').AsString;
-  // Form_Movimento.Edit_descricao.Text := Mem_Produtos.FieldByName('prod_desc').AsString;
-  // Form_Movimento.Edit_categoria.Text := Mem_Produtos.FieldByName('cat_desc').AsString;
   if Mem_Produtos.IsEmpty then
     ModalResult := mrAbort
   else
@@ -51,12 +48,13 @@ begin
   DBGrid1.Columns[0].FieldName := 'prod_id_produto';
   DBGrid1.Columns[1].FieldName := 'prod_desc';
   DBGrid1.Columns[2].FieldName := 'cat_desc';
+  DBGrid1.Columns[3].FieldName := 'un_medida_sigla';
 end;
 
 function TForm_Produtos.puxarProdutos: Boolean;
 begin
   DataModuleConexao.ExecSQL
-    ('SELECT produto.prod_id_produto, produto.prod_desc, categoria.cat_desc FROM produto INNER JOIN categoria USING (cat_id_categoria)',
+    ('SELECT prod_id_produto, prod_desc, cat_desc, un_medida_sigla FROM produto INNER JOIN categoria USING (cat_id_categoria) INNER JOIN un_medida USING (un_medida_id) ORDER BY prod_id_produto asc',
     Mem_Produtos);
 end;
 
