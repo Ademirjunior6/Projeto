@@ -18,7 +18,6 @@ type
     MainMenu1: TMainMenu;
     Cadastro1: TMenuItem;
     Produto1: TMenuItem;
-    Fornecedor1: TMenuItem;
     Usurio1: TMenuItem;
     MovimentarEstoque1: TMenuItem;
     ConsultareAlterar1: TMenuItem;
@@ -27,6 +26,10 @@ type
     Movimentao1: TMenuItem;
     Usuario1: TMenuItem;
     StatusBar1: TStatusBar;
+    Panel1: TPanel;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    SpeedButton3: TSpeedButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Produto1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -36,6 +39,9 @@ type
     procedure ProdutoClick(Sender: TObject);
     procedure Usuario1Click(Sender: TObject);
     procedure Usurio1Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
 
   private
   public
@@ -123,6 +129,35 @@ begin
   Form_RelatorioProduto.Show;
 end;
 
+procedure TForm_Menu.SpeedButton1Click(Sender: TObject);
+begin
+  if not Assigned(Form_Movimento) then
+  begin
+    Form_Movimento := TForm_Movimento.Create(Application);
+    Form_Movimento.BorderStyle := bsNone;
+  end;
+  Form_Movimento.Show;
+end;
+
+procedure TForm_Menu.SpeedButton2Click(Sender: TObject);
+begin
+  if not Assigned(Form_CadastroUsuario) then
+  begin
+    Form_CadastroUsuario := TForm_CadastroUsuario.Create(Application);
+  end;
+  Form_CadastroUsuario.Show;
+end;
+
+procedure TForm_Menu.SpeedButton3Click(Sender: TObject);
+begin
+  if not Assigned(Form_CadastroProduto) then
+  begin
+    Form_CadastroProduto := TForm_CadastroProduto.Create(Application);
+    Form_CadastroProduto.BorderStyle := bsNone;
+  end;
+  Form_CadastroProduto.Show;
+end;
+
 procedure TForm_Menu.Movimentao1Click(Sender: TObject);
 begin
   if not Assigned(Form_RelatorioMovimento) then
@@ -139,9 +174,7 @@ begin
   begin
     Form_Movimento := TForm_Movimento.Create(Application);
     Form_Movimento.BorderStyle := bsNone;
-    Form_Movimento.Position := poOwnerFormCenter;
   end;
-  Form_Movimento.Position := poOwnerFormCenter;
   Form_Movimento.Show;
 end;
 
@@ -151,9 +184,8 @@ begin
   begin
     Form_CadastroProduto := TForm_CadastroProduto.Create(Application);
     Form_CadastroProduto.BorderStyle := bsNone;
-   // Form_CadastroProduto.Position := poOwnerFormCenter;
   end;
-//  Form_CadastroProduto.Position := poOwnerFormCenter;
+  Form_CadastroProduto.Position := poOwnerFormCenter;
   Form_CadastroProduto.Show;
 end;
 

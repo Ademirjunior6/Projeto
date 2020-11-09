@@ -11,6 +11,7 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poOwnerFormCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -160,6 +161,7 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        OnChange = ComboBox_filtroChange
       end
       inline Frame_categoria: TFrame_Generico
         Left = 520

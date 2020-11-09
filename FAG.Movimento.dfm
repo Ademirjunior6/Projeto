@@ -64,6 +64,7 @@ object Form_Movimento: TForm_Movimento
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = SpeedButton_sairClick
     end
     object Label_tituloForm: TLabel
       Left = 1

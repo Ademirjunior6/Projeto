@@ -57,11 +57,13 @@ type
     procedure FormCreate(Sender: TObject);
     procedure SpeedButton_salvarClick(Sender: TObject);
     procedure Image1Click(Sender: TObject);
+    procedure SpeedButton_sairClick(Sender: TObject);
   private
     function addItem: Boolean;
     function validaItem: Boolean;
     function delItem: Boolean;
     function saveLancamento: Boolean;
+   // function gravar : Boolean;
   public
     { Public declarations }
   end;
@@ -147,8 +149,7 @@ end;
     begin
       sql := 'INSERT INTO Item_Movimento(pro_id_codigo) VALUES (' +
         Table_Itens.FieldByName('pro_id_codigo').AsString + ')';
-      DataModuleConexao.ExecSQL(sql);
-      Table_Itens.Next;
+
     end;
   end;
 
@@ -163,7 +164,13 @@ end;
     delItem;
   end;
 
-  procedure TForm_Movimento.SpeedButton_salvarClick(Sender: TObject);
+  procedure TForm_Movimento.SpeedButton_sairClick(Sender: TObject);
+begin
+  close;
+end;
+
+
+procedure TForm_Movimento.SpeedButton_salvarClick(Sender: TObject);
   begin
     saveLancamento;
   end;

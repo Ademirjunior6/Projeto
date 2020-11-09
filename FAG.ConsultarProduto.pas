@@ -40,6 +40,7 @@ type
     procedure SpeedButton_VoltarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Frame_categoriaComboBox_InformacaoExit(Sender: TObject);
+    procedure ComboBox_filtroChange(Sender: TObject);
   private
     function carregaFiltros: Boolean;
     function carregaCategoria: Boolean;
@@ -94,6 +95,36 @@ begin
   ComboBox_filtro.ItemIndex := 0;
 end;
 
+procedure TForm_ConsultarProduto.ComboBox_filtroChange(Sender: TObject);
+begin
+  case ComboBox_filtro.ItemIndex of
+    1:
+      begin
+           Edit_produto.Enabled := True;
+           Frame_categoria.ComboBox_Informacao.Enabled := False;
+           Edit_produto.SetFocus;
+           Edit_produto.Hint := 'Informe dados para consulta';
+           Edit_produto.ShowHint := True;
+      end;
+    2:
+      begin
+           Edit_produto.Enabled := True;
+           Frame_categoria.ComboBox_Informacao.Enabled := False;
+           Edit_produto.SetFocus;
+           Edit_produto.Hint := 'Informe dados para consulta';
+           Edit_produto.ShowHint := True;
+      end;
+    3:
+      begin
+        Edit_produto.Enabled := False;
+        Frame_categoria.ComboBox_Informacao.Enabled := True;
+        Frame_categoria.ComboBox_Informacao.SetFocus;
+        Frame_categoria.ComboBox_Informacao.Hint := 'Selecione a categoria';
+        Frame_categoria.ComboBox_Informacao.ShowHint := True;
+      end;
+  end;
+end;
+
 procedure TForm_ConsultarProduto.DBGrid_resultadoPesquisaDblClick
   (Sender: TObject);
 begin
@@ -125,7 +156,8 @@ begin
     ' FROM produto AS A ' +
     ' INNER JOIN categoria as B ON A.cat_id_categoria = B.cat_id_categoria ' +
     ' INNER JOIN un_medida as C ON A.un_medida_id = C.un_medida_id ' +
-    ' WHERE prod_id_produto = "' + Edit_produto.Text + '" ORDER BY prod_id_produto';
+    ' WHERE prod_id_produto = "' + Edit_produto.Text +
+    '" ORDER BY prod_id_produto';
   DataModuleConexao.ExecSQL(sql, FDMemTable_consultaProduto);
 end;
 
