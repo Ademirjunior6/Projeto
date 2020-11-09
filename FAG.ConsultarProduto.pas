@@ -244,7 +244,7 @@ end;
 procedure TForm_ConsultarProduto.SpeedButton_limparConsultaClick
   (Sender: TObject);
 begin
-  // limpaGrid;
+   limpaGrid;
 end;
 
 procedure TForm_ConsultarProduto.SpeedButton_VoltarClick(Sender: TObject);

@@ -273,7 +273,6 @@ begin
         ' prod_userInclude = "' + Form_Menu.usuarioLogado + '"' +
         ' WHERE prod_id_produto = ' + Edit_codigo.Text + '');
       DataModuleConexao.ExecSQL(sql);
-      ShowMessage('Alterado com sucesso.');
     end
     else
     begin
@@ -287,7 +286,6 @@ begin
         VirgulaPorPonto(Edit_valor.Text) + ',"' +
         Form_Menu.usuarioLogado +'")');
       DataModuleConexao.ExecSQL(sql);
-      ShowMessage('Salvo com sucesso.');
     end;
     cancelar;
   end;
@@ -378,7 +376,7 @@ begin
   Frame_UnMedida.campoDescricao := 'un_medida_desc';
  // Frame_UnMedida.camposExtras := ',un_medida_sigla';
   Frame_UnMedida.condicao := '';
-  Frame_UnMedida.titulo := 'UnMedida';
+  Frame_UnMedida.titulo := 'Unidade de medida';
   Frame_UnMedida.primeiraOpcao := 'Escolha';
   Frame_UnMedida.carregaFrame := True;
 end;

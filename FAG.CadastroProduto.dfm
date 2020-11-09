@@ -123,11 +123,11 @@ object Form_CadastroProduto: TForm_CadastroProduto
         ParentFont = False
       end
       object Label_valor: TLabel
-        Left = 579
-        Top = 98
-        Width = 36
+        Left = 504
+        Top = 95
+        Width = 40
         Height = 21
-        Caption = 'Valor'
+        Caption = 'Custo'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -190,8 +190,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
         TabOrder = 3
       end
       inline Frame_Categoria: TFrame_Generico
-        Left = 91
-        Top = 102
+        Left = 16
+        Top = 99
         Width = 191
         Height = 60
         Font.Charset = DEFAULT_CHARSET
@@ -201,8 +201,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
         TabOrder = 4
-        ExplicitLeft = 91
-        ExplicitTop = 102
+        ExplicitLeft = 16
+        ExplicitTop = 99
         ExplicitWidth = 191
         inherited ComboBox_Informacao: TComboBox
           Width = 190
@@ -211,8 +211,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
         end
       end
       object Edit_valor: TEdit
-        Left = 579
-        Top = 125
+        Left = 504
+        Top = 122
         Width = 102
         Height = 29
         BiDiMode = bdRightToLeft
@@ -229,8 +229,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
         OnKeyPress = Edit_valorKeyPress
       end
       inline Frame_UnMedida: TFrame_Generico
-        Left = 334
-        Top = 102
+        Left = 259
+        Top = 99
         Width = 193
         Height = 60
         Font.Charset = DEFAULT_CHARSET
@@ -240,8 +240,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
         TabOrder = 6
-        ExplicitLeft = 334
-        ExplicitTop = 102
+        ExplicitLeft = 259
+        ExplicitTop = 99
         ExplicitWidth = 193
         inherited ComboBox_Informacao: TComboBox
           Width = 185
@@ -250,8 +250,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
         end
       end
       object BitBtn_categoria: TBitBtn
-        Left = 287
-        Top = 128
+        Left = 213
+        Top = 125
         Width = 26
         Height = 25
         Caption = '+'
@@ -259,8 +259,8 @@ object Form_CadastroProduto: TForm_CadastroProduto
         OnClick = BitBtn_categoriaClick
       end
       object BitBtn_unMedida: TBitBtn
-        Left = 526
-        Top = 128
+        Left = 452
+        Top = 125
         Width = 26
         Height = 25
         Caption = '+'
