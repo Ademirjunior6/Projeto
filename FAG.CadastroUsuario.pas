@@ -234,12 +234,12 @@ begin
     1:
       begin
         Label_CPF.Caption := 'CPF';
-        Mask_CPF.EditMask := '000.000.000-00;1;_';
+        Mask_CPF.EditMask := '999.999.999-99;1;_';
       end;
     2:
       begin
         Label_CPF.Caption := 'CNPJ';
-        Mask_CPF.EditMask := '00.000.000/0000-00;1;_';
+        Mask_CPF.EditMask := '99.999.999/9999-99;1;_';
       end;
 
   end;

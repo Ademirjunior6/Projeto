@@ -357,9 +357,9 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
     object Mask_CPF: TMaskEdit
       Left = 404
       Top = 182
-      Width = 176
+      Width = 174
       Height = 29
-      EditMask = '000.000.000-00;1;_'
+      EditMask = '999.999.999-99;1;_'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
