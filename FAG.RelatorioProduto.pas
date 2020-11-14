@@ -22,7 +22,6 @@ type
     Frame_Produto1: TFrame_Produto;
     GroupBox_grid: TGroupBox;
     Panel_grid: TPanel;
-    SpeedButton_exibirTodos: TSpeedButton;
     SpeedButton_limparConsulta: TSpeedButton;
     SpeedButton_exportar: TSpeedButton;
     SpeedButton_sair: TSpeedButton;
@@ -35,6 +34,13 @@ type
     exportEXCEL: TfrxCSVExport;
     exportTXT: TfrxSimpleTextExport;
     exportWORD: TfrxRTFExport;
+    FDMemTable_Consultaprod_id_produto: TIntegerField;
+    FDMemTable_Consultaprod_desc: TWideStringField;
+    FDMemTable_Consultaun_medida_desc: TWideStringField;
+    FDMemTable_Consultacat_desc: TWideStringField;
+    FDMemTable_Consultaprod_data_cadastro: TDateTimeField;
+    FDMemTable_Consultaprod_quantidade: TIntegerField;
+    SpeedButton_exibirTodos: TSpeedButton;
     procedure SpeedButton_sairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButton_limparConsultaClick(Sender: TObject);
@@ -42,6 +48,8 @@ type
     procedure SpeedButton_filtrarClick(Sender: TObject);
     procedure SpeedButton_exibirTodosClick(Sender: TObject);
     procedure SpeedButton_exportarClick(Sender: TObject);
+    procedure FDMemTable_Consultaprod_quantidadeGetText(Sender: TField; var Text: string; DisplayText: Boolean);
+
   private
     procedure alimentaCategoria;
     procedure buscaMovimento;
@@ -107,10 +115,29 @@ begin
 
   DataModuleConexao.ExecSQL(sql, FDMemTable_Consulta);
 
+   while not FDMemTable_Consulta.IsEmpty do
+   begin
+    if FDMemTable_Consulta.FieldByName('prod_quantidade').AsString = EmptyStr then
+    begin
+       FDMemTable_Consulta.FieldByName('prod_quantidade').AsString := '0';
+
+    end;
+     FDMemTable_Consulta.Next;
+    end ;
+
   if FDMemTable_Consulta.IsEmpty then
   begin
     Application.MessageBox ('Nenhum registro encontrado','Erro',MB_OK+MB_ICONEXCLAMATION);
   end;
+end;
+
+procedure TForm_RelatorioProduto.FDMemTable_Consultaprod_quantidadeGetText(Sender: TField; var Text: string;
+  DisplayText: Boolean);
+begin
+  if (Sender as TField).AsString = '' then
+    text := '0'
+  else
+    text := (Sender as TField).AsString;
 end;
 
 procedure TForm_RelatorioProduto.FormClose(Sender: TObject;
@@ -136,16 +163,22 @@ begin
   DBGrid_Pesquisa.Columns[5].FieldName := 'prod_quantidade';
 end;
 
+
+
+
+
 procedure TForm_RelatorioProduto.SpeedButton_exibirTodosClick(Sender: TObject);
 var
   sql: String;
 begin
   sql := 'SELECT prod_id_produto, prod_desc, un_medida_desc, cat_desc, prod_data_cadastro, '
   +' prod_quantidade FROM produto AS p INNER JOIN categoria AS c ON p.cat_id_categoria = c.cat_id_categoria '
-  +'INNER JOIN un_medida AS un ON p.un_medida_id = un.un_medida_id WHERE  1 > 0 ';
+  +'INNER JOIN un_medida AS un ON p.un_medida_id = un.un_medida_id WHERE  1 > 0 order by prod_id_produto ';
 
   DataModuleConexao.ExecSQL(sql, FDMemTable_Consulta);
-end;
+  
+
+  end;
 
 procedure TForm_RelatorioProduto.SpeedButton_exportarClick(Sender: TObject);
 begin

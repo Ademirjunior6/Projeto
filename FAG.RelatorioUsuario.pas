@@ -14,7 +14,6 @@ type
   TForm_RelatorioUsuario = class(TForm)
     Panel_Principal: TPanel;
     Label_tituloForm: TLabel;
-    SpeedButton_exibirTodos: TSpeedButton;
     SpeedButton_limparConsulta: TSpeedButton;
     SpeedButton_exportar: TSpeedButton;
     SpeedButton_sair: TSpeedButton;
@@ -38,12 +37,13 @@ type
     FDMemTable_Consultapes_nascimento: TDateField;
     FDMemTable_Consultapes_email: TWideStringField;
     FDMemTable_Consultapes_celular: TWideStringField;
-    FDMemTable_Consultapes_ativo: TIntegerField;
     frxDBDatasetExport: TfrxDBDataset;
     exportTXT: TfrxSimpleTextExport;
     exportWORD: TfrxRTFExport;
     exportPDF: TfrxPDFExport;
     exportEXCEL: TfrxCSVExport;
+    FDMemTable_Consultasit_descricao: TWideStringField;
+    SpeedButton_exibirTodos: TSpeedButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButton_sairClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -126,16 +126,16 @@ begin
   ComboBox_filtro.ItemIndex := 1;
 
   ComboBox_Status.Items.Add('TODOS');
-  ComboBox_Status.Items.Add('ATIVO');
-  ComboBox_Status.Items.Add('INATIVO');
+  ComboBox_Status.Items.Add('Ativo');
+  ComboBox_Status.Items.Add('Inativo');
   ComboBox_Status.ItemIndex := 0;
   DBGrid_Pesquisa.Columns[0].FieldName := 'pes_id_pessoa';
   DBGrid_Pesquisa.Columns[1].FieldName := 'pes_nome';
   DBGrid_Pesquisa.Columns[2].FieldName := 'pes_cpf';
   DBGrid_Pesquisa.Columns[3].FieldName := 'pes_nascimento';
-  DBGrid_Pesquisa.Columns[4].FieldName := 'pes_email';
+  DBGrid_Pesquisa.Columns[4].FieldName := 'sit_descricao';
   DBGrid_Pesquisa.Columns[5].FieldName := 'pes_celular';
-  DBGrid_Pesquisa.Columns[6].FieldName := 'pes_ativo';
+  DBGrid_Pesquisa.Columns[6].FieldName := 'pes_email';
 
 
 end;
@@ -150,8 +150,10 @@ procedure TForm_RelatorioUsuario.SpeedButton_exibirTodosClick(Sender: TObject);
 var
    sql: String;
 begin
-   sql := 'SELECT pes_id_pessoa, pes_nome, pes_cpf, pes_nascimento,pes_email, pes_celular,pes_ativo FROM pessoa ' ;
+   sql := 'SELECT pes_id_pessoa, pes_nome, pes_cpf, pes_nascimento,pes_email, pes_celular, si.sit_descricao FROM pessoa AS p '
+   +' INNER JOIN situacao AS si ON p.pes_ativo = si.sit_id';
    DataModuleConexao.ExecSQL(sql, FDMemTable_Consulta);
+   ShowMessage(FDMemTable_Consulta.FieldByName('sit_descricao').AsString);
 end;
 
 procedure TForm_RelatorioUsuario.SpeedButton_exportarClick(Sender: TObject);
@@ -179,11 +181,15 @@ begin
 
   if ComboBox_filtro.ItemIndex = 3 then
   begin
-    sql := 'SELECT pes_id_pessoa, pes_nome, pes_cnpj, pes_nascimento,pes_email, pes_celular,pes_ativo FROM pessoa WHERE 1 > 0' ;
+    sql := 'SELECT pes_id_pessoa, pes_nome, pes_cnpj, pes_nascimento,pes_email, pes_celular, si.sit_descricao FROM pessoa AS p '
+    +' INNER JOIN situacao AS si ON p.pes_ativo = si.sit_id WHERE  1 > 0' ;
+    DBGrid_Pesquisa.Columns[2].FieldName := 'pes_cnpj';
   end
    else
   begin
-    sql := 'SELECT pes_id_pessoa, pes_nome, pes_cpf, pes_nascimento,pes_email, pes_celular,pes_ativo FROM pessoa WHERE 1 > 0' ;
+    sql := 'SELECT pes_id_pessoa, pes_nome, pes_cpf, pes_nascimento,pes_email, pes_celular, si.sit_descricao FROM pessoa AS p '
+    +' INNER JOIN situacao AS si ON p.pes_ativo = si.sit_id  WHERE  1 > 0';
+    DBGrid_Pesquisa.Columns[2].FieldName := 'pes_cpf';
   end;
 
   if MaskEdit_pesquisa.Text <> EmptyStr then
@@ -209,18 +215,18 @@ begin
 
   if ComboBox_Status.ItemIndex <> 0 then
   begin
-    sql := sql + ' AND (pes_ativo = "' + ComboBox_Status.ItemIndex.ToString + '")'
+    sql := sql + ' AND (si.sit_descricao = "' + ComboBox_Status.ItemIndex.ToString + '")'
   end;
 
 
   DataModuleConexao.ExecSQL(sql, FDMemTable_Consulta);
 
-  if FDMemTable_Consulta.FieldByName('pes_ativo').AsInteger = 1 then
-  begin
+  //if FDMemTable_Consulta.FieldByName('pes_ativo').AsInteger = 1 then
+ // begin
 
-    ShowMessage('teste');
+  //  ShowMessage('teste');
 
-  end;
+ // end;
 
   if FDMemTable_Consulta.IsEmpty then
   begin

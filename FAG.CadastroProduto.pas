@@ -42,6 +42,7 @@ type
     procedure SpeedButton_sairClick(Sender: TObject);
     procedure SpeedButton_cancelarClick(Sender: TObject);
     procedure SpeedButton_unMedidaClick(Sender: TObject);
+    procedure Frame_CategoriaExit(Sender: TObject);
     procedure Edit_valorExit(Sender: TObject);
     procedure Edit_valorKeyPress(Sender: TObject; var Key: Char);
     procedure Edit_valorChange(Sender: TObject);
@@ -62,8 +63,6 @@ type
     function carregaCategoria: Boolean;
     function carregaUnMedida: Boolean;
     function carregaStatus: Boolean;
-    function atualizaFrames : Boolean;
-
   public
 
   end;
@@ -145,6 +144,17 @@ begin
   cancelar;
 end;
 
+procedure TForm_CadastroProduto.Frame_CategoriaExit(Sender: TObject);
+begin
+  // showmessage(Frame_Generico1.TableTemp.FieldByName('cat_id_categoria')
+  // .AsString);
+  // showmessage(Frame_Generico1.TableTemp.FieldByName('cat_desc').AsString);
+  // showmessage(Frame_Generico1.TableTemp.FieldByName('cat_data_cadastro')
+  // .AsString);
+  // showmessage(Frame_Generico1.TableTemp.FieldByName('cat_data_alterado')
+  // .AsString);
+end;
+
 procedure TForm_CadastroProduto.SpeedButton_unMedidaClick(Sender: TObject);
 begin
   Form_CadastroUnMedida := TForm_CadastroUnMedida.Create(Self);
@@ -160,7 +170,8 @@ begin
   Form_ConsultarProduto := TForm_ConsultarProduto.Create(Self);
   try
     if Form_ConsultarProduto.ShowModal = mrOk then
-     loadTela(Form_ConsultarProduto.FDMemTable_consultaProduto.FieldByName('Código').AsString);
+      loadTela(Form_ConsultarProduto.FDMemTable_consultaProduto.FieldByName
+        ('Código').AsString);
   finally
     FreeAndNil(Form_ConsultarProduto)
   end;
@@ -273,13 +284,13 @@ begin
         ' prod_userInclude = "' + Form_Menu.usuarioLogado + '"' +
         ' WHERE prod_id_produto = ' + Edit_codigo.Text + '');
       DataModuleConexao.ExecSQL(sql);
-      ShowMessage('Alterado com sucesso.');
+      ShowMessage('Alterado com Sucesso.');
     end
     else
     begin
       sql := ('INSERT INTO produto (prod_id_produto, prod_desc, cat_id_categoria, un_medida_id'
         + ', prod_data_cadastro, prod_ativo, prod_valor, prod_userInclude) VALUES (' +
-        StrToSQL(Edit_codigo.Text) + ',' + StrToSQL(Edit_descricao.Text) + ',' +
+        Edit_codigo.Text + ',' + StrToSQL(Edit_descricao.Text) + ',' +
         StrToSQL(Frame_Categoria.indexCombo) + ',' +
         StrToSQL(Frame_UnMedida.indexCombo) + ',' +
         DateTimeToSQL(DateTimePicker1.DateTime) + ',' +
@@ -287,24 +298,14 @@ begin
         VirgulaPorPonto(Edit_valor.Text) + ',"' +
         Form_Menu.usuarioLogado +'")');
       DataModuleConexao.ExecSQL(sql);
-      ShowMessage('Salvo com sucesso.');
+      ShowMessage('Salvo com Sucesso.');
     end;
     cancelar;
   end;
 end;
 
-function TForm_CadastroProduto.atualizaFrames: Boolean;
-begin
- Frame_Categoria.ComboBox_Informacao.SetFocus;
- Self.Perform(WM_NEXTDLGCTL, 0, 0);
- Frame_UnMedida.ComboBox_Informacao.SetFocus;
- Self.Perform(WM_NEXTDLGCTL, 0, 0);
- Edit_descricao.SetFocus;
-end;
-
 procedure TForm_CadastroProduto.BitBtn1Click(Sender: TObject);
 begin
-  atualizaFrames;
   gravar;
 end;
 
@@ -337,12 +338,10 @@ function TForm_CadastroProduto.cancelar: Boolean;
 begin
   Edit_codigo.Text := getUltimoID;
   Edit_descricao.clear;
-  ComboBox_status.ItemIndex := 0;
   Frame_Categoria.ComboBox_Informacao.ItemIndex := 0;
   Frame_UnMedida.ComboBox_Informacao.ItemIndex := 0;
   DateTimePicker1.DateTime := Date;
   Edit_valor.Clear;
-
 end;
 
 function TForm_CadastroProduto.getUltimoID: String;
@@ -376,6 +375,7 @@ begin
   Frame_UnMedida.tabela := 'un_medida';
   Frame_UnMedida.campoChave := 'un_medida_id';
   Frame_UnMedida.campoDescricao := 'un_medida_desc';
+  Frame_UnMedida.campoSigla := 'un_medida_sigla';
  // Frame_UnMedida.camposExtras := ',un_medida_sigla';
   Frame_UnMedida.condicao := '';
   Frame_UnMedida.titulo := 'UnMedida';

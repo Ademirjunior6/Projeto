@@ -3,7 +3,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
   Top = 0
   BorderIcons = []
   BorderStyle = bsSingle
-  Caption = 'Relatorio de Usuario'
+  Caption = 'Relat'#243'rio de Usu'#225'rio'
   ClientHeight = 602
   ClientWidth = 869
   Color = clBtnFace
@@ -38,7 +38,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
       Top = 24
       Width = 225
       Height = 32
-      Caption = 'Relatorio de Usuarios'
+      Caption = 'Relat'#243'rio de Usu'#225'rios'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -24
@@ -46,22 +46,8 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
       Font.Style = []
       ParentFont = False
     end
-    object SpeedButton_exibirTodos: TSpeedButton
-      Left = 20
-      Top = 557
-      Width = 132
-      Height = 33
-      Caption = 'Exibir Todos'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      OnClick = SpeedButton_exibirTodosClick
-    end
     object SpeedButton_limparConsulta: TSpeedButton
-      Left = 169
+      Left = 37
       Top = 557
       Width = 163
       Height = 33
@@ -75,7 +61,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
       OnClick = SpeedButton_limparConsultaClick
     end
     object SpeedButton_exportar: TSpeedButton
-      Left = 349
+      Left = 222
       Top = 557
       Width = 149
       Height = 33
@@ -89,7 +75,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
       OnClick = SpeedButton_exportarClick
     end
     object SpeedButton_sair: TSpeedButton
-      Left = 769
+      Left = 753
       Top = 557
       Width = 68
       Height = 33
@@ -104,9 +90,9 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
     end
     object GroupBox_consulta: TGroupBox
       Left = 20
-      Top = 77
+      Top = 69
       Width = 817
-      Height = 111
+      Height = 152
       BiDiMode = bdLeftToRight
       Caption = 'Dados da Consulta'
       Font.Charset = DEFAULT_CHARSET
@@ -118,8 +104,8 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
       ParentFont = False
       TabOrder = 0
       object Label_status: TLabel
-        Left = 585
-        Top = 35
+        Left = 664
+        Top = 33
         Width = 42
         Height = 21
         Caption = 'Status'
@@ -131,16 +117,16 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
         ParentFont = False
       end
       object SpeedButton_filtrar: TSpeedButton
-        Left = 718
-        Top = 55
-        Width = 83
-        Height = 31
+        Left = 681
+        Top = 104
+        Width = 120
+        Height = 33
         Caption = 'Filtrar'
         OnClick = SpeedButton_filtrarClick
       end
       object Label_filtro: TLabel
         Left = 17
-        Top = 35
+        Top = 33
         Width = 36
         Height = 21
         Caption = 'Filtro'
@@ -152,11 +138,11 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
         ParentFont = False
       end
       object Label_pesquisa: TLabel
-        Left = 200
-        Top = 35
-        Width = 60
+        Left = 185
+        Top = 33
+        Width = 210
         Height = 21
-        Caption = 'Pesquisa'
+        Caption = 'Digite o termo a ser localizado'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -164,10 +150,24 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
         Font.Style = []
         ParentFont = False
       end
+      object SpeedButton_exibirTodos: TSpeedButton
+        Left = 17
+        Top = 104
+        Width = 132
+        Height = 33
+        Caption = 'Exibir Todos'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = SpeedButton_exibirTodosClick
+      end
       object ComboBox_Status: TComboBox
-        Left = 579
-        Top = 56
-        Width = 111
+        Left = 664
+        Top = 55
+        Width = 137
         Height = 29
         Style = csDropDownList
         CharCase = ecUpperCase
@@ -182,7 +182,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
       object ComboBox_filtro: TComboBox
         Left = 17
         Top = 55
-        Width = 153
+        Width = 146
         Height = 29
         Style = csDropDownList
         CharCase = ecUpperCase
@@ -196,9 +196,9 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
         OnSelect = ComboBox_filtroSelect
       end
       object MaskEdit_pesquisa: TMaskEdit
-        Left = 198
+        Left = 185
         Top = 55
-        Width = 350
+        Width = 456
         Height = 29
         CharCase = ecUpperCase
         Font.Charset = DEFAULT_CHARSET
@@ -213,9 +213,9 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
     end
     object GroupBox_grid: TGroupBox
       Left = 20
-      Top = 194
+      Top = 232
       Width = 817
-      Height = 344
+      Height = 309
       BiDiMode = bdLeftToRight
       Caption = 'Resultado da Pesquisa'
       Font.Charset = DEFAULT_CHARSET
@@ -228,15 +228,15 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
       TabOrder = 1
       object Panel_grid: TPanel
         Left = 17
-        Top = 32
+        Top = 28
         Width = 784
-        Height = 296
+        Height = 267
         TabOrder = 0
         object DBGrid_Pesquisa: TDBGrid
           Left = 1
           Top = 1
           Width = 782
-          Height = 294
+          Height = 265
           Align = alClient
           BiDiMode = bdLeftToRight
           Color = clWhite
@@ -275,7 +275,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 165
+              Width = 205
               Visible = True
             end
             item
@@ -286,7 +286,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 133
+              Width = 147
               Visible = True
             end
             item
@@ -297,18 +297,18 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 142
+              Width = 138
               Visible = True
             end
             item
               Expanded = False
-              Title.Caption = 'E-mail'
+              Title.Caption = 'Status'
               Title.Font.Charset = DEFAULT_CHARSET
               Title.Font.Color = clWindowText
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 182
+              Width = 85
               Visible = True
             end
             item
@@ -324,12 +324,13 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
             end
             item
               Expanded = False
-              Title.Caption = 'Status'
+              Title.Caption = 'E-mail'
               Title.Font.Charset = DEFAULT_CHARSET
               Title.Font.Color = clWindowText
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
+              Width = 296
               Visible = True
             end>
         end
@@ -343,6 +344,36 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
   end
   object FDMemTable_Consulta: TFDMemTable
     Active = True
+    FieldDefs = <
+      item
+        Name = 'pes_id_pessoa'
+        DataType = ftInteger
+      end
+      item
+        Name = 'pes_nome'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'pes_cpf'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'pes_nascimento'
+        DataType = ftDate
+      end
+      item
+        Name = 'pes_email'
+        DataType = ftWideString
+        Size = 255
+      end
+      item
+        Name = 'pes_celular'
+        DataType = ftWideString
+        Size = 255
+      end>
+    IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
@@ -350,6 +381,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
     Left = 300
     Top = 298
     object FDMemTable_Consultapes_id_pessoa: TIntegerField
@@ -366,16 +398,19 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
     object FDMemTable_Consultapes_nascimento: TDateField
       FieldName = 'pes_nascimento'
     end
-    object FDMemTable_Consultapes_email: TWideStringField
-      FieldName = 'pes_email'
+    object FDMemTable_Consultasit_descricao: TWideStringField
+      FieldKind = fkCalculated
+      FieldName = 'sit_descricao'
       Size = 255
+      Calculated = True
     end
     object FDMemTable_Consultapes_celular: TWideStringField
       FieldName = 'pes_celular'
       Size = 255
     end
-    object FDMemTable_Consultapes_ativo: TIntegerField
-      FieldName = 'pes_ativo'
+    object FDMemTable_Consultapes_email: TWideStringField
+      FieldName = 'pes_email'
+      Size = 255
     end
   end
   object frxReportExport: TfrxReport
@@ -388,7 +423,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44130.771658877300000000
-    ReportOptions.LastChange = 44141.329629467600000000
+    ReportOptions.LastChange = 44148.574575104170000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -415,7 +450,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
       RightMargin = 10.000000000000000000
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
-      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+      Frame.Typ = [ftLeft, ftRight, ftTop]
       object ReportTitle1: TfrxReportTitle
         FillType = ftBrush
         Frame.Typ = []
@@ -461,7 +496,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
       object MasterData1: TfrxMasterData
         FillType = ftBrush
         Frame.Typ = []
-        Height = 18.897650000000000000
+        Height = 19.542811290000000000
         Top = 170.078850000000000000
         Width = 718.110700000000000000
         DataSet = frxDBDatasetExport
@@ -480,7 +515,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset1."pes_id_pessoa"]')
           ParentFont = False
@@ -499,7 +534,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset1."pes_nome"]')
           ParentFont = False
@@ -507,7 +542,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
         object frxDBDataset1pes_cpf: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 173.858380000000000000
+          Left = 174.429808570000000000
           Width = 124.724490000000000000
           Height = 18.897650000000000000
           DataField = 'pes_cpf'
@@ -518,7 +553,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset1."pes_cpf"]')
           ParentFont = False
@@ -537,34 +572,15 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset1."pes_nascimento"]')
-          ParentFont = False
-        end
-        object frxDBDataset1pes_email: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 374.173470000000000000
-          Width = 181.417440000000000000
-          Height = 18.897650000000000000
-          DataField = 'pes_email'
-          DataSet = frxDBDatasetExport
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            '[frxDBDataset1."pes_email"]')
           ParentFont = False
         end
         object frxDBDataset1pes_celular: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 555.590910000000000000
+          Left = 444.901254830000000000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           DataField = 'pes_celular'
@@ -575,18 +591,18 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset1."pes_celular"]')
           ParentFont = False
         end
-        object frxDBDataset1pes_ativo: TfrxMemoView
+        object frxDBDataset1pes_email: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 650.079160000000000000
-          Width = 68.031540000000000000
+          Left = 539.572484790000000000
+          Width = 178.313991720000000000
           Height = 18.897650000000000000
-          DataField = 'pes_ativo'
+          DataField = 'pes_email'
           DataSet = frxDBDatasetExport
           DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
@@ -594,9 +610,28 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
           Memo.UTF8W = (
-            '[frxDBDataset1."pes_ativo"]')
+            '[frxDBDataset1."pes_email"]')
+          ParentFont = False
+        end
+        object frxDBDataset1sit_descricao: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 375.458128080000000000
+          Width = 67.824985710000000000
+          Height = 18.853156110000000000
+          DataField = 'sit_descricao'
+          DataSet = frxDBDatasetExport
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."sit_descricao"]')
           ParentFont = False
         end
       end
@@ -638,7 +673,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
         object Memo4: TfrxMemoView
           AllowVectorExport = True
           Left = 173.858380000000000000
-          Width = 124.724490000000000000
+          Width = 125.052358850000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -652,8 +687,8 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
         end
         object Memo5: TfrxMemoView
           AllowVectorExport = True
-          Left = 298.582870000000000000
-          Width = 75.590600000000000000
+          Left = 298.921853050000000000
+          Width = 76.607549150000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -665,25 +700,11 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
             'Data Nasc.')
           ParentFont = False
         end
-        object Memo6: TfrxMemoView
-          AllowVectorExport = True
-          Left = 374.173470000000000000
-          Width = 181.417440000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            'E-mail')
-          ParentFont = False
-        end
         object Memo7: TfrxMemoView
           AllowVectorExport = True
-          Left = 555.590910000000000000
-          Width = 94.488250000000000000
+          Left = 445.056169980000000000
+          Top = -0.011689070000000000
+          Width = 94.333176890000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -697,8 +718,9 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
         end
         object Memo8: TfrxMemoView
           AllowVectorExport = True
-          Left = 650.079160000000000000
-          Width = 68.031540000000000000
+          Left = 375.268532530000000000
+          Top = -0.011689070000000000
+          Width = 69.537964460000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -708,6 +730,22 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
             'Status')
+          ParentFont = False
+        end
+        object Memo6: TfrxMemoView
+          AllowVectorExport = True
+          Left = 539.414438620000000000
+          Top = -0.011689070000000000
+          Width = 178.400852150000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            'E-mail')
           ParentFont = False
         end
       end

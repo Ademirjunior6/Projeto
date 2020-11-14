@@ -36,22 +36,22 @@ type
     SpeedButton_exportar: TSpeedButton;
     SpeedButton_detalharMov: TSpeedButton;
     SpeedButton_limparConsulta: TSpeedButton;
-    SpeedButton_exibirTodos: TSpeedButton;
     DataSource_consulta: TDataSource;
     FDMemTable_consulta: TFDMemTable;
     Panel_resultadoPesquisa: TPanel;
+    exportWORD: TfrxRTFExport;
+    exportTXT: TfrxSimpleTextExport;
+    exportPDF: TfrxPDFExport;
+    exportEXCEL: TfrxCSVExport;
     FDMemTable_consultamov_id: TIntegerField;
     FDMemTable_consultamov_data_movimento: TDateTimeField;
     FDMemTable_consultamov_tipo: TWideStringField;
     FDMemTable_consultalogin_usuario: TWideStringField;
     FDMemTable_consultaprod_desc: TWideStringField;
     FDMemTable_consultacat_desc: TWideStringField;
-    exportTXT: TfrxSimpleTextExport;
-    exportWORD: TfrxRTFExport;
-    exportPDF: TfrxPDFExport;
-    exportEXCEL: TfrxCSVExport;
-    frxReportExport: TfrxReport;
     frxDBDatasetExport: TfrxDBDataset;
+    frxReportExport: TfrxReport;
+    SpeedButton_exibirTodos: TSpeedButton;
     procedure SpeedButton_sairClick(Sender: TObject);
     procedure SpeedButton_limparConsultaClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -150,12 +150,13 @@ begin
   ComboBox_tipoMoviemento.Items.Add('ENTRADA');
   ComboBox_tipoMoviemento.Items.Add('SAÍDA');
   ComboBox_tipoMoviemento.ItemIndex := 0;
-  DBGrid_resultadoPesquisa.Columns[4].Visible := false;
-  DBGrid_resultadoPesquisa.Columns[5].Visible := false;
+  
   DBGrid_resultadoPesquisa.Columns[0].FieldName := 'mov_id';
-  DBGrid_resultadoPesquisa.Columns[1].FieldName := 'mov_data_movimento';
-  DBGrid_resultadoPesquisa.Columns[2].FieldName := 'mov_tipo';
-  DBGrid_resultadoPesquisa.Columns[3].FieldName := 'usuario';
+  DBGrid_resultadoPesquisa.Columns[1].FieldName := 'prod_desc';
+  DBGrid_resultadoPesquisa.Columns[2].FieldName := 'cat_desc';
+  DBGrid_resultadoPesquisa.Columns[3].FieldName := 'mov_tipo';
+  DBGrid_resultadoPesquisa.Columns[4].FieldName := 'mov_data_movimento';
+  DBGrid_resultadoPesquisa.Columns[5].FieldName := 'usuario';
 end;
 
 procedure TForm_RelatorioMovimento.FormShow(Sender: TObject);
@@ -194,12 +195,12 @@ var
   sql: String;
 
 begin
-  sql := 'SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,m.usuario,' +
+  sql := 'SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo, m.usuario,' +
   ' p.prod_desc, c.cat_desc FROM movimento AS m ' +
   ' INNER JOIN item_movimento AS im ON m.mov_id = im.mov_id ' +
   ' INNER JOIN produto AS p ' + ' ON im.prod_id_produto = p.prod_id_produto '+
   ' INNER JOIN categoria AS c' +
-  ' ON p.cat_id_categoria = c.cat_id_categoria WHERE 1 > 0 ';
+  ' ON p.cat_id_categoria = c.cat_id_categoria WHERE 1 > 0 order by m.mov_id';
 
   DataModuleConexao.ExecSQL(sql, FDMemTable_consulta);
 
@@ -222,12 +223,12 @@ var
   sql: String;
 begin
 
-  sql := 'SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo,m.usuario,' +
+  sql := 'SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo, m.usuario,' +
     ' p.prod_desc, c.cat_desc FROM movimento AS m ' +
     ' INNER JOIN item_movimento AS im ON m.mov_id = im.mov_id ' +
     ' INNER JOIN produto AS p ' + ' ON im.prod_id_produto = p.prod_id_produto '+
     ' INNER JOIN categoria AS c' +
-    ' ON p.cat_id_categoria = c.cat_id_categoria WHERE 1 > 0 ';
+    ' ON p.cat_id_categoria = c.cat_id_categoria WHERE 1 > 0' ;
 
   if Trim(Edit_codigo.Text) <> EmptyStr then
   begin

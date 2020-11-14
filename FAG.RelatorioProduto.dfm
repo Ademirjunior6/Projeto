@@ -3,7 +3,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
   Top = 0
   BorderIcons = []
   BorderStyle = bsSingle
-  Caption = 'Relatorio de Produto'
+  Caption = 'Relat'#243'rio de Produto'
   ClientHeight = 602
   ClientWidth = 869
   Color = clBtnFace
@@ -32,14 +32,12 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
     Height = 602
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 8
-    ExplicitTop = -8
     object Label_tituloForm: TLabel
       Left = 296
       Top = 24
       Width = 230
       Height = 32
-      Caption = 'Relatorio de Produtos'
+      Caption = 'Relat'#243'rio de Produtos'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -24
@@ -47,22 +45,8 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
       Font.Style = []
       ParentFont = False
     end
-    object SpeedButton_exibirTodos: TSpeedButton
-      Left = 20
-      Top = 557
-      Width = 132
-      Height = 33
-      Caption = 'Exibir Todos'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      OnClick = SpeedButton_exibirTodosClick
-    end
     object SpeedButton_limparConsulta: TSpeedButton
-      Left = 169
+      Left = 38
       Top = 557
       Width = 163
       Height = 33
@@ -76,7 +60,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
       OnClick = SpeedButton_limparConsultaClick
     end
     object SpeedButton_exportar: TSpeedButton
-      Left = 349
+      Left = 221
       Top = 557
       Width = 149
       Height = 33
@@ -90,7 +74,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
       OnClick = SpeedButton_exportarClick
     end
     object SpeedButton_sair: TSpeedButton
-      Left = 769
+      Left = 753
       Top = 557
       Width = 68
       Height = 33
@@ -105,9 +89,9 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
     end
     object GroupBox_consulta: TGroupBox
       Left = 20
-      Top = 76
+      Top = 72
       Width = 817
-      Height = 111
+      Height = 149
       BiDiMode = bdLeftToRight
       Caption = 'Dados da Consulta'
       Font.Charset = DEFAULT_CHARSET
@@ -119,7 +103,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
       ParentFont = False
       TabOrder = 0
       object Label_categoria: TLabel
-        Left = 442
+        Left = 490
         Top = 35
         Width = 67
         Height = 21
@@ -132,7 +116,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
         ParentFont = False
       end
       object Label_tipoMoviemento: TLabel
-        Left = 601
+        Left = 662
         Top = 35
         Width = 42
         Height = 21
@@ -145,15 +129,29 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
         ParentFont = False
       end
       object SpeedButton_filtrar: TSpeedButton
-        Left = 718
-        Top = 55
-        Width = 83
-        Height = 31
+        Left = 681
+        Top = 104
+        Width = 120
+        Height = 33
         Caption = 'Filtrar'
         OnClick = SpeedButton_filtrarClick
       end
+      object SpeedButton_exibirTodos: TSpeedButton
+        Left = 18
+        Top = 104
+        Width = 132
+        Height = 33
+        Caption = 'Exibir Todos'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = SpeedButton_exibirTodosClick
+      end
       object ComboBox_categoria: TComboBox
-        Left = 442
+        Left = 490
         Top = 56
         Width = 153
         Height = 29
@@ -168,9 +166,9 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
         TabOrder = 1
       end
       object ComboBox_Status: TComboBox
-        Left = 601
+        Left = 662
         Top = 56
-        Width = 111
+        Width = 139
         Height = 29
         Style = csDropDownList
         CharCase = ecUpperCase
@@ -183,13 +181,14 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
         TabOrder = 2
       end
       inline Frame_Produto1: TFrame_Produto
-        Left = 10
+        Left = 12
         Top = 32
-        Width = 428
+        Width = 468
         Height = 56
         TabOrder = 0
-        ExplicitLeft = 10
+        ExplicitLeft = 12
         ExplicitTop = 32
+        ExplicitWidth = 468
         inherited Label2: TLabel
           Top = 3
           ExplicitTop = 3
@@ -204,7 +203,9 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
           ExplicitWidth = 149
         end
         inherited Edit_descricao: TEdit
+          Width = 341
           Font.Style = []
+          ExplicitWidth = 341
         end
         inherited Edit_codigoProduto: TEdit
           Font.Style = []
@@ -217,9 +218,9 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
     end
     object GroupBox_grid: TGroupBox
       Left = 20
-      Top = 194
+      Top = 225
       Width = 817
-      Height = 344
+      Height = 312
       BiDiMode = bdLeftToRight
       Caption = 'Resultado da Pesquisa'
       Font.Charset = DEFAULT_CHARSET
@@ -234,13 +235,13 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
         Left = 17
         Top = 32
         Width = 784
-        Height = 296
+        Height = 261
         TabOrder = 0
         object DBGrid_Pesquisa: TDBGrid
           Left = 1
           Top = 1
           Width = 782
-          Height = 294
+          Height = 259
           Align = alClient
           BiDiMode = bdLeftToRight
           Color = clWhite
@@ -345,6 +346,28 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
     UpdateOptions.AutoCommitUpdates = True
     Left = 388
     Top = 352
+    object FDMemTable_Consultaprod_id_produto: TIntegerField
+      FieldName = 'prod_id_produto'
+    end
+    object FDMemTable_Consultaprod_desc: TWideStringField
+      FieldName = 'prod_desc'
+      Size = 255
+    end
+    object FDMemTable_Consultaun_medida_desc: TWideStringField
+      FieldName = 'un_medida_desc'
+      Size = 255
+    end
+    object FDMemTable_Consultacat_desc: TWideStringField
+      FieldName = 'cat_desc'
+      Size = 255
+    end
+    object FDMemTable_Consultaprod_data_cadastro: TDateTimeField
+      FieldName = 'prod_data_cadastro'
+    end
+    object FDMemTable_Consultaprod_quantidade: TIntegerField
+      FieldName = 'prod_quantidade'
+      OnGetText = FDMemTable_Consultaprod_quantidadeGetText
+    end
   end
   object frxReportExport: TfrxReport
     Version = '6.2.1'

@@ -5,7 +5,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Relatorio de Movimenta'#231#227'o'
-  ClientHeight = 604
+  ClientHeight = 602
   ClientWidth = 869
   Color = clBtnFace
   Constraints.MaxHeight = 633
@@ -31,7 +31,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
     Left = 0
     Top = 0
     Width = 869
-    Height = 604
+    Height = 602
     Align = alClient
     UseDockManager = False
     Font.Charset = DEFAULT_CHARSET
@@ -69,7 +69,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       OnClick = SpeedButton_sairClick
     end
     object SpeedButton_exportar: TSpeedButton
-      Left = 574
+      Left = 214
       Top = 557
       Width = 149
       Height = 33
@@ -83,7 +83,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       OnClick = SpeedButton_exportarClick
     end
     object SpeedButton_detalharMov: TSpeedButton
-      Left = 365
+      Left = 392
       Top = 557
       Width = 193
       Height = 33
@@ -97,7 +97,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       OnClick = SpeedButton_detalharMovClick
     end
     object SpeedButton_limparConsulta: TSpeedButton
-      Left = 184
+      Left = 37
       Top = 557
       Width = 163
       Height = 33
@@ -109,20 +109,6 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       Font.Style = [fsBold]
       ParentFont = False
       OnClick = SpeedButton_limparConsultaClick
-    end
-    object SpeedButton_exibirTodos: TSpeedButton
-      Left = 37
-      Top = 557
-      Width = 132
-      Height = 33
-      Caption = 'Exibir Todos'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      OnClick = SpeedButton_exibirTodosClick
     end
     object GroupBox1: TGroupBox
       Left = 19
@@ -179,8 +165,8 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
       end
       object Label_categoria: TLabel
-        Left = 361
-        Top = 93
+        Left = 577
+        Top = 29
         Width = 67
         Height = 21
         Caption = 'Categoria'
@@ -205,7 +191,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
       end
       object Label_tipoMoviemento: TLabel
-        Left = 536
+        Left = 361
         Top = 93
         Width = 135
         Height = 21
@@ -218,12 +204,26 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
       end
       object SpeedButton_filtrar: TSpeedButton
-        Left = 707
-        Top = 115
-        Width = 83
-        Height = 30
+        Left = 535
+        Top = 112
+        Width = 103
+        Height = 33
         Caption = 'Filtrar'
         OnClick = SpeedButton_filtrarClick
+      end
+      object SpeedButton_exibirTodos: TSpeedButton
+        Left = 657
+        Top = 112
+        Width = 132
+        Height = 33
+        Caption = 'Exibir Todos'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = SpeedButton_exibirTodosClick
       end
       object Edit_codigo: TEdit
         Left = 18
@@ -256,9 +256,9 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         TabOrder = 3
       end
       object ComboBox_categoria: TComboBox
-        Left = 361
-        Top = 115
-        Width = 153
+        Left = 577
+        Top = 51
+        Width = 212
         Height = 29
         Style = csDropDownList
         CharCase = ecUpperCase
@@ -303,7 +303,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         TabOrder = 1
       end
       object ComboBox_tipoMoviemento: TComboBox
-        Left = 536
+        Left = 361
         Top = 115
         Width = 153
         Height = 29
@@ -373,23 +373,12 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
               Title.Font.Height = -13
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 152
+              Width = 50
               Visible = True
             end
             item
               Expanded = False
-              Title.Caption = 'Data'
-              Title.Font.Charset = DEFAULT_CHARSET
-              Title.Font.Color = clWindowText
-              Title.Font.Height = -13
-              Title.Font.Name = 'Segoe UI'
-              Title.Font.Style = []
-              Width = 195
-              Visible = True
-            end
-            item
-              Expanded = False
-              Title.Caption = 'Tipo de Movimento'
+              Title.Caption = 'Descri'#231#227'o'
               Title.Font.Charset = DEFAULT_CHARSET
               Title.Font.Color = clWindowText
               Title.Font.Height = -13
@@ -400,23 +389,36 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
             end
             item
               Expanded = False
-              Title.Caption = 'Usu'#225'rio'
+              Title.Caption = 'Categoria'
               Title.Font.Charset = DEFAULT_CHARSET
               Title.Font.Color = clWindowText
               Title.Font.Height = -13
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 186
+              Width = 167
               Visible = True
             end
             item
               Expanded = False
-              Width = 2
+              Title.Caption = 'Entrada/Sa'#237'da'
+              Title.Font.Charset = DEFAULT_CHARSET
+              Title.Font.Color = clWindowText
+              Title.Font.Height = -13
+              Title.Font.Name = 'Segoe UI'
+              Title.Font.Style = []
+              Width = 107
               Visible = True
             end
             item
               Expanded = False
-              Width = 2
+              Title.Caption = 'Data'
+              Width = 179
+              Visible = True
+            end
+            item
+              Expanded = False
+              Title.Caption = 'Usu'#225'rio'
+              Width = 137
               Visible = True
             end>
         end
@@ -429,36 +431,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
     Top = 384
   end
   object FDMemTable_consulta: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'mov_id'
-        DataType = ftInteger
-      end
-      item
-        Name = 'mov_data_movimento'
-        DataType = ftDateTime
-      end
-      item
-        Name = 'mov_tipo'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'usuario'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'prod_desc'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'cat_desc'
-        DataType = ftWideString
-        Size = 255
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -493,19 +466,6 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       Size = 255
     end
   end
-  object exportTXT: TfrxSimpleTextExport
-    UseFileCache = True
-    ShowProgress = True
-    OverwritePrompt = False
-    DataOnly = False
-    Frames = False
-    EmptyLines = False
-    OEMCodepage = False
-    OpenAfterExport = False
-    DeleteEmptyColumns = True
-    Left = 368
-    Top = 72
-  end
   object exportWORD: TfrxRTFExport
     UseFileCache = True
     ShowProgress = True
@@ -518,8 +478,21 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
     SuppressPageHeadersFooters = False
     HeaderFooterMode = hfText
     AutoSize = False
-    Left = 296
-    Top = 72
+    Left = 24
+    Top = 24
+  end
+  object exportTXT: TfrxSimpleTextExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    Frames = False
+    EmptyLines = False
+    OEMCodepage = False
+    OpenAfterExport = False
+    DeleteEmptyColumns = True
+    Left = 96
+    Top = 24
   end
   object exportPDF: TfrxPDFExport
     UseFileCache = True
@@ -543,8 +516,8 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
     CenterWindow = False
     PrintScaling = False
     PdfA = False
-    Left = 432
-    Top = 72
+    Left = 160
+    Top = 24
   end
   object exportEXCEL: TfrxCSVExport
     UseFileCache = True
@@ -557,8 +530,16 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
     OpenAfterExport = False
     NoSysSymbols = True
     ForcedQuotes = False
-    Left = 504
-    Top = 72
+    Left = 232
+    Top = 24
+  end
+  object frxDBDatasetExport: TfrxDBDataset
+    UserName = 'frxDBDataset1'
+    CloseDataSource = False
+    DataSet = FDMemTable_consulta
+    BCDToCurrency = False
+    Left = 676
+    Top = 13
   end
   object frxReportExport: TfrxReport
     Version = '6.2.1'
@@ -569,14 +550,14 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44130.771658877300000000
-    ReportOptions.LastChange = 44144.820389282410000000
+    ReportOptions.LastChange = 44148.672571377310000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
       ''
       'end.')
-    Left = 608
-    Top = 96
+    Left = 564
+    Top = 18
     Datasets = <
       item
         DataSet = frxDBDatasetExport
@@ -597,6 +578,16 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
       Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+      HGuides.Strings = (
+        '110,00'
+        '90,80972973')
+      VGuides.Strings = (
+        '318,93'
+        '174,64'
+        '52,14'
+        '425,36'
+        '574,29'
+        '717,86')
       object ReportTitle1: TfrxReportTitle
         FillType = ftBrush
         Frame.Typ = []
@@ -645,15 +636,114 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         Height = 18.897650000000000000
         Top = 170.078850000000000000
         Width = 718.110700000000000000
-        DataSet = frxDBDatasetExport
+        DataSet = Form_RelatorioProduto.frxDBDatasetExport
         DataSetName = 'frxDBDataset1'
         RowCount = 0
+        object frxDBDataset1mov_tipo: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 318.930000000000000000
+          Top = -0.555040470000000000
+          Width = 106.430000000000000000
+          Height = 18.897650000000000000
+          DataField = 'mov_tipo'
+          DataSet = Form_RelatorioProduto.frxDBDatasetExport
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."mov_tipo"]')
+          ParentFont = False
+        end
+        object frxDBDataset1prod_desc: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 52.229437220000000000
+          Top = -0.381880300000000000
+          Width = 121.885591260000000000
+          Height = 18.897650000000000000
+          DataField = 'prod_desc'
+          DataSet = frxDBDatasetExport
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."prod_desc"]')
+          ParentFont = False
+        end
+        object frxDBDataset1cat_desc: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 174.285714270000000000
+          Top = -0.435992860000000000
+          Width = 144.915894290000000000
+          Height = 18.897650000000000000
+          DataField = 'cat_desc'
+          DataSet = frxDBDatasetExport
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."cat_desc"]')
+          ParentFont = False
+        end
+        object frxDBDataset1mov_data_movimento: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 425.360000000000000000
+          Top = -0.555040460000000000
+          Width = 148.930000000000000000
+          Height = 18.897650000000000000
+          DataField = 'mov_data_movimento'
+          DataSet = Form_RelatorioProduto.frxDBDatasetExport
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."mov_data_movimento"]')
+          ParentFont = False
+        end
+        object frxDBDataset1usuario: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 574.290000000000000000
+          Top = -0.641913060000000000
+          Width = 143.570000000000000000
+          Height = 18.897650000000000000
+          DataField = 'usuario'
+          DataSet = Form_RelatorioProduto.frxDBDatasetExport
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."usuario"]')
+          ParentFont = False
+        end
         object frxDBDataset1mov_id: TfrxMemoView
           IndexTag = 1
-          Align = baWidth
           AllowVectorExport = True
-          Top = -0.078850000000000000
-          Width = 127.000000000000000000
+          Top = -0.349120270000000000
+          Width = 52.140000000000000000
           Height = 18.897650000000000000
           DataField = 'mov_id'
           DataSet = frxDBDatasetExport
@@ -668,78 +758,18 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
             '[frxDBDataset1."mov_id"]')
           ParentFont = False
         end
-        object frxDBDataset1mov_data_movimento: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 127.000000000000000000
-          Top = -0.078850000000000000
-          Width = 187.622140000000000000
-          Height = 18.897650000000000000
-          DataField = 'mov_data_movimento'
-          DataSet = frxDBDatasetExport
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            '[frxDBDataset1."mov_data_movimento"]')
-          ParentFont = False
-        end
-        object frxDBDataset1mov_tipo1: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 315.095238100000000000
-          Top = -0.228819050000000000
-          Width = 187.011132380000000000
-          Height = 18.897650000000000000
-          DataField = 'mov_tipo'
-          DataSet = frxDBDatasetExport
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            '[frxDBDataset1."mov_tipo"]')
-          ParentFont = False
-        end
-        object frxDBDataset1login_usuario: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 501.666666670000000000
-          Top = -0.133580950000000000
-          Width = 215.868275240000000000
-          Height = 18.897650000000000000
-          DataField = 'usuario'
-          DataSet = frxDBDatasetExport
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            '[frxDBDataset1."usuario"]')
-          ParentFont = False
-        end
       end
       object PageHeader1: TfrxPageHeader
         FillType = ftBrush
         Frame.Typ = []
-        Height = 18.897650000000000000
+        Height = 19.291280000000000000
         Top = 90.708720000000000000
         Width = 718.110700000000000000
         object Memo2: TfrxMemoView
-          Align = baWidth
           AllowVectorExport = True
-          Width = 127.354360000000000000
-          Height = 18.897650000000000000
+          Top = 0.101009730000000000
+          Width = 51.724137940000000000
+          Height = 19.190270270000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -751,11 +781,11 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
           ParentFont = False
         end
         object Memo3: TfrxMemoView
-          Align = baWidth
           AllowVectorExport = True
-          Left = 127.354360000000000000
-          Width = 187.504020000000000000
-          Height = 18.897650000000000000
+          Left = 425.522732760000000000
+          Top = 0.101009730000000000
+          Width = 149.163585520000000000
+          Height = 19.190270270000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -769,9 +799,10 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         object Memo4: TfrxMemoView
           Align = baWidth
           AllowVectorExport = True
-          Left = 314.858380000000000000
-          Width = 186.724490000000000000
-          Height = 18.897650000000000000
+          Left = 318.930000000000000000
+          Top = 0.101009730000000000
+          Width = 106.592732760000000000
+          Height = 19.190270270000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -779,14 +810,16 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
-            'Tipo de Movimento')
+            'Entrada/Sa'#237'da')
           ParentFont = False
         end
         object Memo7: TfrxMemoView
+          Align = baWidth
           AllowVectorExport = True
-          Left = 501.582870000000000000
-          Width = 216.527830000000000000
-          Height = 18.897650000000000000
+          Left = 574.686318280000000000
+          Top = 0.101009730000000000
+          Width = 143.424381720000000000
+          Height = 19.190270270000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -797,15 +830,39 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
             'Usu'#225'rio')
           ParentFont = False
         end
+        object Memo5: TfrxMemoView
+          AllowVectorExport = True
+          Left = 51.724137940000000000
+          Top = 0.101009730000000000
+          Width = 122.764112070000000000
+          Height = 19.190270270000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            'Descri'#231#227'o')
+          ParentFont = False
+        end
+        object Memo8: TfrxMemoView
+          AllowVectorExport = True
+          Left = 174.482758630000000000
+          Top = 0.101009730000000000
+          Width = 144.447241370000000000
+          Height = 19.190270270000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            'Categoria')
+          ParentFont = False
+        end
       end
     end
-  end
-  object frxDBDatasetExport: TfrxDBDataset
-    UserName = 'frxDBDataset1'
-    CloseDataSource = False
-    DataSet = FDMemTable_consulta
-    BCDToCurrency = False
-    Left = 688
-    Top = 32
   end
 end

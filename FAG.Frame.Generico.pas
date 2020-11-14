@@ -26,6 +26,7 @@ type
     Ftitulo: String;
     FprimeiraOpcao: String;
     FindexCombo: String;
+    FcampoSigla: String;
     procedure Setcampos(const Value: String);
     procedure Settabela(const Value: String);
     procedure SetcarregaFrame(const Value: Boolean);
@@ -35,14 +36,15 @@ type
     procedure Settitulo(const Value: String);
     procedure SetprimeiraOpcao(const Value: String);
     procedure SetindexCombo(const Value: String);
+    procedure SetcampoSigla(const Value: String);
     { Private declarations }
   public
     property tabela: String read Ftabela write Settabela; // tabela do banco
     // Campo id chave da tabela
     property campoChave: String read FcampoChave write Setcampos;
     // campo descricao da tabela
-    property campoDescricao: String read FcampoDescricao
-      write SetcampoDescricao;
+    property campoDescricao: String read FcampoDescricao write SetcampoDescricao;
+    property campoSigla: String read FcampoSigla write SetcampoSigla;
     // campo1, campo2, campo3
     property camposExtras: String read FcamposExtras write SetcamposExtras;
     // campo = "1" AND campo2 = "teste"
@@ -81,6 +83,7 @@ begin
   tabela := emptyStr;
   campoChave := emptyStr;
   campoDescricao := emptyStr;
+  campoSigla := emptyStr;
   camposExtras := emptyStr;
   condicao := emptyStr;
   titulo := emptyStr;
@@ -91,10 +94,20 @@ end;
 procedure TFrame_Generico.SetcarregaFrame(const Value: Boolean);
 var
   sql: String;
+  addS: String;
 begin
   Label_Titulo.Caption := titulo;
-  sql := 'SELECT ' + campoChave + ',' + campoDescricao + ' ' + camposExtras +
-    ' FROM ' + tabela + ' ' + condicao;
+  if not camposExtras.IsEmpty then
+    sql := 'SELECT ' + campoChave + ',' + campoDescricao + ', ' + camposExtras + ' ' + campoSigla +
+      ' FROM ' + tabela + ' ' + condicao
+   else
+    if not campoSigla.IsEmpty then
+      sql := 'SELECT ' + campoChave + ',' + campoDescricao + ', ' + camposExtras + ' ' + campoSigla +
+        ' FROM ' + tabela + ' ' + condicao
+    else
+      sql := 'SELECT ' + campoChave + ',' + campoDescricao + ' ' + camposExtras + ' ' + campoSigla +
+        ' FROM ' + tabela + ' ' + condicao;
+
   DataModuleConexao.ExecSQL(sql, TableTemp);
   TableTemp.First;
   ComboBox_Informacao.Clear;
@@ -102,8 +115,14 @@ begin
   ComboBox_Informacao.ItemIndex := 0;
   while not TableTemp.eof do
   begin
-    ComboBox_Informacao.Items.Add(TableTemp.FieldByName(campoChave).AsString +
-      '-' + TableTemp.FieldByName(campoDescricao).AsString);
+    if not campoSigla.IsEmpty then
+      addS :=TableTemp.FieldByName(campoChave).AsString +
+      '-' + TableTemp.FieldByName(campoDescricao).AsString+ ' - ' + TableTemp.FieldByName(campoSigla).AsString
+    else
+      addS := TableTemp.FieldByName(campoChave).AsString +
+      '-' + TableTemp.FieldByName(campoDescricao).AsString;
+
+    ComboBox_Informacao.Items.Add(addS);
     TableTemp.Next;
   end;
   FcarregaFrame := Value;
@@ -111,7 +130,7 @@ end;
 
 procedure TFrame_Generico.Setcondicao(const Value: String);
 begin
- // Fcondicao := ' WHERE 1 > 0 ' + Value;
+  // Fcondicao := ' WHERE 1 > 0 ' + Value;
   Fcondicao := Value;
 end;
 
@@ -140,7 +159,6 @@ begin
   FcampoDescricao := Value;
 end;
 
-
 procedure TFrame_Generico.Setcampos(const Value: String);
 begin
   FcampoChave := Value;
@@ -149,6 +167,11 @@ end;
 procedure TFrame_Generico.SetcamposExtras(const Value: String);
 begin
   FcamposExtras := Value;
+end;
+
+procedure TFrame_Generico.SetcampoSigla(const Value: String);
+begin
+  FcampoSigla := Value;
 end;
 
 end.
