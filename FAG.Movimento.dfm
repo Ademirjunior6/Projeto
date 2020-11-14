@@ -42,7 +42,7 @@ object Form_Movimento: TForm_Movimento
       OnClick = SpeedButton_salvarClick
     end
     object SpeedButton_sair: TSpeedButton
-      Left = 737
+      Left = 131
       Top = 556
       Width = 109
       Height = 33
@@ -88,7 +88,7 @@ object Form_Movimento: TForm_Movimento
         830
         525)
       object Label_codigo: TLabel
-        Left = 11
+        Left = 9
         Top = 27
         Width = 134
         Height = 21
@@ -101,8 +101,8 @@ object Form_Movimento: TForm_Movimento
         ParentFont = False
       end
       object Label1: TLabel
-        Left = 160
-        Top = 28
+        Left = 163
+        Top = 27
         Width = 114
         Height = 21
         Caption = 'Tipo Movimento'
@@ -127,10 +127,10 @@ object Form_Movimento: TForm_Movimento
         ParentFont = False
       end
       object Edit_codigo: TEdit
-        Left = 11
+        Left = 9
         Top = 50
-        Width = 134
-        Height = 29
+        Width = 145
+        Height = 27
         Anchors = [akLeft, akTop, akRight]
         AutoSize = False
         Enabled = False
@@ -143,9 +143,9 @@ object Form_Movimento: TForm_Movimento
         TabOrder = 0
       end
       object ComboBox_tipoMovimento: TComboBox
-        Left = 160
+        Left = 163
         Top = 50
-        Width = 118
+        Width = 129
         Height = 27
         Style = csDropDownList
         Font.Charset = DEFAULT_CHARSET
@@ -191,6 +191,7 @@ object Form_Movimento: TForm_Movimento
           Font.Height = -13
           Font.Name = 'Segoe UI'
           Font.Style = []
+          Options = [dgTitles, dgIndicator, dgColLines, dgRowLines, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
           ParentFont = False
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
@@ -210,7 +211,7 @@ object Form_Movimento: TForm_Movimento
               Expanded = False
               FieldName = 'prod_desc'
               Title.Caption = 'Descri'#231#227'o'
-              Width = 285
+              Width = 332
               Visible = True
             end
             item
@@ -224,14 +225,14 @@ object Form_Movimento: TForm_Movimento
               Expanded = False
               FieldName = 'mov_tipo'
               Title.Caption = 'Entrada / Sa'#237'da'
-              Width = 156
+              Width = 152
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'prod_quantidade'
               Title.Caption = 'Quantidade'
-              Width = 88
+              Width = 125
               Visible = True
             end>
         end
@@ -293,7 +294,7 @@ object Form_Movimento: TForm_Movimento
             822
             65)
           object Label2: TLabel
-            Left = 8
+            Left = 5
             Top = -1
             Width = 54
             Height = 21
@@ -699,7 +700,7 @@ object Form_Movimento: TForm_Movimento
             OnClick = Image1Click
           end
           object Label3: TLabel
-            Left = 118
+            Left = 121
             Top = -1
             Width = 127
             Height = 21
@@ -712,7 +713,7 @@ object Form_Movimento: TForm_Movimento
             ParentFont = False
           end
           object Label5: TLabel
-            Left = 461
+            Left = 456
             Top = -1
             Width = 67
             Height = 21
@@ -738,9 +739,9 @@ object Form_Movimento: TForm_Movimento
             ParentFont = False
           end
           object Edit_codigoProduto: TEdit
-            Left = 8
+            Left = 5
             Top = 24
-            Width = 75
+            Width = 78
             Height = 29
             Anchors = [akLeft, akTop, akRight]
             AutoSize = False
@@ -749,14 +750,15 @@ object Form_Movimento: TForm_Movimento
             Font.Height = -16
             Font.Name = 'Segoe UI'
             Font.Style = [fsBold]
+            NumbersOnly = True
             ParentFont = False
             TabOrder = 0
             OnExit = Edit_codigoProdutoExit
           end
           object Edit_descricao: TEdit
-            Left = 118
+            Left = 121
             Top = 24
-            Width = 323
+            Width = 327
             Height = 29
             Anchors = [akLeft, akTop, akRight]
             AutoSize = False
@@ -770,9 +772,9 @@ object Form_Movimento: TForm_Movimento
             TabOrder = 1
           end
           object Edit_categoria: TEdit
-            Left = 461
+            Left = 456
             Top = 24
-            Width = 215
+            Width = 218
             Height = 29
             Anchors = [akLeft, akTop, akRight]
             AutoSize = False
@@ -788,7 +790,7 @@ object Form_Movimento: TForm_Movimento
           object Edit_quantidade: TEdit
             Left = 683
             Top = 24
-            Width = 128
+            Width = 134
             Height = 29
             Anchors = [akLeft, akTop, akRight]
             AutoSize = False
@@ -797,6 +799,7 @@ object Form_Movimento: TForm_Movimento
             Font.Height = -16
             Font.Name = 'Segoe UI'
             Font.Style = [fsBold]
+            NumbersOnly = True
             ParentFont = False
             TabOrder = 3
           end
@@ -828,8 +831,8 @@ object Form_Movimento: TForm_Movimento
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 408
-    Top = 60
+    Left = 440
+    Top = 68
   end
   object Table_Itens: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -859,5 +862,16 @@ object Form_Movimento: TForm_Movimento
     object Table_Itensprod_quantidade: TIntegerField
       FieldName = 'prod_quantidade'
     end
+  end
+  object FDMemTable3: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 344
+    Top = 76
   end
 end

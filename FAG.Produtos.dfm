@@ -3,8 +3,8 @@ object Form_Produtos: TForm_Produtos
   Top = 0
   BorderIcons = [biSystemMenu]
   Caption = 'Todos os produtos'
-  ClientHeight = 286
-  ClientWidth = 727
+  ClientHeight = 373
+  ClientWidth = 743
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,10 +16,37 @@ object Form_Produtos: TForm_Produtos
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object Label1: TLabel
+    Left = 6
+    Top = 5
+    Width = 138
+    Height = 21
+    Caption = 'Pesquisar descri'#231#227'o:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+  end
+  object SpeedButton_Filtrar: TSpeedButton
+    Left = 377
+    Top = 32
+    Width = 109
+    Height = 29
+    Caption = 'Filtrar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
+    OnClick = SpeedButton_FiltrarClick
+  end
   object DBGrid1: TDBGrid
-    Left = 0
-    Top = -4
-    Width = 729
+    Left = 6
+    Top = 67
+    Width = 730
     Height = 297
     DataSource = ds_Produtos
     Font.Charset = DEFAULT_CHARSET
@@ -97,6 +124,25 @@ object Form_Produtos: TForm_Produtos
         Visible = True
       end>
   end
+  object Edit_Pesquisa: TEdit
+    Left = 6
+    Top = 32
+    Width = 369
+    Height = 29
+    Hint = 'DIGITE O PRODUTO OU INICIAL AQUI'
+    CharCase = ecUpperCase
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    OEMConvert = True
+    ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 1
+    OnKeyPress = Edit_PesquisaKeyPress
+  end
   object Mem_Produtos: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -106,11 +152,11 @@ object Form_Produtos: TForm_Produtos
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     Left = 216
-    Top = 168
+    Top = 156
   end
   object ds_Produtos: TDataSource
     DataSet = Mem_Produtos
     Left = 408
-    Top = 136
+    Top = 124
   end
 end

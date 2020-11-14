@@ -50,6 +50,7 @@ type
     Table_Itensprod_quantidade: TIntegerField;
     Table_Itensmov_tipo: TStringField;
     Table_Itensun_medida_desc: TStringField;
+    FDMemTable3: TFDMemTable;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure SpeedButton_removerClick(Sender: TObject);
@@ -66,7 +67,7 @@ type
     function delItem: Boolean;
     function saveLancamento: Boolean;
     procedure limpar;
-    function alterarQuantidade: Boolean;
+    procedure alterarQuantidade;
   public
     { Public declarations }
   end;
@@ -106,34 +107,51 @@ begin
 
 end;
 
-function TForm_Movimento.alterarQuantidade: Boolean;
+procedure TForm_Movimento.alterarQuantidade;
 var
-sql: String;
-resultado: TFDMemTable;
-soma: Double;
+  buscar: integer;
+
 begin
 
-  sql := 'SELECT prod_quantidade from produto where prod_id_produto';
-
-  DataModuleConexao.ExecSQL(sql, resultado);
+  DataModuleConexao.ExecSQL
+    ('SELECT prod_quantidade FROM produto WHERE prod_id_produto = ' +
+    Table_Itens.FieldByName('prod_id_produto').AsString, FDMemTable3);
 
   if Table_Itens.FieldByName('mov_tipo').AsString = 'ENTRADA' then
   begin
-    resultado.FieldByName('prod_quantidade').AsString;
+    buscar := Table_Itens.FieldByName('prod_quantidade').AsInteger +
+      FDMemTable3.FieldByName('prod_quantidade').AsInteger;
+
+    DataModuleConexao.ExecSQL('UPDATE produto SET prod_quantidade = ' +
+      IntToStr(buscar) + ' WHERE prod_id_produto = ' + Table_Itens.FieldByName
+      ('prod_id_produto').AsString);
   end
   else if Table_Itens.FieldByName('mov_tipo').AsString = 'SAÍDA' then
   begin
+    buscar := (FDMemTable3.FieldByName('prod_quantidade').AsInteger) -
+      (Table_Itens.FieldByName('prod_quantidade').AsInteger);
 
+    DataModuleConexao.ExecSQL('UPDATE produto SET prod_quantidade = ' +
+      IntToStr(buscar) + ' WHERE prod_id_produto = ' + Table_Itens.FieldByName
+      ('prod_id_produto').AsString);
   end;
 
 end;
 
 function TForm_Movimento.delItem: Boolean;
 begin
-  if Application.MessageBox('Atenção, deseja remover o item do grid?',
-    'Remoção do item', MB_ICONWARNING + MB_TASKMODAL + MB_YESNO) = ID_YES then
+  if Table_Itens.IsEmpty then
   begin
-    Table_Itens.Delete;
+    Application.MessageBox('Não existe itens para remover',
+      'Lançamento em branco', MB_ICONWARNING + MB_TASKMODAL + MB_OK);
+  end
+  else
+  begin
+    if Application.MessageBox('Atenção, deseja remover o item do lançamento?',
+      'Remoção do item', MB_ICONWARNING + MB_TASKMODAL + MB_YESNO) = ID_YES then
+    begin
+      Table_Itens.Delete;
+    end;
   end;
 end;
 
@@ -167,6 +185,7 @@ var
   codigo: String;
 begin
   Table_Itens.CreateDataSet;
+  DateTimePicker1.DateTime := Now;
   DataModuleConexao.ExecSQL('SELECT MAX(mov_id)+1 FROM movimento', FDMemTable1);
   codigo := FDMemTable1.FieldByName('MAX(mov_id)+1').AsString;
   Edit_codigo.Text := codigo;
@@ -212,7 +231,7 @@ begin
   Edit_descricao.Clear;
   Edit_categoria.Clear;
   Edit_quantidade.Clear;
-
+  Table_Itens.EmptyDataSet;
 end;
 
 function TForm_Movimento.saveLancamento: Boolean;
@@ -220,35 +239,46 @@ var
   sql: String;
   sql2: String;
   codigo: String;
+
 begin
 
-  Table_Itens.First;
-  while not Table_Itens.Eof do
+  if Table_Itens.IsEmpty then
   begin
-    DataModuleConexao.ExecSQL('SELECT MAX(mov_id)+1 FROM movimento',
-      FDMemTable1);
+    Application.MessageBox
+      ('Você precisa primeiro realizar um lançamento para salvar',
+      'Lançamento em branco', MB_ICONINFORMATION + MB_TASKMODAL + MB_OK);
+  end
+  else
+  begin
 
-    codigo := FDMemTable1.FieldByName('MAX(mov_id)+1').AsString;
+    Table_Itens.First;
+    while not Table_Itens.Eof do
+    begin
+      DataModuleConexao.ExecSQL('SELECT MAX(mov_id)+1 FROM movimento',
+        FDMemTable1);
 
-    sql := 'INSERT INTO movimento (mov_tipo, usuario, mov_data_movimento) VALUES ("'
-      + Table_Itens.FieldByName('mov_tipo').AsString + ' ","' +
-      Form_Menu.usuarioLogado + '", now())';
+      codigo := FDMemTable1.FieldByName('MAX(mov_id)+1').AsString;
 
-    sql2 := 'INSERT INTO item_movimento (mov_id, prod_id_produto, mov_quantidade) VALUES ('
-      + codigo + ',' + Table_Itens.FieldByName('prod_id_produto').AsString + ','
-      + Table_Itens.FieldByName('prod_quantidade').AsString + ')';
+      sql := 'INSERT INTO movimento (mov_tipo, usuario, mov_data_movimento) VALUES ("'
+        + Table_Itens.FieldByName('mov_tipo').AsString + ' ","' +
+        Form_Menu.usuarioLogado + '", now())';
 
-    DataModuleConexao.ExecSQL(sql);
-    DataModuleConexao.ExecSQL(sql2);
+      sql2 := 'INSERT INTO item_movimento (mov_id, prod_id_produto, mov_quantidade) VALUES ('
+        + codigo + ',' + Table_Itens.FieldByName('prod_id_produto').AsString +
+        ',' + Table_Itens.FieldByName('prod_quantidade').AsString + ')';
 
-    Table_Itens.Next;
+      alterarQuantidade;
+      DataModuleConexao.ExecSQL(sql);
+      DataModuleConexao.ExecSQL(sql2);
+
+      Table_Itens.Next;
+    end;
+
+    Application.MessageBox('Movimento realizado com sucesso', 'Sucesso',
+      MB_ICONINFORMATION + MB_TASKMODAL + MB_OK);
+
+    limpar;
   end;
-
-  Application.MessageBox('Movimento realizado com sucesso', 'Sucesso',
-    MB_ICONINFORMATION + MB_TASKMODAL + MB_OK);
-
-  Form_Movimento.Close;
-
 end;
 
 procedure TForm_Movimento.SpeedButton_AdicionarClick(Sender: TObject);
