@@ -85,7 +85,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       Top = 78
       Width = 833
       Height = 195
-      Caption = 'Dados Pessoais'
+      Caption = '  Dados Pessoais  '
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -94,7 +94,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       ParentFont = False
       TabOrder = 0
       object Label_codigo: TLabel
-        Left = 7
+        Left = 16
         Top = 21
         Width = 50
         Height = 21
@@ -211,7 +211,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
       end
       object Edit_codigo: TEdit
-        Left = 7
+        Left = 16
         Top = 48
         Width = 65
         Height = 29
@@ -220,6 +220,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        NumbersOnly = True
         ParentFont = False
         TabOrder = 0
         OnExit = Edit_codigoExit
@@ -248,7 +249,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 4
+        TabOrder = 5
       end
       object Date_Nascimento: TDateTimePicker
         Left = 136
@@ -263,7 +264,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 2
+        TabOrder = 8
       end
       object Edit_Matricula: TEdit
         Left = 716
@@ -276,7 +277,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 6
       end
       object ComboBox_Sexo: TComboBox
         Left = 16
@@ -302,7 +303,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 6
+        TabOrder = 9
       end
       object Edit_Telefone: TEdit
         Left = 464
@@ -315,7 +316,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 8
+        TabOrder = 10
       end
       inline Frame_Pessoa: TFrame_Generico
         Left = 226
@@ -328,7 +329,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 1
+        TabOrder = 2
         ExplicitLeft = 226
         ExplicitTop = 21
         ExplicitWidth = 177
@@ -343,6 +344,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
           Left = 4
           Top = 27
           Width = 140
+          Style = csDropDownList
+          OnChange = Frame_PessoaComboBox_InformacaoChange
           OnExit = Frame_PessoaComboBox_InformacaoExit
           ExplicitLeft = 4
           ExplicitTop = 27
@@ -353,29 +356,63 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
           Top = 8
         end
       end
-    end
-    object Mask_CPF: TMaskEdit
-      Left = 404
-      Top = 182
-      Width = 174
-      Height = 29
-      EditMask = '999.999.999-99;1;_'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = []
-      MaxLength = 14
-      ParentFont = False
-      TabOrder = 3
-      Text = '   .   .   -  '
+      object Mask_CPF: TMaskEdit
+        Left = 376
+        Top = 104
+        Width = 176
+        Height = 29
+        EditMask = '000.000.000-00;1;_'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        MaxLength = 14
+        ParentFont = False
+        TabOrder = 4
+        Text = '   .   .   -  '
+      end
+      inline Frame_Status: TFrame_Generico
+        Left = 97
+        Top = 22
+        Width = 119
+        Height = 68
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 1
+        ExplicitLeft = 97
+        ExplicitTop = 22
+        ExplicitWidth = 119
+        ExplicitHeight = 68
+        inherited Label_Titulo: TLabel
+          Left = 4
+          ExplicitLeft = 4
+        end
+        inherited ComboBox_Informacao: TComboBox
+          Left = 5
+          Top = 26
+          Width = 104
+          Style = csDropDownList
+          ExplicitLeft = 5
+          ExplicitTop = 26
+          ExplicitWidth = 104
+        end
+        inherited TableTemp: TFDMemTable
+          Left = 32
+          Top = 8
+        end
+      end
     end
     object GroupBox2: TGroupBox
       Left = 28
       Top = 279
       Width = 833
       Height = 146
-      Caption = 'Endere'#231'o'
+      Caption = '  Endere'#231'o  '
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -571,7 +608,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       Top = 426
       Width = 833
       Height = 146
-      Caption = 'Dados de Acesso'
+      Caption = '  Dados de Acesso '
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -683,39 +720,6 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
         TabOrder = 3
       end
-    end
-  end
-  inline Frame_Status: TFrame_Generico
-    Left = 121
-    Top = 91
-    Width = 119
-    Height = 68
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 1
-    ExplicitLeft = 121
-    ExplicitTop = 91
-    ExplicitWidth = 119
-    ExplicitHeight = 68
-    inherited Label_Titulo: TLabel
-      Top = 0
-      ExplicitTop = 0
-    end
-    inherited ComboBox_Informacao: TComboBox
-      Left = 3
-      Top = 27
-      Width = 104
-      ExplicitLeft = 3
-      ExplicitTop = 27
-      ExplicitWidth = 104
-    end
-    inherited TableTemp: TFDMemTable
-      Left = 32
-      Top = 8
     end
   end
   object FDMemTable1: TFDMemTable

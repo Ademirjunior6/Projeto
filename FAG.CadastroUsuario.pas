@@ -10,7 +10,7 @@ uses
   Vcl.Buttons, Vcl.Mask, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  FAG.Frame.Generico, FireDAC.Stan.Async, FireDAC.DApt;
+  FAG.Frame.Generico, FireDAC.Stan.Async, FireDAC.DApt, FAG.Utils;
 
 type
   TForm_CadastroUsuario = class(TForm)
@@ -73,19 +73,24 @@ type
     procedure Edit_codigoExit(Sender: TObject);
     procedure Frame_PessoaComboBox_InformacaoExit(Sender: TObject);
     procedure SpeedButton_editarClick(Sender: TObject);
+    procedure Frame_PessoaComboBox_InformacaoChange(Sender: TObject);
     // procedure Edit_codigoExit(Sender: TObject);
 
   private
-    function inserirdados: Boolean;
+    function inserirDados: Boolean;
+    function alterarDados: Boolean;
     function inserirendereco: Boolean;
+    function alterarEndereco: Boolean;
     function carregaStatus: Boolean;
     function validarCampos: Boolean;
     function existe_usuario(codigo: string): Boolean;
-    function senha: Boolean;
+    function inserirSenha: Boolean;
+    function alterarSenha: Boolean;
     function EncryptSTR(const key, texto: String): String;
     function getUltimoId: String;
     function getUltimoIdEnd: String;
     function limpacampos: Boolean;
+    procedure mudaMascaraPessoa(Sender: TObject);
 
   public
     function carregatppessoa: Boolean;
@@ -98,7 +103,56 @@ implementation
 
 {$R *.dfm}
 
-uses FAG.DataModule.Conexao, FAG.Utils;
+uses FAG.DataModule.Conexao;
+
+function TForm_CadastroUsuario.alterarDados: Boolean;
+var
+  sql: String;
+begin
+  sql := 'UPDATE pessoa SET ' + ' pes_nome = ' +
+    StrToSQL(Edit_nomecompleto.Text) + ',' + ' pes_rg = ' +
+    StrToSQL(Edit_RG.Text) + ',' + ' pes_celular =' +
+    StrToSQL(Edit_Celular.Text) + ',' + ' pes_nascimento = ' +
+    DateTimeToSQL(Date_Nascimento.datetime);
+
+  if Frame_Pessoa.TableTemp.FieldByName('id_tipoPessoa').AsString = '1' then
+  // Pessoa fisica
+  begin
+    sql := sql + ', pes_cpf = ' + StrToSQL(Mask_CPF.Text) + ', pes_cnpj = ' +
+      StrToSQL('');
+  end
+  else
+  begin
+    sql := sql + ', pes_cnpj = ' + StrToSQL(Mask_CPF.Text) + ', pes_cpf = ' +
+      StrToSQL('');
+  end;
+
+  sql := sql + ' WHERE pes_id_pessoa = ' + Edit_codigo.Text;
+  DataModuleConexao.ExecSQL(sql);
+end;
+
+function TForm_CadastroUsuario.alterarEndereco: Boolean;
+var
+  sql: String;
+begin
+  sql := ('UPDATE endereco SET end_num = ' + StrToSQL(Edit_numero.Text) + ',' +
+    ' end_rua = ' + StrToSQL(Edit_logradouro.Text) + ',' + ' end_bairro = ' +
+    StrToSQL(Edit_bairro.Text) + ', end_cidade =' + StrToSQL(Edit_cidade.Text) +
+    ',' + ' end_cep = ' + StrToSQL(Edit_cep.Text) + ',' + ' end_cx_postal = ' +
+    StrToSQL(Edit_cxpostal.Text) + ',' + ' end_complemento = ' +
+    StrToSQL(Edit_complemento.Text) + '' + ' WHERE end_id_endereco = ' +
+    Edit_codigo.Text + '');
+  DataModuleConexao.ExecSQL(sql);
+end;
+
+function TForm_CadastroUsuario.alterarSenha: Boolean;
+var
+  sql: String;
+begin
+  sql := ' UPDATE login SET ' + 'login_senha = ' + DecryptBD(Edit_senha.Text) +
+    ' WHERE pes_id_pessoa = ' + (Edit_codigo.Text);
+  DataModuleConexao.ExecSQL(sql);
+end;
 
 function TForm_CadastroUsuario.carregaStatus: Boolean;
 begin
@@ -124,6 +178,28 @@ begin
   Frame_Pessoa.carregaFrame := True;
 end;
 
+procedure TForm_CadastroUsuario.mudaMascaraPessoa(Sender: TObject);
+begin
+
+  case Frame_Pessoa.ComboBox_Informacao.ItemIndex of
+    0:
+      begin
+        ShowMessage('Escolha tipo de pessoa');
+        Frame_Pessoa.ComboBox_Informacao.SetFocus;
+      end;
+    1:
+      begin
+        Label_CPF.Caption := 'CPF';
+        Mask_CPF.EditMask := '999.999.999-99;1;_';
+      end;
+    2:
+      begin
+        Label_CPF.Caption := 'CNPJ';
+        Mask_CPF.EditMask := '99.999.999/9999-99;1;_';
+      end;
+  end;
+end;
+
 procedure TForm_CadastroUsuario.Edit_codigoExit(Sender: TObject);
 var
   carrega: TFDMemTable;
@@ -140,11 +216,11 @@ begin
     begin
       carrega := TFDMemTable.Create(Self);
       try
-       // Dados Pessoais //
+        // Dados Pessoais //
         DataModuleConexao.ExecSQL
           ('SELECT pes_id_pessoa, pes_nome, pes_cpf, pes_rg, pes_sexo, pes_nascimento, pes_email, pes_telefone,'
           + 'pes_celular, pes_datacadastro,pes_data_atualizacao, log_id,tip_id_tipo_pessoa,	'
-          +  'pes_fantasia, pes_incricao_municipal, pes_incricao_estadual, pes_ativo, end_id_endereco FROM pessoa WHERE pes_id_pessoa = '
+          + 'pes_fantasia, pes_incricao_municipal, pes_incricao_estadual, pes_ativo, end_id_endereco FROM pessoa WHERE pes_id_pessoa = '
           + Edit_codigo.Text, carrega);
 
         Edit_codigo.Text := carrega.FieldByName('pes_id_pessoa').AsString;
@@ -155,8 +231,10 @@ begin
         Edit_Telefone.Text := carrega.FieldByName('pes_telefone').AsString;
         Edit_email.Text := carrega.FieldByName('pes_email').AsString;
 
-        Frame_Pessoa.ComboBox_Informacao.ItemIndex := carrega.FieldByName('tip_id_tipo_pessoa').AsInteger;
-        Frame_Status.ComboBox_Informacao.ItemIndex := carrega.FieldByName('pes_ativo').AsInteger;
+        Frame_Pessoa.ComboBox_Informacao.ItemIndex :=
+          carrega.FieldByName('tip_id_tipo_pessoa').AsInteger;
+        Frame_Status.ComboBox_Informacao.ItemIndex :=
+          carrega.FieldByName('pes_ativo').AsInteger;
         Date_Nascimento.Date := carrega.FieldByName('pes_nascimento').Value;
         Edit_nomecompleto.Text := carrega.FieldByName('pes_nome').AsString;
         Mask_CPF.Text := carrega.FieldByName('pes_cpf').AsString;
@@ -220,30 +298,16 @@ begin
   getUltimoIdEnd;
 end;
 
+procedure TForm_CadastroUsuario.Frame_PessoaComboBox_InformacaoChange
+  (Sender: TObject);
+begin
+  mudaMascaraPessoa(Sender);
+end;
+
 procedure TForm_CadastroUsuario.Frame_PessoaComboBox_InformacaoExit
   (Sender: TObject);
 begin
   Frame_Pessoa.ComboBox_InformacaoExit(Sender);
-  case Frame_Pessoa.ComboBox_Informacao.ItemIndex of
-    0:
-      begin
-        ShowMessage('Escolha tipo de pessoa');
-        Frame_Pessoa.ComboBox_Informacao.SetFocus;
-      end;
-
-    1:
-      begin
-        Label_CPF.Caption := 'CPF';
-        Mask_CPF.EditMask := '999.999.999-99;1;_';
-      end;
-    2:
-      begin
-        Label_CPF.Caption := 'CNPJ';
-        Mask_CPF.EditMask := '99.999.999/9999-99;1;_';
-      end;
-
-  end;
-
 end;
 
 function TForm_CadastroUsuario.getUltimoId: String;
@@ -275,82 +339,49 @@ begin
   end;
 end;
 
-function TForm_CadastroUsuario.inserirdados: Boolean;
+function TForm_CadastroUsuario.inserirDados: Boolean;
 var
   sql: String;
+  tpPessoa: String;
 begin
-  if not validarCampos then
+
+  sql := 'INSERT INTO pessoa (pes_nome, pes_rg, pes_celular, pes_nascimento, ' +
+    ' pes_email, pes_telefone, pes_ativo, tip_id_tipo_pessoa, pes_cpf, pes_cnpj)'
+    + 'VALUES (' + StrToSQL(Edit_nomecompleto.Text) + ',' +
+    StrToSQL(Edit_RG.Text) + ',' + StrToSQL(Edit_Celular.Text) + ',' +
+    DateTimeToSQL(Date_Nascimento.datetime) + ',' + StrToSQL(Edit_email.Text) +
+    ',' + StrToSQL(Edit_Telefone.Text) + ',' + StrToSQL(Frame_Status.indexCombo)
+    + ',' + StrToSQL(Frame_Pessoa.indexCombo) + ',';
+  if Frame_Pessoa.TableTemp.FieldByName('id_tipoPessoa').AsString = '1' then
+  // Pessoa fisica
   begin
-    Result := False;
-    Exit;
-  end;
+    sql := sql + StrToSQL(Mask_CPF.Text) + ', ' + StrToSQL('');
+  end
+  else
   begin
-    if existe_usuario(Edit_codigo.Text) then
-    begin
-      sql := ('UPDATE pessoa SET pes_nome = ' + StrToSQL(Edit_nomecompleto.Text)
-        + ',' + ' pes_cpf = ' + StrToSQL(Mask_CPF.Text) + ',' + ' pes_rg = ' +
-        StrToSQL(Edit_RG.Text) + ', pes_celular =' + StrToSQL(Edit_Celular.Text)
-        + ',' + ' pes_nascimento = ' + DateTimeToSQL(Date_Nascimento.datetime) +
-        ',' + ' end_cx_postal = ' + StrToSQL(Edit_cxpostal.Text) + ',' +
-        ' end_complemento = ' + StrToSQL(Edit_complemento.Text) + '' +
-        ' WHERE end_id_endereco = ' + Edit_codigo.Text + '');
-      DataModuleConexao.ExecSQL(sql);
-      ShowMessage('Alterado com Sucesso.');
-    end
-    else
-    begin
-      sql := 'INSERT INTO pessoa (pes_nome, pes_cpf, pes_rg, pes_celular, pes_nascimento, pes_email, pes_telefone, pes_ativo, tip_id_tipo_pessoa)'
-        + 'VALUES (' + StrToSQL(Edit_nomecompleto.Text) + ',' +
-        StrToSQL(Mask_CPF.Text) + ',' + StrToSQL(Edit_RG.Text) + ',' +
-        StrToSQL(Edit_Celular.Text) + ',' +
-        DateTimeToSQL(Date_Nascimento.datetime) + ',' +
-        StrToSQL(Edit_email.Text) + ',' + StrToSQL(Edit_Telefone.Text) + ',' +
-        StrToSQL(Frame_Status.indexCombo) + ',' +
-        StrToSQL(Frame_Pessoa.indexCombo) + ')';
-      DataModuleConexao.ExecSQL(sql);
-      ShowMessage('Salvo com Sucesso.');
-    end;
-    limpacampos;
+    sql := sql + StrToSQL('') + ', ' + StrToSQL(Mask_CPF.Text);
   end;
+  sql := sql + ')';
+  DataModuleConexao.ExecSQL(sql);
+
 end;
 
 function TForm_CadastroUsuario.inserirendereco: Boolean;
 var
   sql: String;
 begin
-  if not validarCampos then
-  begin
-    Result := False;
-    Exit;
-  end;
-  begin
-    if existe_usuario(Edit_codigo.Text) then
-    begin
-      sql := ('UPDATE endereco SET end_num = ' + StrToSQL(Edit_numero.Text) +
-        ',' + ' end_rua = ' + StrToSQL(Edit_logradouro.Text) + ',' +
-        ' end_bairro = ' + StrToSQL(Edit_bairro.Text) + ', end_cidade =' +
-        StrToSQL(Edit_cidade.Text) + ',' + ' end_cep = ' +
-        StrToSQL(Edit_cep.Text) + ',' + ' end_cx_postal = ' +
-        StrToSQL(Edit_cxpostal.Text) + ',' + ' end_complemento = ' +
-        StrToSQL(Edit_complemento.Text) + '' + ' WHERE end_id_endereco = ' +
-        Edit_codigo.Text + '');
-      DataModuleConexao.ExecSQL(sql);
-
-    end
-    else
-    begin
-      sql := 'INSERT INTO endereco (end_id_endereco,end_num, end_rua, end_bairro, end_cidade, '
-        + 'end_cep, end_cx_postal, end_complemento, end_data_cadastro, pes_id_pessoa)VALUES('
-        + StrToSQL(getUltimoIdEnd) + ',' + StrToSQL(Edit_numero.Text) + ',' +
-        StrToSQL(Edit_logradouro.Text) + ',' + StrToSQL(Edit_bairro.Text) + ','
-        + StrToSQL(Edit_cidade.Text) + ',' + StrToSQL(Edit_cep.Text) + ',' +
-        StrToSQL(Edit_cxpostal.Text) + ',' + StrToSQL(Edit_complemento.Text) +
-        ',NOW(),' + StrToSQL(Edit_codigo.Text) + ')';
-
-      DataModuleConexao.ExecSQL(sql);
-    end;
-    limpacampos;
-  end;
+  sql := 'INSERT INTO endereco (end_num, end_rua, end_bairro, end_cidade, '
+    + 'end_cep, end_cx_postal, end_complemento, end_data_cadastro, pes_id_pessoa)VALUES('+
+    StrToSQL(Edit_numero.Text) + ',' +
+    StrToSQL(Edit_logradouro.Text) + ',' +
+    StrToSQL(Edit_bairro.Text) + ',' +
+    StrToSQL(Edit_cidade.Text) + ',' +
+    StrToSQL(Edit_cep.Text) + ',' +
+    StrToSQL(Edit_cxpostal.Text) + ',' +
+    StrToSQL(Edit_complemento.Text) +','+
+    'NOW(),' +
+    StrToSQL(Edit_codigo.Text) + ')';
+  DataModuleConexao.ExecSQL(sql);
 end;
 
 function TForm_CadastroUsuario.limpacampos: Boolean;
@@ -380,15 +411,13 @@ begin
   Edit_email.Clear;
 end;
 
-function TForm_CadastroUsuario.senha: Boolean;
+function TForm_CadastroUsuario.inserirSenha: Boolean;
 var
   sql: String;
 begin
-  sql := 'INSERT INTO login (login_usuario,login_senha )' + 'values ("' +
-    Edit_login.Text + '","' + EncryptSTR(Edit_senha.Text,
-    Edit_login.Text) + '")';
+  sql := 'INSERT INTO login (login_usuario,login_senha,pes_id_pessoa) VALUES ('
+    + StrToSQL(Edit_login.Text) + ',' + CryptBD(Edit_senha.Text) +','+StrToSQL(Edit_codigo.Text)+')';
   DataModuleConexao.ExecSQL(sql);
-
 end;
 
 procedure TForm_CadastroUsuario.SpeedButton_editarClick(Sender: TObject);
@@ -402,11 +431,36 @@ begin
 end;
 
 procedure TForm_CadastroUsuario.SpeedButton_salvarClick(Sender: TObject);
-
 begin
-  inserirdados;
-  inserirendereco;
-  senha;
+  try
+    //iniciatransacao;
+    if validarCampos then
+    begin
+      if existe_usuario(Edit_codigo.Text) then
+      begin
+        alterarDados;
+        alterarEndereco;
+        alterarSenha;
+        ShowMessage('Alterado com sucesso.');
+      end
+      else
+      begin
+        inserirDados;
+        inserirendereco;
+        inserirSenha;
+        showMessage('Salvo com sucesso.');
+      end;
+      limpacampos;
+    end;
+    //finalizatransacao
+  except
+		on E : Exception do
+		begin
+			//voltatransacao
+			//showmessage(E.Message);
+			Raise;
+		end;
+  end;
 end;
 
 function TForm_CadastroUsuario.validarCampos: Boolean;
@@ -439,7 +493,7 @@ begin
   // end
   // else
   // begin
-  // Result := True;
+  Result := True;
   // end;
 end;
 

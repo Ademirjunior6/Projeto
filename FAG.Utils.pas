@@ -1,12 +1,16 @@
 unit FAG.Utils;
 
 interface
+const
+  KEY : String = 'AOISIOD90AS8DASA9SDAS09DAS092123123ASD';
 
 function StrToSQL(caracter: String): String;
 function IntToSQL(valor: Integer): String;
 function VirgulaPorPonto(Vlr: string): string;
 function DateTimeToSQL(DataTime: TDateTime): String;
 function DateToSQL(DataTime: TDateTime): String;
+function CryptBD(password : String) : String;
+function DecryptBD(password : String) : String;
 
 implementation
 
@@ -77,4 +81,31 @@ begin
 
 end;
 
+function CryptBD(password : String) : String;
+var
+	newPassword : String;
+begin
+  if Trim(password) = '' then
+  begin
+    Result := 'NULL';
+    Exit;
+  end;
+
+  newPassword := 'AES_ENCRYPT(' + QuotedStr(password) + ', ' + QuotedStr(KEY) + ')';
+  Result := newPassword;
+end;
+
+function DecryptBD(password : String) : String;
+var
+	newPassword : String;
+begin
+  if Trim(password) = '' then
+  begin
+    Result := 'NULL';
+    Exit;
+  end;
+
+  newPassword := 'AES_DECRYPT(' + QuotedStr(password) + ', ' + QuotedStr(KEY) + ')';
+  Result := newPassword;
+end;
 end.
