@@ -42,8 +42,9 @@ type
     exportWORD: TfrxRTFExport;
     exportPDF: TfrxPDFExport;
     exportEXCEL: TfrxCSVExport;
-    FDMemTable_Consultasit_descricao: TWideStringField;
     SpeedButton_exibirTodos: TSpeedButton;
+    FDMemTable_Consultapes_ativo: TIntegerField;
+    FDMemTable_Consultapse_cnpj: TWideStringField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButton_sairClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -53,6 +54,8 @@ type
     procedure FormShow(Sender: TObject);
     procedure SpeedButton_exibirTodosClick(Sender: TObject);
     procedure SpeedButton_exportarClick(Sender: TObject);
+    procedure FDMemTable_Consultapes_ativoGetText(Sender: TField; var Text: string; DisplayText: Boolean);
+    procedure FDMemTable_Consultapes_cpfGetText(Sender: TField; var Text: string; DisplayText: Boolean);
 
 
 
@@ -106,6 +109,26 @@ begin
 
 end;
 
+procedure TForm_RelatorioUsuario.FDMemTable_Consultapes_ativoGetText(Sender: TField; var Text: string;
+  DisplayText: Boolean);
+begin
+  if (Sender as TField).AsString = '1' then
+    text := 'ATIVO'
+  else if (Sender as TField).AsString = '2' then
+    begin
+     text := 'INATIVO'
+    end;
+end;
+
+procedure TForm_RelatorioUsuario.FDMemTable_Consultapes_cpfGetText(Sender: TField; var Text: string; DisplayText: Boolean);
+begin
+ if (Sender as TField).AsString = '' then
+    begin
+     text := FDMemTable_Consultapse_cnpj.AsString;
+
+    end else
+    text := (Sender as TField).AsString;
+end;
 
 procedure TForm_RelatorioUsuario.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -133,7 +156,7 @@ begin
   DBGrid_Pesquisa.Columns[1].FieldName := 'pes_nome';
   DBGrid_Pesquisa.Columns[2].FieldName := 'pes_cpf';
   DBGrid_Pesquisa.Columns[3].FieldName := 'pes_nascimento';
-  DBGrid_Pesquisa.Columns[4].FieldName := 'sit_descricao';
+  DBGrid_Pesquisa.Columns[4].FieldName := 'pes_ativo';
   DBGrid_Pesquisa.Columns[5].FieldName := 'pes_celular';
   DBGrid_Pesquisa.Columns[6].FieldName := 'pes_email';
 
@@ -150,10 +173,9 @@ procedure TForm_RelatorioUsuario.SpeedButton_exibirTodosClick(Sender: TObject);
 var
    sql: String;
 begin
-   sql := 'SELECT pes_id_pessoa, pes_nome, pes_cpf, pes_nascimento,pes_email, pes_celular, si.sit_descricao FROM pessoa AS p '
-   +' INNER JOIN situacao AS si ON p.pes_ativo = si.sit_id';
+   sql := 'SELECT pes_id_pessoa, pes_nome, pes_cpf, pes_cnpj, pes_nascimento, pes_ativo, pes_email, pes_celular '
+      +'FROM pessoa order by pes_id_pessoa ';
    DataModuleConexao.ExecSQL(sql, FDMemTable_Consulta);
-   ShowMessage(FDMemTable_Consulta.FieldByName('sit_descricao').AsString);
 end;
 
 procedure TForm_RelatorioUsuario.SpeedButton_exportarClick(Sender: TObject);
@@ -179,18 +201,8 @@ begin
    exit
   end;
 
-  if ComboBox_filtro.ItemIndex = 3 then
-  begin
-    sql := 'SELECT pes_id_pessoa, pes_nome, pes_cnpj, pes_nascimento,pes_email, pes_celular, si.sit_descricao FROM pessoa AS p '
-    +' INNER JOIN situacao AS si ON p.pes_ativo = si.sit_id WHERE  1 > 0' ;
-    DBGrid_Pesquisa.Columns[2].FieldName := 'pes_cnpj';
-  end
-   else
-  begin
-    sql := 'SELECT pes_id_pessoa, pes_nome, pes_cpf, pes_nascimento,pes_email, pes_celular, si.sit_descricao FROM pessoa AS p '
-    +' INNER JOIN situacao AS si ON p.pes_ativo = si.sit_id  WHERE  1 > 0';
-    DBGrid_Pesquisa.Columns[2].FieldName := 'pes_cpf';
-  end;
+
+  sql := 'SELECT pes_id_pessoa, pes_nome, pes_cpf, pes_cnpj, pes_nascimento, pes_email, pes_celular, pes_ativo FROM pessoa WHERE 1 > 0' ;
 
   if MaskEdit_pesquisa.Text <> EmptyStr then
   begin
@@ -215,18 +227,11 @@ begin
 
   if ComboBox_Status.ItemIndex <> 0 then
   begin
-    sql := sql + ' AND (si.sit_descricao = "' + ComboBox_Status.ItemIndex.ToString + '")'
+    sql := sql + ' AND (pes_ativo = "' + ComboBox_Status.ItemIndex.ToString+ '")'
   end;
 
 
   DataModuleConexao.ExecSQL(sql, FDMemTable_Consulta);
-
-  //if FDMemTable_Consulta.FieldByName('pes_ativo').AsInteger = 1 then
- // begin
-
-  //  ShowMessage('teste');
-
- // end;
 
   if FDMemTable_Consulta.IsEmpty then
   begin

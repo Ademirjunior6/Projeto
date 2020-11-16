@@ -130,10 +130,6 @@
             <Form>Form_Produtos</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="FAG.DetalharMovimento.pas">
-            <Form>Form_detalharMovimento</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="FAG.RelatorioMovimento.pas">
             <Form>Form_RelatorioMovimento</Form>
             <FormType>dfm</FormType>
@@ -163,6 +159,10 @@
         <DCCReference Include="FAG.Utils.pas"/>
         <DCCReference Include="FAG.CadastroUsuario.pas">
             <Form>Form_CadastroUsuario</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FAG.DetalharMovimento.pas">
+            <Form>Form_detalharMovimento</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <RcItem Include="C:\libmysql.dll">

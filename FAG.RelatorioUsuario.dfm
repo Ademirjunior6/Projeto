@@ -286,7 +286,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 147
+              Width = 156
               Visible = True
             end
             item
@@ -297,10 +297,11 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
               Title.Font.Height = -15
               Title.Font.Name = 'Segoe UI'
               Title.Font.Style = []
-              Width = 138
+              Width = 131
               Visible = True
             end
             item
+              Alignment = taCenter
               Expanded = False
               Title.Caption = 'Status'
               Title.Font.Charset = DEFAULT_CHARSET
@@ -339,40 +340,11 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
   end
   object DataSource_Consulta: TDataSource
     DataSet = FDMemTable_Consulta
-    Left = 460
-    Top = 298
+    Left = 468
+    Top = 330
   end
   object FDMemTable_Consulta: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'pes_id_pessoa'
-        DataType = ftInteger
-      end
-      item
-        Name = 'pes_nome'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'pes_cpf'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'pes_nascimento'
-        DataType = ftDate
-      end
-      item
-        Name = 'pes_email'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'pes_celular'
-        DataType = ftWideString
-        Size = 255
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -383,7 +355,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
     Left = 300
-    Top = 298
+    Top = 330
     object FDMemTable_Consultapes_id_pessoa: TIntegerField
       FieldName = 'pes_id_pessoa'
     end
@@ -393,16 +365,15 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
     end
     object FDMemTable_Consultapes_cpf: TWideStringField
       FieldName = 'pes_cpf'
+      OnGetText = FDMemTable_Consultapes_cpfGetText
       Size = 255
     end
     object FDMemTable_Consultapes_nascimento: TDateField
       FieldName = 'pes_nascimento'
     end
-    object FDMemTable_Consultasit_descricao: TWideStringField
-      FieldKind = fkCalculated
-      FieldName = 'sit_descricao'
-      Size = 255
-      Calculated = True
+    object FDMemTable_Consultapes_ativo: TIntegerField
+      FieldName = 'pes_ativo'
+      OnGetText = FDMemTable_Consultapes_ativoGetText
     end
     object FDMemTable_Consultapes_celular: TWideStringField
       FieldName = 'pes_celular'
@@ -410,6 +381,10 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
     end
     object FDMemTable_Consultapes_email: TWideStringField
       FieldName = 'pes_email'
+      Size = 255
+    end
+    object FDMemTable_Consultapse_cnpj: TWideStringField
+      FieldName = 'pes_cnpj'
       Size = 255
     end
   end
@@ -423,7 +398,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44130.771658877300000000
-    ReportOptions.LastChange = 44148.574575104170000000
+    ReportOptions.LastChange = 44151.480320810190000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -621,7 +596,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
           Left = 375.458128080000000000
           Width = 67.824985710000000000
           Height = 18.853156110000000000
-          DataField = 'sit_descricao'
+          DataField = 'pes_ativo'
           DataSet = frxDBDatasetExport
           DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
@@ -631,7 +606,7 @@ object Form_RelatorioUsuario: TForm_RelatorioUsuario
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
-            '[frxDBDataset1."sit_descricao"]')
+            '[frxDBDataset1."pes_ativo"]')
           ParentFont = False
         end
       end

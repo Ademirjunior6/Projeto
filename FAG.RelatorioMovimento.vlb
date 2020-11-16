@@ -71,9 +71,6 @@ Coordinates=493,10,88,51
 [Label_tipoMoviemento]
 Coordinates=112,247,125,51
 
-[SpeedButton_detalharMov]
-Coordinates=247,247,144,33
-
 [DateTimePicker_Fim]
 Coordinates=295,125,115,51
 
@@ -81,5 +78,5 @@ Coordinates=295,125,115,51
 Coordinates=163,186,85,51
 
 []
-Coordinates=558,372,82,33
+Coordinates=247,247,144,33
 

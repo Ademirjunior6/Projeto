@@ -4,7 +4,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
   ActiveControl = Edit_produto
   BorderIcons = []
   BorderStyle = bsSingle
-  Caption = 'Relatorio de Movimenta'#231#227'o'
+  Caption = 'Relat'#243'rio de Movimenta'#231#227'o'
   ClientHeight = 602
   ClientWidth = 869
   Color = clBtnFace
@@ -46,7 +46,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       Top = 24
       Width = 269
       Height = 32
-      Caption = 'Relatorio de Movimentos'
+      Caption = 'Relat'#243'rio de Movimentos'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -24
@@ -81,20 +81,6 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       Font.Style = [fsBold]
       ParentFont = False
       OnClick = SpeedButton_exportarClick
-    end
-    object SpeedButton_detalharMov: TSpeedButton
-      Left = 392
-      Top = 557
-      Width = 193
-      Height = 33
-      Caption = 'Detalhar Movimento'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      OnClick = SpeedButton_detalharMovClick
     end
     object SpeedButton_limparConsulta: TSpeedButton
       Left = 37
@@ -253,7 +239,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 4
       end
       object ComboBox_categoria: TComboBox
         Left = 577
@@ -268,7 +254,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 4
+        TabOrder = 3
       end
       object DateTimePicker_Fim: TDateTimePicker
         Left = 373
@@ -363,49 +349,28 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
           TitleFont.Height = -15
           TitleFont.Name = 'Segoe UI'
           TitleFont.Style = []
-          OnDblClick = DBGrid_resultadoPesquisaDblClick
           Columns = <
             item
               Expanded = False
               Title.Caption = 'C'#243'digo'
-              Title.Font.Charset = DEFAULT_CHARSET
-              Title.Font.Color = clWindowText
-              Title.Font.Height = -13
-              Title.Font.Name = 'Segoe UI'
-              Title.Font.Style = []
-              Width = 50
+              Width = 53
               Visible = True
             end
             item
               Expanded = False
               Title.Caption = 'Descri'#231#227'o'
-              Title.Font.Charset = DEFAULT_CHARSET
-              Title.Font.Color = clWindowText
-              Title.Font.Height = -13
-              Title.Font.Name = 'Segoe UI'
-              Title.Font.Style = []
               Width = 202
               Visible = True
             end
             item
               Expanded = False
               Title.Caption = 'Categoria'
-              Title.Font.Charset = DEFAULT_CHARSET
-              Title.Font.Color = clWindowText
-              Title.Font.Height = -13
-              Title.Font.Name = 'Segoe UI'
-              Title.Font.Style = []
               Width = 167
               Visible = True
             end
             item
               Expanded = False
               Title.Caption = 'Entrada/Sa'#237'da'
-              Title.Font.Charset = DEFAULT_CHARSET
-              Title.Font.Color = clWindowText
-              Title.Font.Height = -13
-              Title.Font.Name = 'Segoe UI'
-              Title.Font.Style = []
               Width = 107
               Visible = True
             end
@@ -636,7 +601,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         Height = 18.897650000000000000
         Top = 170.078850000000000000
         Width = 718.110700000000000000
-        DataSet = Form_RelatorioProduto.frxDBDatasetExport
+        DataSet = frxDBDatasetExport
         DataSetName = 'frxDBDataset1'
         RowCount = 0
         object frxDBDataset1mov_tipo: TfrxMemoView
@@ -647,7 +612,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
           Width = 106.430000000000000000
           Height = 18.897650000000000000
           DataField = 'mov_tipo'
-          DataSet = Form_RelatorioProduto.frxDBDatasetExport
+          DataSet = frxDBDatasetExport
           DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -707,7 +672,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
           Width = 148.930000000000000000
           Height = 18.897650000000000000
           DataField = 'mov_data_movimento'
-          DataSet = Form_RelatorioProduto.frxDBDatasetExport
+          DataSet = frxDBDatasetExport
           DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -727,7 +692,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
           Width = 143.570000000000000000
           Height = 18.897650000000000000
           DataField = 'usuario'
-          DataSet = Form_RelatorioProduto.frxDBDatasetExport
+          DataSet = frxDBDatasetExport
           DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack

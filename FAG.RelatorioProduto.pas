@@ -115,15 +115,6 @@ begin
 
   DataModuleConexao.ExecSQL(sql, FDMemTable_Consulta);
 
-   while not FDMemTable_Consulta.IsEmpty do
-   begin
-    if FDMemTable_Consulta.FieldByName('prod_quantidade').AsString = EmptyStr then
-    begin
-       FDMemTable_Consulta.FieldByName('prod_quantidade').AsString := '0';
-
-    end;
-     FDMemTable_Consulta.Next;
-    end ;
 
   if FDMemTable_Consulta.IsEmpty then
   begin

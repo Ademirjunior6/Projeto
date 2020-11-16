@@ -379,7 +379,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44130.771658877300000000
-    ReportOptions.LastChange = 44141.421249050900000000
+    ReportOptions.LastChange = 44151.826957604160000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -410,7 +410,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
       object ReportTitle1: TfrxReportTitle
         FillType = ftBrush
         Frame.Typ = []
-        Height = 60.472480000000000000
+        Height = 54.872480000000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
         object Memo1: TfrxMemoView
@@ -434,7 +434,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
         FillType = ftBrush
         Frame.Typ = []
         Height = 18.897650000000000000
-        Top = 181.417440000000000000
+        Top = 177.637910000000000000
         Width = 718.110700000000000000
         DataSet = frxDBDatasetExport
         DataSetName = 'frxDBDataset1'
@@ -454,7 +454,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset1."prod_id_produto"]')
           ParentFont = False
@@ -475,7 +475,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset1."prod_desc"]')
           ParentFont = False
@@ -496,7 +496,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset1."un_medida_desc"]')
           ParentFont = False
@@ -517,15 +517,16 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset1."cat_desc"]')
           ParentFont = False
         end
         object frxDBDataset1prod_quantidade: TfrxMemoView
           IndexTag = 1
+          Align = baRight
           AllowVectorExport = True
-          Left = 641.000000000000000000
+          Left = 641.386290550000000000
           Top = -0.417440000000000000
           Width = 76.724409450000000000
           Height = 18.897650000000000000
@@ -537,7 +538,8 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataset1."prod_quantidade"]')
           ParentFont = False
@@ -548,7 +550,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
           AllowVectorExport = True
           Left = 506.519685040000000000
           Top = -0.417440000000000000
-          Width = 134.480314960000000000
+          Width = 134.866605510000000000
           Height = 18.897650000000000000
           DataField = 'prod_data_cadastro'
           DataSet = frxDBDatasetExport
@@ -558,7 +560,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset1."prod_data_cadastro"]')
           ParentFont = False
@@ -568,7 +570,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
         FillType = ftBrush
         Frame.Typ = []
         Height = 18.897650000000000000
-        Top = 102.047310000000000000
+        Top = 98.267780000000000000
         Width = 718.110700000000000000
         object Memo2: TfrxMemoView
           Align = baWidth

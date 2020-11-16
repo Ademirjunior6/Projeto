@@ -34,7 +34,6 @@ type
     DBGrid_resultadoPesquisa: TDBGrid;
     SpeedButton_sair: TSpeedButton;
     SpeedButton_exportar: TSpeedButton;
-    SpeedButton_detalharMov: TSpeedButton;
     SpeedButton_limparConsulta: TSpeedButton;
     DataSource_consulta: TDataSource;
     FDMemTable_consulta: TFDMemTable;
@@ -56,12 +55,11 @@ type
     procedure SpeedButton_limparConsultaClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
-    procedure SpeedButton_detalharMovClick(Sender: TObject);
     procedure SpeedButton_filtrarClick(Sender: TObject);
     procedure SpeedButton_exibirTodosClick(Sender: TObject);
-    procedure DBGrid_resultadoPesquisaDblClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure SpeedButton_exportarClick(Sender: TObject);
+
 
   private
     procedure habilitaPesquisa;
@@ -120,6 +118,7 @@ begin
 
 end;
 
+
 procedure TForm_RelatorioMovimento.alimentaCategoria;
 var
   categoria: TFDMemTable;
@@ -157,6 +156,8 @@ begin
   DBGrid_resultadoPesquisa.Columns[3].FieldName := 'mov_tipo';
   DBGrid_resultadoPesquisa.Columns[4].FieldName := 'mov_data_movimento';
   DBGrid_resultadoPesquisa.Columns[5].FieldName := 'usuario';
+
+
 end;
 
 procedure TForm_RelatorioMovimento.FormShow(Sender: TObject);
@@ -164,30 +165,6 @@ begin
   Edit_codigo.SetFocus;
 end;
 
-procedure TForm_RelatorioMovimento.SpeedButton_detalharMovClick
-  (Sender: TObject);
-
-begin
-  if FDMemTable_consulta.IsEmpty = true then
-  begin
-    Application.MessageBox ('Selecione um movimento','Erro',MB_OK+MB_ICONEXCLAMATION);
-    Edit_codigo.SetFocus;
-    exit
-  end;
-
-  if not Assigned(Form_detalharMovimento) then
-    Form_detalharMovimento := TForm_detalharMovimento.Create(Self);
-  try
-    Form_detalharMovimento.codigoConsulta := FDMemTable_consulta.FieldByName
-      ('mov_id').AsString;
-
-    Form_detalharMovimento.ShowModal;
-
-  finally
-    FreeAndNil(Form_detalharMovimento);
-  end;
-
-end;
 
 procedure TForm_RelatorioMovimento.SpeedButton_exibirTodosClick
   (Sender: TObject);
@@ -266,31 +243,13 @@ begin
   DataModuleConexao.ExecSQL(sql, FDMemTable_consulta);
   if FDMemTable_consulta.IsEmpty then
   begin
+     if DateTimePicker_Fim.Date = DateTimePicker_Ini.Date then
+     begin
+      Application.MessageBox ('Nenhum registro encontrado, verifique se a data esta correta','Erro',MB_OK+MB_ICONEXCLAMATION);
+     end else
      Application.MessageBox ('Nenhum registro encontrado','Erro',MB_OK+MB_ICONEXCLAMATION);
   end;
 
-end;
-
-procedure TForm_RelatorioMovimento.DBGrid_resultadoPesquisaDblClick
-  (Sender: TObject);
-begin
-  if FDMemTable_consulta.IsEmpty = true then
-  begin
-    ShowMessage('Selecione um movimento');
-    Edit_codigo.SetFocus;
-    exit
-  end;
-
-  if not Assigned(Form_detalharMovimento) then
-    Form_detalharMovimento := TForm_detalharMovimento.Create(Self);
-  try
-    Form_detalharMovimento.codigoConsulta := FDMemTable_consulta.FieldByName
-      ('mov_id').AsString;
-    Form_detalharMovimento.ShowModal;
-
-  finally
-    FreeAndNil(Form_detalharMovimento);
-  end;
 end;
 
 procedure TForm_RelatorioMovimento.SpeedButton_filtrarClick(Sender: TObject);
@@ -309,4 +268,50 @@ begin
   Form_RelatorioMovimento.Close;
 end;
 
+//procedure TForm_RelatorioMovimento.SpeedButton_detalharMovClick
+//  (Sender: TObject);
+//
+//begin
+//  if FDMemTable_consulta.IsEmpty = true then
+//  begin
+//    Application.MessageBox ('Selecione um movimento','Erro',MB_OK+MB_ICONEXCLAMATION);
+//    Edit_codigo.SetFocus;
+//    exit
+//  end;
+//
+//  if not Assigned(Form_detalharMovimento) then
+//    Form_detalharMovimento := TForm_detalharMovimento.Create(Self);
+//  try
+//    Form_detalharMovimento.codigoConsulta := FDMemTable_consulta.FieldByName
+//      ('mov_id').AsString;
+//
+//    Form_detalharMovimento.ShowModal;
+//
+//  finally
+//    FreeAndNil(Form_detalharMovimento);
+//  end;
+//
+//end;
+
+//procedure TForm_RelatorioMovimento.DBGrid_resultadoPesquisaDblClick
+//  (Sender: TObject);
+//begin
+//  if FDMemTable_consulta.IsEmpty = true then
+//  begin
+//    ShowMessage('Selecione um movimento');
+//    Edit_codigo.SetFocus;
+//    exit
+//  end;
+//
+//  if not Assigned(Form_detalharMovimento) then
+//    Form_detalharMovimento := TForm_detalharMovimento.Create(Self);
+//  try
+//    Form_detalharMovimento.codigoConsulta := FDMemTable_consulta.FieldByName
+//      ('mov_id').AsString;
+//    Form_detalharMovimento.ShowModal;
+//
+//  finally
+//    FreeAndNil(Form_detalharMovimento);
+//  end;
+//end;
 end.

@@ -17,9 +17,7 @@ type
   TForm_Menu = class(TForm)
     MainMenu1: TMainMenu;
     Cadastro1: TMenuItem;
-    Produto1: TMenuItem;
-    Usurio1: TMenuItem;
-    MovimentarEstoque1: TMenuItem;
+    Produto1: TMenuItem;  MovimentarEstoque1: TMenuItem;
     ConsultareAlterar1: TMenuItem;
     Movimentar1: TMenuItem;
     Produto: TMenuItem;

@@ -13,7 +13,6 @@ uses
   FAG.CadastroCategoria in 'FAG.CadastroCategoria.pas' {Form_CadastroCategoria},
   FAG.Movimento in 'FAG.Movimento.pas' {Form_Movimento},
   FAG.Produtos in 'FAG.Produtos.pas' {Form_Produtos},
-  FAG.DetalharMovimento in 'FAG.DetalharMovimento.pas' {Form_detalharMovimento},
   FAG.RelatorioMovimento in 'FAG.RelatorioMovimento.pas' {Form_RelatorioMovimento},
   FAG.Frame.Produto in 'FAG.Frame.Produto.pas' {Frame_Produto: TFrame},
   FAG.ConsultarProduto in 'FAG.ConsultarProduto.pas' {Form_ConsultarProduto},
@@ -21,7 +20,8 @@ uses
   FAG.RelatorioUsuario in 'FAG.RelatorioUsuario.pas' {Form_RelatorioUsuario},
   FAG.Frame.UnMedida in 'FAG.Frame.UnMedida.pas' {Frame_UnMedida: TFrame},
   FAG.Utils in 'FAG.Utils.pas',
-  FAG.CadastroUsuario in 'FAG.CadastroUsuario.pas' {Form_CadastroUsuario};
+  FAG.CadastroUsuario in 'FAG.CadastroUsuario.pas' {Form_CadastroUsuario},
+  FAG.DetalharMovimento in 'FAG.DetalharMovimento.pas' {Form_detalharMovimento};
 
 {$R *.res}
 
@@ -30,5 +30,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDataModuleConexao, DataModuleConexao);
   Application.CreateForm(TForm_Menu, Form_Menu);
+  Application.CreateForm(TForm_detalharMovimento, Form_detalharMovimento);
   Application.Run;
 end.
