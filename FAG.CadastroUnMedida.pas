@@ -9,7 +9,8 @@ uses
   FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  FAG.Utils;
 
 type
   TForm_CadastroUnMedida = class(TForm)
@@ -20,6 +21,8 @@ type
     FDMemTable1: TFDMemTable;
     BitBtn_salvar: TBitBtn;
     BitBtn_cancelar: TBitBtn;
+    EditSigla: TEdit;
+    LabelSigla: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure BitBtn_cancelarClick(Sender: TObject);
     procedure BitBtn_salvarClick(Sender: TObject);
@@ -46,9 +49,14 @@ begin
   Result := False;
   if Edit_descricaoUnMedida.Text = '' then
   begin
-    ShowMessage('Informe uma descrição da para Unidade!');
+    ShowMessage('Informe uma descrição.');
     Edit_descricaoUnMedida.SetFocus;
   end
+  else if EditSigla.Text = '' then
+  begin
+    ShowMessage('Informe uma sigla.');
+    EditSigla.SetFocus;
+    end
   else
   begin
     Result := True;
@@ -65,8 +73,10 @@ begin
     Exit;
   end;
   begin
-    SQL := 'INSERT INTO un_medida (un_medida_id, un_medida_desc) ' + ' VALUES ('
-      + Edit_codigoUnMedida.Text + ',"' + Edit_descricaoUnMedida.Text + '")';
+    SQL := ('INSERT INTO un_medida (un_medida_id, un_medida_desc, un_medida_sigla) '
+      + ' VALUES (' + Edit_codigoUnMedida.Text + ',' +
+      StrToSQL(Edit_descricaoUnMedida.Text) + ',' +
+      StrToSQL(EditSigla.Text) + ')');
     DataModuleConexao.ExecSQL(SQL);
     ShowMessage('Salvo com Sucesso.');
   end;

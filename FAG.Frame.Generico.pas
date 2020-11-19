@@ -117,10 +117,10 @@ begin
   begin
     if not campoSigla.IsEmpty then
       addS :=TableTemp.FieldByName(campoChave).AsString +
-      '-' + TableTemp.FieldByName(campoDescricao).AsString+ ' - ' + TableTemp.FieldByName(campoSigla).AsString
+      ' - ' + TableTemp.FieldByName(campoDescricao).AsString+ ' - ' + TableTemp.FieldByName(campoSigla).AsString
     else
       addS := TableTemp.FieldByName(campoChave).AsString +
-      '-' + TableTemp.FieldByName(campoDescricao).AsString;
+      ' - ' + TableTemp.FieldByName(campoDescricao).AsString;
 
     ComboBox_Informacao.Items.Add(addS);
     TableTemp.Next;
