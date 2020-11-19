@@ -51,6 +51,9 @@ type
     frxDBDatasetExport: TfrxDBDataset;
     frxReportExport: TfrxReport;
     SpeedButton_exibirTodos: TSpeedButton;
+    Label1: TLabel;
+    RadioButtonSIM: TRadioButton;
+    RadioButtonNAO: TRadioButton;
     procedure SpeedButton_sairClick(Sender: TObject);
     procedure SpeedButton_limparConsultaClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -59,6 +62,8 @@ type
     procedure SpeedButton_exibirTodosClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure SpeedButton_exportarClick(Sender: TObject);
+    procedure RadioButtonSIMClick(Sender: TObject);
+    procedure RadioButtonNAOClick(Sender: TObject);
 
 
   private
@@ -119,6 +124,18 @@ begin
 end;
 
 
+procedure TForm_RelatorioMovimento.RadioButtonNAOClick(Sender: TObject);
+begin
+    DateTimePicker_Fim.Enabled := false;
+    DateTimePicker_Ini.Enabled := false;
+end;
+
+procedure TForm_RelatorioMovimento.RadioButtonSIMClick(Sender: TObject);
+begin
+    DateTimePicker_Fim.Enabled := true;
+    DateTimePicker_Ini.Enabled := true;
+end;
+
 procedure TForm_RelatorioMovimento.alimentaCategoria;
 var
   categoria: TFDMemTable;
@@ -157,7 +174,7 @@ begin
   DBGrid_resultadoPesquisa.Columns[4].FieldName := 'mov_data_movimento';
   DBGrid_resultadoPesquisa.Columns[5].FieldName := 'usuario';
 
-
+  RadioButtonSIM.Checked := true;
 end;
 
 procedure TForm_RelatorioMovimento.FormShow(Sender: TObject);
@@ -188,7 +205,7 @@ begin
  // frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorio.fr3');
   if FDMemTable_consulta.IsEmpty then
   begin
-   Application.MessageBox ('Realize uma pesquisa para exportar','Erro',MB_OK+MB_ICONEXCLAMATION);
+   Application.MessageBox ('Realize uma consulta para exportar!','Aviso',MB_OK+MB_ICONEXCLAMATION);
    exit
   end;
     //frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorioUsuario.fr3') ;
@@ -205,14 +222,15 @@ begin
     ' INNER JOIN item_movimento AS im ON m.mov_id = im.mov_id ' +
     ' INNER JOIN produto AS p ' + ' ON im.prod_id_produto = p.prod_id_produto '+
     ' INNER JOIN categoria AS c' +
-    ' ON p.cat_id_categoria = c.cat_id_categoria WHERE 1 > 0' ;
+    ' ON p.cat_id_categoria = c.cat_id_categoria WHERE 1 > 0 ' ;
 
   if Trim(Edit_codigo.Text) <> EmptyStr then
   begin
     sql := sql + ' AND m.mov_id = ' + Edit_codigo.Text;
   end;
 
-  if (DateTimePicker_Ini.Date <> 0) and (DateTimePicker_Fim.Date <> 0) then
+  if (DateTimePicker_Fim.Enabled = true) and (DateTimePicker_Ini.Enabled = true) then
+  //if (DateTimePicker_Ini.Date <> 0) and (DateTimePicker_Fim.Date <> 0) then
   begin
     sql := sql + ' AND M.mov_data_movimento BETWEEN("' +
       FormatDateTime('yyyy-mm-dd', DateTimePicker_Ini.Date) + '")' + ' AND ("' +
@@ -240,21 +258,32 @@ begin
     sql := sql + ' AND (mov_tipo = "' + ComboBox_tipoMoviemento.Text + '")'
   end;
 
+  sql := sql +  ' order by m.mov_id';
+
   DataModuleConexao.ExecSQL(sql, FDMemTable_consulta);
   if FDMemTable_consulta.IsEmpty then
   begin
-     if DateTimePicker_Fim.Date = DateTimePicker_Ini.Date then
+     if (DateTimePicker_Ini.Enabled = true) and  (DateTimePicker_Fim.Date = DateTimePicker_Ini.Date) then
      begin
-      Application.MessageBox ('Nenhum registro encontrado, verifique se a data esta correta','Erro',MB_OK+MB_ICONEXCLAMATION);
+      Application.MessageBox ('Nenhum registro encontrado, verifique' +#13+ 'se a data está correta!','Aviso',MB_OK+MB_ICONEXCLAMATION);
      end else
-     Application.MessageBox ('Nenhum registro encontrado','Erro',MB_OK+MB_ICONEXCLAMATION);
+     Application.MessageBox ('Nenhum registro encontrado!','Aviso',MB_OK+MB_ICONEXCLAMATION);
   end;
 
 end;
 
 procedure TForm_RelatorioMovimento.SpeedButton_filtrarClick(Sender: TObject);
 begin
-   buscaMovimentos;
+   if(Edit_codigo.Text = EmptyStr) and (Edit_produto.Text = EmptyStr)
+      and (ComboBox_categoria.ItemIndex = 0) and (ComboBox_tipoMoviemento.ItemIndex = 0) then
+    begin
+    Application.MessageBox ('Preencha a consulta!','Aviso',MB_OK+MB_ICONEXCLAMATION);
+    end
+   else
+    begin
+     buscaMovimentos;
+    end;
+
 end;
 
 procedure TForm_RelatorioMovimento.SpeedButton_limparConsultaClick

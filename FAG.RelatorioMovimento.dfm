@@ -125,8 +125,8 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
       end
       object Label_data_ate: TLabel
-        Left = 335
-        Top = 54
+        Left = 570
+        Top = 55
         Width = 21
         Height = 21
         Caption = 'at'#233
@@ -151,7 +151,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
       end
       object Label_categoria: TLabel
-        Left = 577
+        Left = 107
         Top = 29
         Width = 67
         Height = 21
@@ -164,8 +164,8 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
       end
       object Label_data_de: TLabel
-        Left = 104
-        Top = 54
+        Left = 349
+        Top = 55
         Width = 19
         Height = 21
         Caption = 'De'
@@ -177,7 +177,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
       end
       object Label_tipoMoviemento: TLabel
-        Left = 361
+        Left = 365
         Top = 93
         Width = 135
         Height = 21
@@ -190,18 +190,18 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
       end
       object SpeedButton_filtrar: TSpeedButton
-        Left = 535
-        Top = 112
+        Left = 537
+        Top = 114
         Width = 103
-        Height = 33
+        Height = 32
         Caption = 'Filtrar'
         OnClick = SpeedButton_filtrarClick
       end
       object SpeedButton_exibirTodos: TSpeedButton
-        Left = 657
-        Top = 112
+        Left = 655
+        Top = 114
         Width = 132
-        Height = 33
+        Height = 32
         Caption = 'Exibir Todos'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -210,6 +210,19 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         Font.Style = [fsBold]
         ParentFont = False
         OnClick = SpeedButton_exibirTodosClick
+      end
+      object Label1: TLabel
+        Left = 365
+        Top = 28
+        Width = 110
+        Height = 21
+        Caption = 'Filtrar por data?'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
       end
       object Edit_codigo: TEdit
         Left = 18
@@ -229,7 +242,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       object Edit_produto: TEdit
         Left = 16
         Top = 115
-        Width = 321
+        Width = 328
         Height = 29
         AutoSize = False
         CharCase = ecUpperCase
@@ -242,9 +255,9 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         TabOrder = 4
       end
       object ComboBox_categoria: TComboBox
-        Left = 577
+        Left = 107
         Top = 51
-        Width = 212
+        Width = 222
         Height = 29
         Style = csDropDownList
         CharCase = ecUpperCase
@@ -254,10 +267,26 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 1
       end
       object DateTimePicker_Fim: TDateTimePicker
-        Left = 373
+        Left = 602
+        Top = 51
+        Width = 185
+        Height = 29
+        Date = 44100.000000000000000000
+        Time = 0.354362268517434100
+        Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 3
+      end
+      object DateTimePicker_Ini: TDateTimePicker
+        Left = 374
         Top = 51
         Width = 185
         Height = 29
@@ -272,24 +301,8 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
         TabOrder = 2
       end
-      object DateTimePicker_Ini: TDateTimePicker
-        Left = 129
-        Top = 51
-        Width = 185
-        Height = 29
-        Date = 44100.000000000000000000
-        Time = 0.354362268517434100
-        Enabled = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 1
-      end
       object ComboBox_tipoMoviemento: TComboBox
-        Left = 361
+        Left = 365
         Top = 115
         Width = 153
         Height = 29
@@ -302,6 +315,36 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         Font.Style = []
         ParentFont = False
         TabOrder = 5
+      end
+      object RadioButtonSIM: TRadioButton
+        Left = 481
+        Top = 31
+        Width = 50
+        Height = 17
+        Caption = 'Sim'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 6
+        OnClick = RadioButtonSIMClick
+      end
+      object RadioButtonNAO: TRadioButton
+        Left = 537
+        Top = 32
+        Width = 50
+        Height = 17
+        Caption = 'N'#227'o'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 7
+        OnClick = RadioButtonNAOClick
       end
     end
     object GroupBox2: TGroupBox

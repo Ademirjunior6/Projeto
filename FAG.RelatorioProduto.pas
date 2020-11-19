@@ -118,7 +118,7 @@ begin
 
   if FDMemTable_Consulta.IsEmpty then
   begin
-    Application.MessageBox ('Nenhum registro encontrado','Erro',MB_OK+MB_ICONEXCLAMATION);
+    Application.MessageBox ('Nenhum registro encontrado!','Aviso',MB_OK+MB_ICONEXCLAMATION);
   end;
 end;
 
@@ -176,7 +176,7 @@ begin
  // frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorio.fr3');
   if FDMemTable_Consulta.IsEmpty then
   begin
-   Application.MessageBox ('Realize uma pesquisa para exportar','Erro',MB_OK+MB_ICONEXCLAMATION);
+   Application.MessageBox ('Realize uma pesquisa para exportar!','Aviso',MB_OK+MB_ICONEXCLAMATION);
    exit
   end;
     //frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorioUsuario.fr3') ;
@@ -187,7 +187,7 @@ procedure TForm_RelatorioProduto.SpeedButton_filtrarClick(Sender: TObject);
 begin
   if (Frame_Produto1.Edit_codigoProduto.Text = EmptyStr) AND (ComboBox_categoria.ItemIndex = 0) AND(ComboBox_Status.ItemIndex = 0) then
   begin
-     Application.MessageBox ('Preencha a pesquisa','Erro',MB_OK+MB_ICONEXCLAMATION);
+     Application.MessageBox ('Preencha a pesquisa!','Aviso',MB_OK+MB_ICONEXCLAMATION);
      exit
   end;
   buscaMovimento;

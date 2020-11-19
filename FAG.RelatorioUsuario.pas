@@ -183,7 +183,7 @@ begin
  // frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorio.fr3');
   if FDMemTable_Consulta.IsEmpty then
   begin
-   Application.MessageBox ('Realize uma pesquisa para exportar','Erro',MB_OK+MB_ICONEXCLAMATION);
+   Application.MessageBox ('Realize uma pesquisa para exportar!','Aviso',MB_OK+MB_ICONEXCLAMATION);
    exit
   end;
     //frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorioUsuario.fr3') ;
@@ -196,7 +196,7 @@ var
 begin
   if (MaskEdit_pesquisa.Text = EmptyStr) AND (ComboBox_Status.ItemIndex = 0) then
   begin
-   Application.MessageBox ('Preencha a pesquisa','Erro',MB_OK+MB_ICONEXCLAMATION);
+   Application.MessageBox ('Preencha a pesquisa!','Aviso',MB_OK+MB_ICONEXCLAMATION);
    MaskEdit_pesquisa.SetFocus;
    exit
   end;
@@ -235,7 +235,7 @@ begin
 
   if FDMemTable_Consulta.IsEmpty then
   begin
-    Application.MessageBox ('Nenhum registro encontrado','Erro',MB_OK+MB_ICONEXCLAMATION);
+    Application.MessageBox ('Nenhum registro encontrado!','Aviso',MB_OK+MB_ICONEXCLAMATION);
   end;
 end;
 
