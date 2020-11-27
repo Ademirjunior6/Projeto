@@ -21,8 +21,7 @@ uses
   FAG.Frame.UnMedida in 'FAG.Frame.UnMedida.pas' {Frame_UnMedida: TFrame},
   FAG.Utils in 'FAG.Utils.pas',
   FAG.CadastroUsuario in 'FAG.CadastroUsuario.pas' {Form_CadastroUsuario},
-  FAG.DetalharMovimento in 'FAG.DetalharMovimento.pas' {Form_detalharMovimento},
-  FAG.ConsultaUsuario in 'FAG.ConsultaUsuario.pas' {Form_ConsultaUsuario};
+  FAG.DetalharMovimento in 'FAG.DetalharMovimento.pas' {Form_detalharMovimento};
 
 {$R *.res}
 

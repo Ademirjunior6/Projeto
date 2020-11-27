@@ -29,8 +29,8 @@ object DataModuleConexao: TDataModuleConexao
     Top = 344
   end
   object FDConnection1: TFDConnection
-    Left = 216
-    Top = 128
+    Left = 304
+    Top = 152
   end
   object FDManager1: TFDManager
     DriverDefFileAutoLoad = False
@@ -40,7 +40,7 @@ object DataModuleConexao: TDataModuleConexao
     FormatOptions.OwnMapRules = True
     FormatOptions.MapRules = <>
     Active = True
-    Left = 64
-    Top = 104
+    Left = 128
+    Top = 120
   end
 end

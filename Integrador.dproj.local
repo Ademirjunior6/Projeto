@@ -15,52 +15,5 @@
     <Transaction>2020/10/25 15:32:12.000.741,C:\ProjetoGit\FAG.RelatorioUsuario.dfm=C:\ProjetoGit\Unit1.dfm</Transaction>
     <Transaction>2020/11/16 19:45:08.000.029,C:\ProjetoGit\FAG.DetalharMovimento.pas=</Transaction>
     <Transaction>2020/11/16 19:46:23.000.391,=C:\ProjetoGit\FAG.DetalharMovimento.pas</Transaction>
-    <Transaction>2020/11/22 11:57:40.000.775,=C:\lalapow\Unit1.pas</Transaction>
-    <Transaction>2020/11/22 11:58:14.000.478,C:\lalapow\FAG.ConsultaUsuario.pas=C:\lalapow\Unit1.pas</Transaction>
-    <Transaction>2020/11/22 12:00:50.000.873,C:\lalapow\FAG.ConsultaUsuario.pas=</Transaction>
-    <Transaction>2020/11/22 12:01:05.000.283,=C:\lalapow\Unit1.pas</Transaction>
-    <Transaction>2020/11/22 12:01:35.000.401,C:\lalapow\FAG.ConsultaUsuario.pas=C:\lalapow\Unit1.pas</Transaction>
-    <Transaction>2020/11/22 12:01:35.000.401,C:\lalapow\FAG.ConsultaUsuario.dfm=C:\lalapow\Unit1.dfm</Transaction>
   </Transactions>
-	<ProjectSortOrder AutoSort="0" SortType="0">
-    <File Path="C:"/>
-    <File Path="C:\libmysql.dll"/>
-    <File Path="FAG.CadastroCategoria.pas"/>
-    <File Path="FAG.CadastroCategoria.dfm"/>
-    <File Path="FAG.CadastroProduto.pas"/>
-    <File Path="FAG.CadastroProduto.dfm"/>
-    <File Path="FAG.CadastroUnMedida.pas"/>
-    <File Path="FAG.CadastroUnMedida.dfm"/>
-    <File Path="FAG.CadastroUsuario.pas"/>
-    <File Path="FAG.CadastroUsuario.dfm"/>
-    <File Path="FAG.ConsultarProduto.pas"/>
-    <File Path="FAG.ConsultarProduto.dfm"/>
-    <File Path="FAG.DataModule.Conexao.pas"/>
-    <File Path="FAG.DataModule.Conexao.dfm"/>
-    <File Path="FAG.DetalharMovimento.pas"/>
-    <File Path="FAG.DetalharMovimento.dfm"/>
-    <File Path="FAG.Frame.Generico.pas"/>
-    <File Path="FAG.Frame.Generico.dfm"/>
-    <File Path="FAG.Frame.Produto.pas"/>
-    <File Path="FAG.Frame.Produto.dfm"/>
-    <File Path="FAG.Frame.UnMedida.pas"/>
-    <File Path="FAG.Frame.UnMedida.dfm"/>
-    <File Path="FAG.Login.pas"/>
-    <File Path="FAG.Login.dfm"/>
-    <File Path="FAG.Menu.pas"/>
-    <File Path="FAG.Menu.dfm"/>
-    <File Path="FAG.Movimento.pas"/>
-    <File Path="FAG.Movimento.dfm"/>
-    <File Path="FAG.Produtos.pas"/>
-    <File Path="FAG.Produtos.dfm"/>
-    <File Path="FAG.RelatorioMovimento.pas"/>
-    <File Path="FAG.RelatorioMovimento.dfm"/>
-    <File Path="FAG.RelatorioProduto.pas"/>
-    <File Path="FAG.RelatorioProduto.dfm"/>
-    <File Path="FAG.RelatorioUsuario.pas"/>
-    <File Path="FAG.RelatorioUsuario.dfm"/>
-    <File Path="FAG.Utils.pas"/>
-    <File Path="FAG.ConsultaUsuario.pas"/>
-    <File Path="FAG.ConsultaUsuario.dfm"/>
-  </ProjectSortOrder>
 </BorlandProject>

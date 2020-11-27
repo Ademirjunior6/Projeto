@@ -165,10 +165,6 @@
             <Form>Form_detalharMovimento</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="FAG.ConsultaUsuario.pas">
-            <Form>Form_ConsultaUsuario</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <RcItem Include="C:\libmysql.dll">
             <ContainerId>ResourceItem</ContainerId>
             <ResourceType>RCDATA</ResourceType>

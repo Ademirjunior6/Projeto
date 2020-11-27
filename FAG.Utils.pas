@@ -1,23 +1,21 @@
 unit FAG.Utils;
 
 interface
-
 const
-  KEY: String = 'AOISIOD90AS8DASA9SDAS09DAS092123123ASD';
+  KEY : String = 'AOISIOD90AS8DASA9SDAS09DAS092123123ASD';
 
 function StrToSQL(caracter: String): String;
 function IntToSQL(valor: Integer): String;
 function VirgulaPorPonto(Vlr: string): string;
 function DateTimeToSQL(DataTime: TDateTime): String;
 function DateToSQL(DataTime: TDateTime): String;
-function CryptBD(password: String): String;
-function DecryptBD(password: String): String;
-function getLastID: String;
+function CryptBD(password : String) : String;
+function DecryptBD(password : String) : String;
 
 implementation
 
 uses
-  System.SysUtils, FireDAC.Comp.Client, FAG.DataModule.Conexao;
+  System.SysUtils;
 
 function StrToSQL(caracter: String): String;
 begin
@@ -83,9 +81,9 @@ begin
 
 end;
 
-function CryptBD(password: String): String;
+function CryptBD(password : String) : String;
 var
-  newPassword: String;
+	newPassword : String;
 begin
   if Trim(password) = '' then
   begin
@@ -93,14 +91,13 @@ begin
     Exit;
   end;
 
-  newPassword := 'AES_ENCRYPT(' + QuotedStr(password) + ', ' +
-    QuotedStr(KEY) + ')';
+  newPassword := 'AES_ENCRYPT(' + QuotedStr(password) + ', ' + QuotedStr(KEY) + ')';
   Result := newPassword;
 end;
 
-function DecryptBD(password: String): String;
+function DecryptBD(password : String) : String;
 var
-  newPassword: String;
+	newPassword : String;
 begin
   if Trim(password) = '' then
   begin
@@ -108,22 +105,7 @@ begin
     Exit;
   end;
 
-  newPassword := 'AES_DECRYPT(' + QuotedStr(password) + ', ' +
-    QuotedStr(KEY) + ')';
+  newPassword := 'AES_DECRYPT(' + QuotedStr(password) + ', ' + QuotedStr(KEY) + ')';
   Result := newPassword;
 end;
-
-function getLastID: String;
-var
-  tmp: TFDMemTable;
-begin
-  tmp := TFDMemTable.Create(nil);
-  try
-    DataModuleConexao.ExecSQL('SELECT (SELECT LAST_INSERT_ID()) AS id', tmp);
-    result := tmp.FieldByName('id').AsString;
-  finally
-    FreeAndNil(tmp);
-  end;
-end;
-
 end.

@@ -68,7 +68,8 @@ uses
 procedure TFrame_Generico.ComboBox_InformacaoExit(Sender: TObject);
 begin
   // ComboBox_Informacao.Items.IndexOf(ComboBox_Informacao.text);
-  indexCombo := Trim(Copy(ComboBox_Informacao.Text, 0, Pred(Pos('-', ComboBox_Informacao.Text))));
+  indexCombo := Copy(ComboBox_Informacao.Text, 0,
+    Pred(Pos('-', ComboBox_Informacao.Text)));
 
   if StrToIntDef(indexCombo, 0) <> 0 then
     TableTemp.Locate(campoChave, indexCombo, [])

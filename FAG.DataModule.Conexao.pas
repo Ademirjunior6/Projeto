@@ -48,9 +48,7 @@ type
 			function ExtrairArquivoInterno : Boolean;
 		public
 			function ExecSQL(strSQL : string; const ZQueryParam : TFDMemTable = nil) : Boolean;
-			function BeginTrans : Boolean;
-			function CommitTrans : Boolean;
-			function RollBackTrans : Boolean;
+
 	end;
 
 function LeiaConfigINI : Boolean;
@@ -96,20 +94,6 @@ begin
 
 end;
 
-function TDataModuleConexao.BeginTrans: Boolean;
-begin
-	if FDConnection1.Connected then
-  	if not FDConnection1.InTransaction then
-	  	FDConnection1.StartTransaction
-end;
-
-function TDataModuleConexao.CommitTrans: Boolean;
-begin
-  if FDConnection1.Connected then
-    if FDConnection1.InTransaction then
-      FDConnection1.Commit;
-end;
-
 procedure TDataModuleConexao.DataModuleCreate(Sender : TObject);
 var
 	oParams : TStrings;
@@ -119,8 +103,7 @@ begin
 		if (LeiaConfigINI) and (ExtrairArquivoInterno) then
 		begin
 
-      FDPhysMySQLDriverLink1.VendorLib := ExtractFilePath(Application.ExeName) + LIBMYSQL;
-
+			         FDPhysMySQLDriverLink1.VendorLib := ExtractFilePath(Application.ExeName) + LIBMYSQL;
 			oParams.Add('CharacterSet=utf8');
 			oParams.Add('Server=' + configIni.DBServer);
 			oParams.Add('DriverID=MySQL');
@@ -129,19 +112,12 @@ begin
 			oParams.Add('User_Name=' + configIni.DBUser);
 			oParams.Add('Password=' + configIni.DBPassword);
 			oParams.Add('Pooled=True');
-
-			FDConnection1.FetchOptions.Mode := fmAll;
-			FDConnection1.Connected         := False;
-			FDConnection1.LoginPrompt       := False;
-			FDConnection1.Params.Clear;
-
 			FDManager1.Active := False;
 			FDManager1.ConnectionCount;
 			FDManager1.AddConnectionDef('MySQL_Pooled', 'MySQL', oParams);
 			FDManager1.Active := True;
-
-      FDConnection1.ConnectionDefName := 'MySQL_Pooled';
-			FDConnection1.Connected         := True;
+			// FDConnection1.ConnectionDefName := 'MySQL_Pooled';
+			// FDConnection1.Connected         := True;
 		end;
 	finally
 		FreeAndNil(oParams);
@@ -150,7 +126,7 @@ end;
 
 function TDataModuleConexao.ExecSQL(strSQL : string; const ZQueryParam : TFDMemTable) : Boolean;
 var
-	//FDConnectionOnly : TFDConnection;
+	FDConnectionOnly : TFDConnection;
 	fdQueryT         : TFDQuery;
 	vs_SQLT          : string;
 begin
@@ -162,77 +138,57 @@ begin
 		fdQueryT := TFDQuery.Create(nil);
 		try
 			vs_SQLT := Trim(strSQL);
-			//FDConnectionOnly := TFDConnection.Create(nil);
-			//FDConnectionOnly.ConnectionDefName := 'MySQL_Pooled';
-			fdQueryT.Connection                := FDConnection1; //FDConnectionOnly;
-  		fdQueryT.Close;
+			FDConnectionOnly := TFDConnection.Create(nil);
+			FDConnectionOnly.ConnectionDefName := 'MySQL_Pooled';
+			fdQueryT.Connection                := FDConnectionOnly;
 			fdQueryT.SQL.Clear;
 			fdQueryT.SQL.Add(vs_SQLT);
 
 			if (Pos(SELECT, Trim(UpperCase(vs_SQLT))) in [1, 2]) then
 			begin
-//				if not (FDConnectionOnly.Connected) then
-//				begin
-//					FDConnectionOnly.Connected := True;
-//					fdQueryT.Prepare;
-//					fdQueryT.Open;
-//					if ZQueryParam <> nil then
-//					begin
-//						ZQueryParam.Close;
-//						ZQueryParam.Data := fdQueryT.Data;
-//					end;
-//					FDConnectionOnly.Connected := False;
-//				end else
-//				begin
-//					fdQueryT.Prepare;
-//					fdQueryT.Open;
-//					if ZQueryParam <> nil then
-//					begin
-//						ZQueryParam.Close;
-//						ZQueryParam.Data := fdQueryT.Data;
-//					end;
-//				end;
-          if not (FDConnection1.Connected) then
+				if not (FDConnectionOnly.Connected) then
+				begin
+					FDConnectionOnly.Connected := True;
+					fdQueryT.Prepare;
+					fdQueryT.Open;
+					if ZQueryParam <> nil then
 					begin
-						FDConnection1.Connected := True;
-						fdQueryT.Prepare;
-						fdQueryT.Open;
-						if ZQueryParam <> nil then
-						begin
-							ZQueryParam.Close;
-							ZQueryParam.Data := fdQueryT.Data;
-						end;
-						FDConnection1.Connected := False;
-					end else
-					begin
-						fdQueryT.Prepare;
-						fdQueryT.Open;
-						if ZQueryParam <> nil then
-						begin
-							ZQueryParam.Close;
-							ZQueryParam.Data := fdQueryT.Data;
-						end;
+						ZQueryParam.Close;
+						ZQueryParam.Data := fdQueryT.Data;
 					end;
+					FDConnectionOnly.Connected := False;
+				end else
+				begin
+					fdQueryT.Prepare;
+					fdQueryT.Open;
+					if ZQueryParam <> nil then
+					begin
+						ZQueryParam.Close;
+						ZQueryParam.Data := fdQueryT.Data;
+					end;
+				end;
 			end else
 			begin
-//				FDConnectionOnly.StartTransaction;
-//				fdQueryT.Prepare;
-//				fdQueryT.ExecSQL;
-//				FDConnectionOnly.Commit;
-					fdQueryT.Prepare;
-					fdQueryT.ExecSQL;
+				FDConnectionOnly.StartTransaction;
+				fdQueryT.Prepare;
+				fdQueryT.ExecSQL;
+				FDConnectionOnly.Commit;
 			end;
-    finally
-      fdQueryT.Free;
-    end;
-    Result := True;
-  except
-    on E : Exception do
-    begin
-      Result := False;
-      Raise;
-    end;
-  end;
+		except
+			on E : Exception do
+			begin
+				FDConnectionOnly.Rollback;
+				Result := False;
+				Raise;
+			end;
+		end;
+	finally
+		fdQueryT.Active := False;
+		fdQueryT.Connection.Close;
+		FDConnectionOnly.Connected := False;
+		FreeAndNil(fdQueryT);
+		FreeAndNil(FDConnectionOnly);
+	end;
 end;
 
 function TDataModuleConexao.ExtrairArquivoInterno : Boolean;
@@ -262,13 +218,6 @@ begin
 			Result := False;
 		end;
 	end;
-end;
-
-function TDataModuleConexao.RollBackTrans: Boolean;
-begin
-  if FDConnection1.Connected then
-    if FDConnection1.InTransaction then
-      FDConnection1.Rollback;
 end;
 
 end.

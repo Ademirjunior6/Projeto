@@ -4,7 +4,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Cadastro de Produto'
-  ClientHeight = 604
+  ClientHeight = 602
   ClientWidth = 869
   Color = clBtnFace
   Constraints.MaxHeight = 633
@@ -29,7 +29,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
     Left = 0
     Top = 0
     Width = 869
-    Height = 604
+    Height = 602
     Align = alClient
     UseDockManager = False
     Font.Charset = DEFAULT_CHARSET
@@ -39,8 +39,6 @@ object Form_CadastroProduto: TForm_CadastroProduto
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    ExplicitLeft = 368
-    ExplicitTop = 232
     object Label_tituloForm: TLabel
       Left = 330
       Top = 32
