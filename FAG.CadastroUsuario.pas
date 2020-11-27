@@ -174,7 +174,7 @@ begin
     begin
       if existe_usuario(Edit_codigo.Text) then
       begin
-//        alterarDados;
+        alterarDados;
         alterarEndereco;
         alterarSenha;
         ShowMessage('Alterado com sucesso.');
