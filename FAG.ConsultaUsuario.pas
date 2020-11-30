@@ -43,7 +43,6 @@ type
     function filtrarDesc: Boolean;
     function filtrarCPF: Boolean;
     function filtrarCNPJ: Boolean;
-    function filtrarStatus: Boolean;
 
   public
     { Public declarations }
@@ -52,6 +51,7 @@ type
 var
   Form_ConsultaUsuario: TForm_ConsultaUsuario;
 
+
 implementation
 
 {$R *.dfm}
@@ -59,6 +59,12 @@ implementation
 uses FAG.DataModule.Conexao;
 
 { TForm1 }
+
+const
+  SQL_SELECT: String = 'SELECT pes_id_pessoa as Código, pes_nome as Nome, ' +
+   ' IF(pes_cnpj IS NULL, CONCAT("CPF: ",pes_cpf), CONCAT("CNPJ: ",pes_cnpj)) AS Inscrição, '+
+    ' pes_celular as Celular, pes_ativo as Status FROM pessoa WHERE 1>0 ';
+
 
 procedure TForm_ConsultaUsuario.Bit_FiltrarClick(Sender: TObject);
 begin
@@ -87,10 +93,10 @@ function TForm_ConsultaUsuario.carregaDBgrid: Boolean;
 begin
   resultadoUsuario.Columns[0].FieldName := 'Código';
   resultadoUsuario.Columns[1].FieldName := 'Nome';
-  resultadoUsuario.Columns[2].FieldName := 'CPF';
-  resultadoUsuario.Columns[3].FieldName := 'CNPJ';
-  resultadoUsuario.Columns[4].FieldName := 'Celular';
-  resultadoUsuario.Columns[5].FieldName := 'Status';
+  resultadoUsuario.Columns[2].FieldName := 'Inscrição';
+  //resultadoUsuario.Columns[3].FieldName := 'CNPJ';
+  resultadoUsuario.Columns[3].FieldName := 'Celular';
+  //resultadoUsuario.Columns[4].FieldName := 'Status';
 end;
 
 function TForm_ConsultaUsuario.carregaFiltros: Boolean;
@@ -120,8 +126,7 @@ function TForm_ConsultaUsuario.carregaTodos: Boolean;
 var
   sql: String;
 begin
-  sql := 'SELECT pes_id_pessoa as Código, pes_nome AS Nome, pes_cpf AS CPF, pes_cnpj AS CNPJ, pes_nascimento, pes_ativo AS Status, pes_email, pes_celular AS Celular '
-    + 'FROM pessoa order by pes_id_pessoa ';
+  sql := SQL_SELECT+' order by pes_id_pessoa ';
   DataModuleConexao.ExecSQL(sql, FDMemTable_Usuario);
 end;
 
@@ -129,9 +134,7 @@ function TForm_ConsultaUsuario.filtrarCNPJ: Boolean;
 var
   sql: String;
 begin
-  sql := 'SELECT pes_id_pessoa as Código, pes_nome as Nome , pes_cpf as CPF, pes_cnpj as CNPJ,'
-    + 'pes_celular as Celular , pes_ativo as Statuss FROM pessoa WHERE pes_cnpj LIKE "%'
-    + Edit_pesquisa.Text + '%"';
+  sql := SQL_SELECT+' AND pes_cnpj LIKE "%'+ Edit_pesquisa.Text + '%"';
   DataModuleConexao.ExecSQL(sql, FDMemTable_Usuario);
 end;
 
@@ -139,9 +142,7 @@ function TForm_ConsultaUsuario.filtrarCPF: Boolean;
 var
   sql: String;
 begin
-  sql := 'SELECT pes_id_pessoa as Código, pes_nome as Nome , pes_cpf as CPF, pes_cnpj as CNPJ,'
-    + 'pes_celular as Celular , pes_ativo as Statuss FROM pessoa WHERE pes_cpf LIKE "%'
-    + Edit_pesquisa.Text + '%"';
+  sql := SQL_SELECT+' pes_cpf LIKE "%'+ Edit_pesquisa.Text + '%"';
   DataModuleConexao.ExecSQL(sql, FDMemTable_Usuario);
 end;
 
@@ -151,32 +152,22 @@ var
 begin
   if Frame_Status.indexCombo = '0' then
   begin
-       sql := 'SELECT pes_id_pessoa as Código, pes_nome as Nome, pes_cpf as CPF, pes_cnpj as CNPJ, pes_celular as Celular, pes_ativo as Status FROM pessoa'
-      + ' WHERE pes_nome LIKE "%' + Edit_pesquisa.Text + '%" ';
+    sql := SQL_SELECT;
+    if Edit_pesquisa.Text <> EmptyStr then
+      sql := sql + ' AND pes_nome LIKE "%' + Edit_pesquisa.Text + '%" ';
   end;
   if Frame_Status.indexCombo = '1' then
   begin
-    sql := 'SELECT pes_id_pessoa as Código, pes_nome as Nome, pes_cpf as CPF, pes_cnpj as CNPJ, pes_celular as Celular, pes_ativo as Status FROM pessoa'
-      + ' WHERE pes_ativo = 1 and pes_nome LIKE "%' +  Edit_pesquisa.Text + '%" ';
+    sql := SQL_SELECT+' AND pes_ativo = 1 AND pes_nome LIKE "%' +  Edit_pesquisa.Text + '%" ';
   end;
   if Frame_Status.indexCombo = '2' then
   begin
-    sql := 'SELECT pes_id_pessoa as Código, pes_nome as Nome, pes_cpf as CPF, pes_cnpj as CNPJ, pes_celular as Celular, pes_ativo as Status FROM pessoa'
-      + ' WHERE pes_ativo = 2 and pes_nome LIKE "%' + Edit_pesquisa.Text + '%" ';
+    sql := SQL_SELECT+' AND pes_ativo = 2 AND pes_nome LIKE "%' + Edit_pesquisa.Text + '%" ';
   end;
 
   DataModuleConexao.ExecSQL(sql, FDMemTable_Usuario);
 end;
 
-function TForm_ConsultaUsuario.filtrarStatus: Boolean;
-var
-  sql: string;
-begin
-  sql := 'SELECT pes_id_pessoa as Código, pes_nome as Nome , pes_cpf as CPF, pes_cnpj as CNPJ,'
-    + 'pes_celular as Celular , pes_ativo as Status FROM pessoa WHERE pes_ativo LIKE "%'
-    + Frame_Status.indexCombo + '%"';
-  DataModuleConexao.ExecSQL(sql, FDMemTable_Usuario);
-end;
 
 procedure TForm_ConsultaUsuario.FormCreate(Sender: TObject);
 begin

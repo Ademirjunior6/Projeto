@@ -11,6 +11,7 @@ object Form_ConsultaUsuario: TForm_ConsultaUsuario
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesktopCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -202,6 +203,7 @@ object Form_ConsultaUsuario: TForm_ConsultaUsuario
         Width = 776
         Height = 281
         DataSource = DataSource_Consulta
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
