@@ -112,14 +112,6 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
         Font.Style = []
         ParentFont = False
       end
-      object SpeedButton_filtrar: TSpeedButton
-        Left = 707
-        Top = 64
-        Width = 83
-        Height = 30
-        Caption = 'Filtrar'
-        OnClick = SpeedButton_filtrarClick
-      end
       object Label_filtro: TLabel
         Left = 17
         Top = 37
@@ -146,7 +138,7 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 0
+        TabOrder = 1
       end
       object ComboBox_filtro: TComboBox
         Left = 16
@@ -160,7 +152,7 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 1
+        TabOrder = 0
         OnChange = ComboBox_filtroChange
       end
       inline Frame_categoria: TFrame_Generico
@@ -194,6 +186,15 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
           ExplicitTop = 27
           ExplicitWidth = 163
         end
+      end
+      object BitBtn1: TBitBtn
+        Left = 714
+        Top = 64
+        Width = 75
+        Height = 29
+        Caption = 'Filtrar'
+        TabOrder = 3
+        OnClick = BitBtn1Click
       end
     end
     object GroupBox2: TGroupBox

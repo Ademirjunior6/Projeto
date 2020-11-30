@@ -19,7 +19,6 @@ type
     SpeedButton_exibirTodos: TSpeedButton;
     GroupBox1: TGroupBox;
     Label_produto: TLabel;
-    SpeedButton_filtrar: TSpeedButton;
     Edit_produto: TEdit;
     GroupBox2: TGroupBox;
     Panel_resultadoPesquisa: TPanel;
@@ -32,15 +31,16 @@ type
     Label_filtro: TLabel;
     DBGrid_resultadoPesquisa: TDBGrid;
     Frame_categoria: TFrame_Generico;
+    BitBtn1: TBitBtn;
     procedure SpeedButton_exibirTodosClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure DBGrid_resultadoPesquisaDblClick(Sender: TObject);
-    procedure SpeedButton_filtrarClick(Sender: TObject);
     procedure SpeedButton_limparConsultaClick(Sender: TObject);
     procedure SpeedButton_VoltarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Frame_categoriaComboBox_InformacaoExit(Sender: TObject);
     procedure ComboBox_filtroChange(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
   private
     function carregaFiltros: Boolean;
     function carregaCategoria: Boolean;
@@ -64,6 +64,31 @@ implementation
 Uses
 
   FAG.DataModule.Conexao;
+
+
+
+procedure TForm_ConsultarProduto.BitBtn1Click(Sender: TObject);
+begin
+   case ComboBox_filtro.ItemIndex of
+    0:
+      begin
+        ShowMessage('Selecione um filtro.');
+      end;
+    1:
+      begin
+        filtrarCod;
+      end;
+    2:
+      begin
+        filtrarDesc;
+      end;
+    3:
+      begin
+        Self.Perform(WM_NEXTDLGCTL, 0, 0);
+        filtrarCat;
+      end;
+  end;
+end;
 
 function TForm_ConsultarProduto.carregaCategoria: Boolean;
 begin
@@ -216,29 +241,6 @@ end;
 procedure TForm_ConsultarProduto.SpeedButton_exibirTodosClick(Sender: TObject);
 begin
   filtrarTodos;
-end;
-
-procedure TForm_ConsultarProduto.SpeedButton_filtrarClick(Sender: TObject);
-begin
-  case ComboBox_filtro.ItemIndex of
-    0:
-      begin
-        ShowMessage('Selecione um filtro.');
-      end;
-    1:
-      begin
-        filtrarCod;
-      end;
-    2:
-      begin
-        filtrarDesc;
-      end;
-    3:
-      begin
-        Self.Perform(WM_NEXTDLGCTL, 0, 0);
-        filtrarCat;
-      end;
-  end;
 end;
 
 procedure TForm_ConsultarProduto.SpeedButton_limparConsultaClick

@@ -4,12 +4,12 @@ object Form_CadastroProduto: TForm_CadastroProduto
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Cadastro de Produto'
-  ClientHeight = 602
+  ClientHeight = 571
   ClientWidth = 869
   Color = clBtnFace
-  Constraints.MaxHeight = 633
+  Constraints.MaxHeight = 600
   Constraints.MaxWidth = 875
-  Constraints.MinHeight = 633
+  Constraints.MinHeight = 600
   Constraints.MinWidth = 875
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -29,7 +29,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
     Left = 0
     Top = 0
     Width = 869
-    Height = 602
+    Height = 571
     Align = alClient
     UseDockManager = False
     Font.Charset = DEFAULT_CHARSET
@@ -41,7 +41,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
     TabOrder = 0
     object Label_tituloForm: TLabel
       Left = 330
-      Top = 32
+      Top = 40
       Width = 191
       Height = 32
       Caption = 'Cadastrar Produto'
@@ -53,7 +53,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
       ParentFont = False
     end
     object GroupBox1: TGroupBox
-      Left = 19
+      Left = 27
       Top = 130
       Width = 814
       Height = 199
@@ -123,11 +123,11 @@ object Form_CadastroProduto: TForm_CadastroProduto
         ParentFont = False
       end
       object Label_valor: TLabel
-        Left = 579
+        Left = 504
         Top = 98
-        Width = 36
+        Width = 40
         Height = 21
-        Caption = 'Valor'
+        Caption = 'Custo'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -149,14 +149,14 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 0
+        TabOrder = 8
       end
       object ComboBox_status: TComboBox
         Left = 104
         Top = 51
         Width = 105
         Height = 29
-        TabOrder = 1
+        TabOrder = 2
       end
       object Edit_descricao: TEdit
         Left = 224
@@ -171,7 +171,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 2
+        TabOrder = 3
       end
       object DateTimePicker1: TDateTimePicker
         Left = 611
@@ -187,10 +187,10 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 4
       end
       inline Frame_Categoria: TFrame_Generico
-        Left = 91
+        Left = 16
         Top = 102
         Width = 191
         Height = 60
@@ -200,19 +200,23 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 4
+        TabOrder = 5
         OnExit = Frame_CategoriaExit
-        ExplicitLeft = 91
+        ExplicitLeft = 16
         ExplicitTop = 102
         ExplicitWidth = 191
         inherited ComboBox_Informacao: TComboBox
           Width = 190
           Style = csDropDownList
+          OnExit = Frame_CategoriaComboBox_InformacaoExit
           ExplicitWidth = 190
+        end
+        inherited TableTemp: TFDMemTable
+          Left = 120
         end
       end
       object Edit_valor: TEdit
-        Left = 579
+        Left = 504
         Top = 125
         Width = 102
         Height = 29
@@ -225,12 +229,12 @@ object Form_CadastroProduto: TForm_CadastroProduto
         MaxLength = 10
         ParentBiDiMode = False
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 7
         OnChange = Edit_valorChange
         OnKeyPress = Edit_valorKeyPress
       end
       inline Frame_UnMedida: TFrame_Generico
-        Left = 334
+        Left = 259
         Top = 102
         Width = 193
         Height = 60
@@ -241,37 +245,43 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Style = []
         ParentFont = False
         TabOrder = 6
-        ExplicitLeft = 334
+        ExplicitLeft = 259
         ExplicitTop = 102
         ExplicitWidth = 193
         inherited ComboBox_Informacao: TComboBox
           Width = 185
           Style = csDropDownList
+          OnExit = Frame_UnMedidaComboBox_InformacaoExit
           ExplicitWidth = 185
+        end
+        inherited TableTemp: TFDMemTable
+          Left = 104
         end
       end
       object BitBtn_categoria: TBitBtn
-        Left = 287
+        Left = 212
         Top = 128
         Width = 26
         Height = 25
         Caption = '+'
-        TabOrder = 7
+        TabOrder = 1
+        TabStop = False
         OnClick = BitBtn_categoriaClick
       end
       object BitBtn_unMedida: TBitBtn
-        Left = 526
+        Left = 451
         Top = 128
         Width = 26
         Height = 25
         Caption = '+'
-        TabOrder = 8
+        TabOrder = 0
+        TabStop = False
         OnClick = BitBtn_unMedidaClick
       end
     end
     object GroupBox2: TGroupBox
-      Left = 19
-      Top = 448
+      Left = 27
+      Top = 384
       Width = 814
       Height = 137
       TabOrder = 1
@@ -304,7 +314,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         OnClick = SpeedButton_pesquisarClick
       end
       object SpeedButton_sair: TSpeedButton
-        Left = 533
+        Left = 534
         Top = 56
         Width = 109
         Height = 33

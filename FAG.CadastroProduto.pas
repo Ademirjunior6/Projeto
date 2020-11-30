@@ -52,6 +52,8 @@ type
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn_unMedidaClick(Sender: TObject);
     procedure BitBtn_categoriaClick(Sender: TObject);
+    procedure Frame_CategoriaComboBox_InformacaoExit(Sender: TObject);
+    procedure Frame_UnMedidaComboBox_InformacaoExit(Sender: TObject);
   private
     { Private declarations }
     function getUltimoID: String;
@@ -144,6 +146,11 @@ begin
   cancelar;
 end;
 
+procedure TForm_CadastroProduto.Frame_CategoriaComboBox_InformacaoExit(Sender: TObject);
+begin
+  Frame_Categoria.ComboBox_InformacaoExit(Sender);
+end;
+
 procedure TForm_CadastroProduto.Frame_CategoriaExit(Sender: TObject);
 begin
   // showmessage(Frame_Generico1.TableTemp.FieldByName('cat_id_categoria')
@@ -153,6 +160,11 @@ begin
   // .AsString);
   // showmessage(Frame_Generico1.TableTemp.FieldByName('cat_data_alterado')
   // .AsString);
+end;
+
+procedure TForm_CadastroProduto.Frame_UnMedidaComboBox_InformacaoExit(Sender: TObject);
+begin
+  Frame_UnMedida.ComboBox_InformacaoExit(Sender);
 end;
 
 procedure TForm_CadastroProduto.SpeedButton_unMedidaClick(Sender: TObject);
@@ -306,6 +318,11 @@ end;
 
 procedure TForm_CadastroProduto.BitBtn1Click(Sender: TObject);
 begin
+  Frame_Categoria.ComboBox_Informacao.SetFocus;
+  Self.Perform(WM_NEXTDLGCTL, 0, 0);
+  Frame_UnMedida.ComboBox_Informacao.SetFocus;
+  Self.Perform(WM_NEXTDLGCTL, 0, 0);
+  ComboBox_status.SetFocus;
   gravar;
 end;
 
@@ -341,6 +358,7 @@ begin
   Frame_Categoria.ComboBox_Informacao.ItemIndex := 0;
   Frame_UnMedida.ComboBox_Informacao.ItemIndex := 0;
   DateTimePicker1.DateTime := Date;
+  ComboBox_status.ItemIndex := 0;
   Edit_valor.Clear;
 end;
 

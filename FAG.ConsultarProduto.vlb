@@ -4,9 +4,6 @@ Coordinates=410,130,69,51
 [Panel_resultadoPesquisa]
 Coordinates=99,144,139,51
 
-[SpeedButton_filtrar]
-Coordinates=382,280,110,33
-
 [ComboBox_filtro]
 Coordinates=10,10,97,105
 
@@ -45,7 +42,7 @@ Coordinates=312,212,113,33
 Coordinates=10,144,70,51
 
 []
-Coordinates=130,10,120,105
+Coordinates=382,280,110,33
 
 [DataSource_consultaProduto]
 Coordinates=263,144,159,51
