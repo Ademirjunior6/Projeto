@@ -83,6 +83,7 @@ type
     procedure Mask_cepExit(Sender: TObject);
     procedure Mask_cepEnter(Sender: TObject);
     procedure CancelarClick(Sender: TObject);
+    procedure Frame_StatusComboBox_InformacaoExit(Sender: TObject);
 
     // procedure Edit_codigoExit(Sender: TObject);
 
@@ -179,6 +180,8 @@ begin
     begin
       if existe_usuario(Edit_codigo.Text) then
       begin
+        Frame_Status.ComboBox_Informacao.SetFocus;
+        Self.Perform(WM_NEXTDLGCTL, 0, 0);
         alterarDados;
         alterarEndereco;
         alterarSenha;
@@ -186,6 +189,8 @@ begin
       end
       else
       begin
+        Frame_Status.ComboBox_Informacao.SetFocus;
+        Self.Perform(WM_NEXTDLGCTL, 0, 0);
         inserirDados;
         Edit_codigo.Text := getLastID;
         inserirendereco;
@@ -382,6 +387,11 @@ procedure TForm_CadastroUsuario.Frame_PessoaComboBox_InformacaoExit
   (Sender: TObject);
 begin
   Frame_Pessoa.ComboBox_InformacaoExit(Sender);
+end;
+
+procedure TForm_CadastroUsuario.Frame_StatusComboBox_InformacaoExit(Sender: TObject);
+begin
+ Frame_Status.ComboBox_InformacaoExit(Sender);
 end;
 
 function TForm_CadastroUsuario.getUltimoId: String;

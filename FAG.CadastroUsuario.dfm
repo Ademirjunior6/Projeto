@@ -1,10 +1,16 @@
 object Form_CadastroUsuario: TForm_CadastroUsuario
   Left = 0
   Top = 0
+  BorderIcons = []
+  BorderStyle = bsSingle
   Caption = 'Cadastro de Usu'#225'rio'
-  ClientHeight = 617
-  ClientWidth = 858
+  ClientHeight = 667
+  ClientWidth = 884
   Color = clBtnFace
+  Constraints.MaxHeight = 696
+  Constraints.MaxWidth = 890
+  Constraints.MinHeight = 696
+  Constraints.MinWidth = 890
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -19,15 +25,18 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
   PixelsPerInch = 96
   TextHeight = 13
   object Panel_CadastroUsuario: TPanel
-    Left = -8
-    Top = -8
-    Width = 913
-    Height = 657
+    Left = 0
+    Top = 0
+    Width = 884
+    Height = 667
+    Align = alClient
     UseDockManager = False
     TabOrder = 0
+    ExplicitLeft = -2
+    ExplicitTop = -2
     object Label_tituloForm: TLabel
       Left = 331
-      Top = 40
+      Top = 24
       Width = 214
       Height = 32
       Caption = 'Cadastro de Usu'#225'rio'
@@ -39,8 +48,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       ParentFont = False
     end
     object SpeedButton_editar: TSpeedButton
-      Left = 479
-      Top = 578
+      Left = 476
+      Top = 613
       Width = 109
       Height = 33
       Caption = 'Pesquisar'
@@ -53,8 +62,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       OnClick = SpeedButton_editarClick
     end
     object SpeedButton_Sair: TSpeedButton
-      Left = 608
-      Top = 578
+      Left = 615
+      Top = 613
       Width = 109
       Height = 33
       Caption = 'Sair'
@@ -67,10 +76,10 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       OnClick = SpeedButton_SairClick
     end
     object GroupBox1: TGroupBox
-      Left = 28
+      Left = 20
       Top = 78
-      Width = 833
-      Height = 195
+      Width = 821
+      Height = 203
       Caption = '  Dados Pessoais  '
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
@@ -106,7 +115,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
       end
       object Label_CPF: TLabel
-        Left = 376
+        Left = 371
         Top = 83
         Width = 27
         Height = 21
@@ -119,8 +128,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
       end
       object Label_RG: TLabel
-        Left = 562
-        Top = 83
+        Left = 531
+        Top = 77
         Width = 21
         Height = 21
         Caption = 'RG'
@@ -134,9 +143,9 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       object Label_nascimento: TLabel
         Left = 136
         Top = 139
-        Width = 83
+        Width = 103
         Height = 21
-        Caption = 'Nascimento'
+        Caption = 'Dt. nascimento'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -145,8 +154,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
       end
       object Label_Matricula: TLabel
-        Left = 722
-        Top = 83
+        Left = 691
+        Top = 77
         Width = 65
         Height = 21
         Caption = 'Matricula'
@@ -171,7 +180,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
       end
       object Label_Celular: TLabel
-        Left = 288
+        Left = 252
         Top = 139
         Width = 49
         Height = 21
@@ -184,7 +193,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
       end
       object Label_Telefone: TLabel
-        Left = 464
+        Left = 403
         Top = 139
         Width = 57
         Height = 21
@@ -214,7 +223,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       object Edit_nomecompleto: TEdit
         Left = 16
         Top = 104
-        Width = 354
+        Width = 349
         Height = 29
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -240,7 +249,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         TabOrder = 8
       end
       object Edit_Matricula: TEdit
-        Left = 722
+        Left = 691
         Top = 104
         Width = 93
         Height = 29
@@ -253,7 +262,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         TabOrder = 6
       end
       object Edit_Celular: TEdit
-        Left = 288
+        Left = 252
         Top = 161
         Width = 145
         Height = 29
@@ -266,8 +275,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         TabOrder = 9
       end
       object Edit_Telefone: TEdit
-        Left = 464
-        Top = 163
+        Left = 403
+        Top = 161
         Width = 145
         Height = 29
         Font.Charset = ANSI_CHARSET
@@ -317,9 +326,9 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         end
       end
       object Mask_CPF: TMaskEdit
-        Left = 376
+        Left = 371
         Top = 104
-        Width = 176
+        Width = 154
         Height = 29
         EditMask = '000.000.000-00;1;_'
         Font.Charset = ANSI_CHARSET
@@ -357,6 +366,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
           Top = 26
           Width = 104
           Style = csDropDownList
+          OnExit = Frame_StatusComboBox_InformacaoExit
           ExplicitLeft = 5
           ExplicitTop = 26
           ExplicitWidth = 104
@@ -380,9 +390,9 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         TabOrder = 7
       end
       object Mask_RG: TMaskEdit
-        Left = 562
+        Left = 531
         Top = 104
-        Width = 150
+        Width = 154
         Height = 29
         EditMask = '99.999.999-9;1;_'
         Font.Charset = ANSI_CHARSET
@@ -399,9 +409,9 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       end
     end
     object GroupBox2: TGroupBox
-      Left = 28
-      Top = 279
-      Width = 833
+      Left = 20
+      Top = 291
+      Width = 821
       Height = 146
       Caption = '  Endere'#231'o  '
       Font.Charset = ANSI_CHARSET
@@ -438,8 +448,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
       end
       object Label5: TLabel
-        Left = 589
-        Top = 19
+        Left = 585
+        Top = 14
         Width = 19
         Height = 21
         Caption = 'N'#186
@@ -464,7 +474,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
       end
       object Label10: TLabel
-        Left = 677
+        Left = 496
         Top = 76
         Width = 82
         Height = 21
@@ -477,7 +487,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
       end
       object Label11: TLabel
-        Left = 256
+        Left = 217
         Top = 76
         Width = 48
         Height = 21
@@ -503,8 +513,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
       end
       object UF: TLabel
-        Left = 487
-        Top = 77
+        Left = 425
+        Top = 76
         Width = 46
         Height = 21
         Caption = 'Estado'
@@ -529,7 +539,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         TabOrder = 4
       end
       object Edit_numero: TEdit
-        Left = 589
+        Left = 585
         Top = 41
         Width = 76
         Height = 29
@@ -542,7 +552,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         TabOrder = 2
       end
       object Edit_complemento: TEdit
-        Left = 677
+        Left = 667
         Top = 41
         Width = 138
         Height = 29
@@ -555,8 +565,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         TabOrder = 3
       end
       object Edit_cxpostal: TEdit
-        Left = 677
-        Top = 100
+        Left = 496
+        Top = 103
         Width = 138
         Height = 29
         Font.Charset = ANSI_CHARSET
@@ -568,8 +578,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         TabOrder = 7
       end
       object Edit_cidade: TEdit
-        Left = 256
-        Top = 100
+        Left = 217
+        Top = 103
         Width = 202
         Height = 29
         Font.Charset = ANSI_CHARSET
@@ -612,8 +622,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         OnExit = Mask_cepExit
       end
       object Edit_Uf: TEdit
-        Left = 487
-        Top = 104
+        Left = 425
+        Top = 103
         Width = 65
         Height = 29
         Font.Charset = ANSI_CHARSET
@@ -626,9 +636,9 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       end
     end
     object GroupBox3: TGroupBox
-      Left = 28
-      Top = 426
-      Width = 833
+      Left = 20
+      Top = 450
+      Width = 821
       Height = 146
       Caption = '  Dados de Acesso '
       Font.Charset = ANSI_CHARSET
@@ -652,11 +662,11 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
       end
       object Label9: TLabel
-        Left = 247
-        Top = 21
+        Left = 188
+        Top = 16
         Width = 43
         Height = 20
-        Caption = 'E_mail'
+        Caption = 'E-mail'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -15
@@ -665,7 +675,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
       end
       object Label13: TLabel
-        Left = 247
+        Left = 188
         Top = 77
         Width = 118
         Height = 21
@@ -705,8 +715,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         TabOrder = 2
       end
       object Edit_email: TEdit
-        Left = 247
-        Top = 45
+        Left = 188
+        Top = 42
         Width = 270
         Height = 29
         Font.Charset = ANSI_CHARSET
@@ -718,7 +728,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         TabOrder = 1
       end
       object Edit_confirmasenha: TEdit
-        Left = 247
+        Left = 188
         Top = 101
         Width = 156
         Height = 29
@@ -746,8 +756,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       end
     end
     object BitBtn1: TBitBtn
-      Left = 209
-      Top = 578
+      Left = 193
+      Top = 613
       Width = 109
       Height = 33
       Caption = 'Salvar'
@@ -761,8 +771,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       OnClick = BitBtn1Click
     end
     object Cancelar: TBitBtn
-      Left = 337
-      Top = 578
+      Left = 336
+      Top = 613
       Width = 109
       Height = 33
       Caption = 'Cancelar'

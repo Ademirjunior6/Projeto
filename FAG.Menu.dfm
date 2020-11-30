@@ -3,7 +3,7 @@ object Form_Menu: TForm_Menu
   Top = 0
   BorderIcons = [biSystemMenu, biMaximize]
   BorderStyle = bsSingle
-  Caption = 'Menu'
+  Caption = 'Menu principal'
   ClientHeight = 758
   ClientWidth = 1270
   Color = clBtnFace

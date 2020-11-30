@@ -21,7 +21,8 @@ uses
   FAG.Frame.UnMedida in 'FAG.Frame.UnMedida.pas' {Frame_UnMedida: TFrame},
   FAG.Utils in 'FAG.Utils.pas',
   FAG.CadastroUsuario in 'FAG.CadastroUsuario.pas' {Form_CadastroUsuario},
-  FAG.DetalharMovimento in 'FAG.DetalharMovimento.pas' {Form_detalharMovimento};
+  FAG.DetalharMovimento in 'FAG.DetalharMovimento.pas' {Form_detalharMovimento},
+  FAG.ConsultaUsuario in 'FAG.ConsultaUsuario.pas' {Form_ConsultaUsuario};
 
 {$R *.res}
 
@@ -31,5 +32,6 @@ begin
   Application.CreateForm(TDataModuleConexao, DataModuleConexao);
   Application.CreateForm(TForm_Menu, Form_Menu);
   Application.CreateForm(TForm_detalharMovimento, Form_detalharMovimento);
+  Application.CreateForm(TForm_ConsultaUsuario, Form_ConsultaUsuario);
   Application.Run;
 end.

@@ -44,7 +44,7 @@ object Form_ConsultaUsuario: TForm_ConsultaUsuario
     end
     object SpeedButton_exibirTodos: TSpeedButton
       Left = 187
-      Top = 565
+      Top = 561
       Width = 132
       Height = 33
       Caption = 'Exibir Todos'
@@ -58,7 +58,7 @@ object Form_ConsultaUsuario: TForm_ConsultaUsuario
     end
     object SpeedButton_limparConsulta: TSpeedButton
       Left = 339
-      Top = 565
+      Top = 561
       Width = 132
       Height = 33
       Caption = 'Limpar Consulta'
@@ -72,7 +72,7 @@ object Form_ConsultaUsuario: TForm_ConsultaUsuario
     end
     object SpeedButton_Voltar: TSpeedButton
       Left = 491
-      Top = 565
+      Top = 561
       Width = 132
       Height = 33
       Caption = 'Voltar'
@@ -161,8 +161,8 @@ object Form_ConsultaUsuario: TForm_ConsultaUsuario
           ExplicitWidth = 167
         end
         inherited TableTemp: TFDMemTable
-          Left = 88
-          Top = 0
+          Left = 72
+          Top = 32
         end
       end
       object Bit_Filtrar: TBitBtn
