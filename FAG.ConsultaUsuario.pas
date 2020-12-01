@@ -118,7 +118,7 @@ begin
   Frame_Status.camposExtras := '';
   Frame_Status.condicao := '';
   Frame_Status.titulo := 'Status';
-  Frame_Status.primeiraOpcao := 'Ambo';
+  Frame_Status.primeiraOpcao := 'Ambos';
   Frame_Status.carregaFrame := True;
 end;
 

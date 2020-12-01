@@ -234,7 +234,7 @@ begin
     ShowMessage('Informe a descrição.');
     Edit_descricao.SetFocus;
   end
-  else if Edit_valor.Text = '' then
+  else if ((Edit_valor.Text = '') AND (Edit_valor.Text <= '0')) then
   begin
     ShowMessage('Informe o valor.');
     Edit_valor.SetFocus

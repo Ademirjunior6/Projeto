@@ -142,6 +142,7 @@ begin
   if not Assigned(Form_CadastroUsuario) then
   begin
     Form_CadastroUsuario := TForm_CadastroUsuario.Create(Application);
+    Form_CadastroUsuario.BorderStyle := bsNone;
   end;
   Form_CadastroUsuario.Show;
 end;

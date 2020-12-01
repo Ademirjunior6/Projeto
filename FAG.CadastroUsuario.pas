@@ -85,7 +85,6 @@ type
     procedure Mask_cepEnter(Sender: TObject);
     procedure CancelarClick(Sender: TObject);
     procedure Frame_StatusComboBox_InformacaoExit(Sender: TObject);
-
     // procedure Edit_codigoExit(Sender: TObject);
 
   private
@@ -96,8 +95,13 @@ type
     function carregaStatus: Boolean;
     function validarCampos: Boolean;
     function existe_usuario(codigo: string): Boolean;
+    function existe_cpf(codigo: string): Boolean;
+    function existe_cnpj(codigo: string): Boolean;
+    function existe_rg(codigo: string): Boolean;
+    function existe_login(codigo: string): Boolean;
     function inserirSenha: Boolean;
     function alterarSenha: Boolean;
+    function existeCampos: Boolean;
     function EncryptSTR(const key, texto: String): String;
     function getUltimoId: String;
     function getUltimoIdEnd: String;
@@ -107,8 +111,9 @@ type
     function loadEnd: Boolean;
     function loadLog: Boolean;
     procedure loadTela(id: string);
-    function limparMask(cpf : String): String;
-    function validacpf : Boolean;
+    function limparMask(cpf: String): String;
+    function validacpf: Boolean;
+    function loadGenero: String;
 
   public
     function carregatppessoa: Boolean;
@@ -128,15 +133,14 @@ function TForm_CadastroUsuario.alterarDados: Boolean;
 var
   sql: String;
 begin
-  sql := 'UPDATE pessoa SET ' +
-  ' pes_nome = ' + StrToSQL(Edit_nomecompleto.Text) + ',' +
-    ' pes_rg = ' + StrToSQL(Mask_RG.Text) + ',' +
-    ' pes_celular =' + StrToSQL(Mask_Celular.Text) + ',' +
-    ' pes_telefone =' + StrToSQL(Mask_telefone.Text) + ',' +
-    ' pes_genero = ' + StrToSQL(Combo_Genero.Text) + ',' +
-    ' pes_email = ' + StrToSQL(Edit_email.Text) + ',' +
-    ' pes_data_atualizacao = ' + 'NOW()' + ',' +
-    ' pes_matricula = ' + StrToSQL(Edit_Matricula.Text) + ',' +
+  sql := 'UPDATE pessoa SET ' + ' pes_nome = ' +
+    StrToSQL(Edit_nomecompleto.Text) + ',' + ' pes_rg = ' +
+    StrToSQL(Mask_RG.Text) + ',' + ' pes_celular =' +
+    StrToSQL(Mask_Celular.Text) + ',' + ' pes_telefone =' +
+    StrToSQL(Mask_telefone.Text) + ',' + ' pes_genero = ' +
+    StrToSQL(Combo_Genero.Text) + ',' + ' pes_email = ' +
+    StrToSQL(Edit_email.Text) + ',' + ' pes_data_atualizacao = ' + 'NOW()' + ','
+    + ' pes_matricula = ' + StrToSQL(Edit_Matricula.Text) + ',' +
     ' pes_nascimento = ' + DateTimeToSQL(Date_Nascimento.datetime);
 
   if Frame_Pessoa.TableTemp.FieldByName('id_tipoPessoa').AsString = '1' then
@@ -160,14 +164,13 @@ var
   sql: String;
 begin
   sql := ('UPDATE endereco SET end_num = ' + StrToSQL(Edit_numero.Text) + ',' +
-    ' end_rua = ' + StrToSQL(Edit_logradouro.Text) + ',' +
-    ' end_bairro = ' + StrToSQL(Edit_bairro.Text) + ','+
-    ' end_cidade =' + StrToSQL(Edit_cidade.Text) + ',' +
-    ' end_cep = ' + StrToSQL(Mask_cep.Text) + ',' +
-    ' end_estado = ' + StrToSQL(Edit_Uf.Text) + ',' +
-    ' end_cx_postal = ' + StrToSQL(Edit_cxpostal.Text) + ',' +
-    ' end_complemento = ' + StrToSQL(Edit_complemento.Text) + '' +
-    ' WHERE end_pes_id_pessoa = ' + Edit_codigo.Text + '');
+    ' end_rua = ' + StrToSQL(Edit_logradouro.Text) + ',' + ' end_bairro = ' +
+    StrToSQL(Edit_bairro.Text) + ',' + ' end_cidade =' +
+    StrToSQL(Edit_cidade.Text) + ',' + ' end_cep = ' + StrToSQL(Mask_cep.Text) +
+    ',' + ' end_estado = ' + StrToSQL(Edit_Uf.Text) + ',' + ' end_cx_postal = '
+    + StrToSQL(Edit_cxpostal.Text) + ',' + ' end_complemento = ' +
+    StrToSQL(Edit_complemento.Text) + '' + ' WHERE end_pes_id_pessoa = ' +
+    Edit_codigo.Text + '');
   DataModuleConexao.ExecSQL(sql);
 end;
 
@@ -186,30 +189,34 @@ begin
     DataModuleConexao.BeginTrans;
     if validarCampos then
     begin
-      if existe_usuario(Edit_codigo.Text) then
+      if validacpf then
       begin
-        Frame_Pessoa.ComboBox_Informacao.SetFocus;
-        Self.Perform(WM_NEXTDLGCTL, 0, 0);
-        Frame_Status.ComboBox_Informacao.SetFocus;
-        Self.Perform(WM_NEXTDLGCTL, 0, 0);
-        alterarDados;
-        alterarEndereco;
-        alterarSenha;
-        ShowMessage('Alterado com Sucesso.');
-      end
-      else
-      begin
-        Frame_Pessoa.ComboBox_Informacao.SetFocus;
-        Self.Perform(WM_NEXTDLGCTL, 0, 0);
-        Frame_Status.ComboBox_Informacao.SetFocus;
-        Self.Perform(WM_NEXTDLGCTL, 0, 0);
-        inserirDados;
-        Edit_codigo.Text := getLastID;
-        inserirendereco;
-        inserirSenha;
-        ShowMessage('Salvo com Sucesso.');
+        if existeCampos then
+        begin
+          Frame_Status.ComboBox_Informacao.SetFocus;
+          Self.Perform(WM_NEXTDLGCTL, 0, 0);
+          Frame_Pessoa.ComboBox_Informacao.SetFocus;
+          Self.Perform(WM_NEXTDLGCTL, 0, 0);
+          if existe_usuario(Edit_codigo.Text) then
+          begin
+            alterarDados;
+            alterarEndereco;
+            alterarSenha;
+            ShowMessage('Alterado com Sucesso.');
+          end
+          else
+          begin
+            inserirDados;
+            Edit_codigo.Text := getLastID;
+            inserirendereco;
+            inserirSenha;
+            ShowMessage('Salvo com Sucesso.');
+          end;
+          limpacampos;
+        end;
+        exit
       end;
-      limpacampos;
+      exit
     end;
     DataModuleConexao.CommitTrans;
   except
@@ -221,15 +228,50 @@ begin
   end;
 end;
 
-
+function TForm_CadastroUsuario.existeCampos: Boolean;
+begin
+  Result := False;
+  if Frame_Pessoa.ComboBox_Informacao.ItemIndex = 1 then
+  begin
+    if existe_cpf(Mask_CPF.Text) then
+    begin
+      ShowMessage('CPF já cadastrado');
+      Mask_CPF.SetFocus;
+      Exit;
+    end;
+  end;
+  if Frame_Pessoa.ComboBox_Informacao.ItemIndex = 2 then
+  begin
+    if existe_cnpj(Mask_CPF.Text) then
+    begin
+      ShowMessage('CNPJ já cadastrado');
+      Mask_CPF.SetFocus;
+      Exit;
+    end;
+  end;
+  if existe_rg(Mask_RG.Text) then
+  begin
+    ShowMessage('RG já cadastrado');
+    Mask_RG.SetFocus;
+    Exit;
+  end;
+  if existe_login(Edit_login.Text) then
+  begin
+    ShowMessage('Login já cadastrado');
+    Edit_login.SetFocus;
+    Exit;
+  end
+  else
+    Result := True;
+end;
 
 procedure TForm_CadastroUsuario.CancelarClick(Sender: TObject);
 begin
-carregaStatus;
-getUltimoId;
-carregaGenero;
-carregatppessoa;
-limpacampos;
+  carregaStatus;
+  getUltimoId;
+  carregaGenero;
+  carregatppessoa;
+  limpacampos;
 end;
 
 function TForm_CadastroUsuario.carregaGenero: Boolean;
@@ -356,6 +398,63 @@ begin
   end;
 end;
 
+function TForm_CadastroUsuario.existe_cnpj(codigo: string): Boolean;
+var
+  excist: TFDMemTable;
+begin
+  excist := TFDMemTable.Create(Self);
+  try
+    DataModuleConexao.ExecSQL('SELECT pes_cnpj FROM pessoa WHERE pes_cnpj = ' +
+      '"' + codigo + '"', excist);
+    Result := not excist.IsEmpty;
+  finally
+    FreeAndNil(excist);
+  end;
+end;
+
+function TForm_CadastroUsuario.existe_cpf(codigo: string): Boolean;
+var
+  excist: TFDMemTable;
+begin
+  excist := TFDMemTable.Create(Self);
+  try
+    DataModuleConexao.ExecSQL('SELECT pes_cpf FROM pessoa WHERE pes_cpf = ' +
+      '"' + codigo + '"', excist);
+    Result := not excist.IsEmpty;
+  finally
+    FreeAndNil(excist);
+  end;
+end;
+
+function TForm_CadastroUsuario.existe_login(codigo: string): Boolean;
+var
+  excist: TFDMemTable;
+begin
+  excist := TFDMemTable.Create(Self);
+  try
+    DataModuleConexao.ExecSQL
+      ('SELECT login_usuario FROM login WHERE login_usuario = ' + '"' + codigo +
+      '"', excist);
+    Result := not excist.IsEmpty;
+  finally
+    FreeAndNil(excist);
+  end;
+end;
+
+function TForm_CadastroUsuario.existe_rg(codigo: string): Boolean;
+var
+  excist: TFDMemTable;
+begin
+  excist := TFDMemTable.Create(Self);
+  try
+    DataModuleConexao.ExecSQL('SELECT pes_rg FROM pessoa WHERE pes_rg = ' + '"'
+      + codigo + '"', excist);
+    Result := not excist.IsEmpty;
+  finally
+    FreeAndNil(excist);
+  end;
+end;
+
 function TForm_CadastroUsuario.existe_usuario(codigo: string): Boolean;
 var
   excist: TFDMemTable;
@@ -381,6 +480,7 @@ end;
 
 procedure TForm_CadastroUsuario.FormCreate(Sender: TObject);
 begin
+
   Date_Nascimento.datetime := now;
   carregatppessoa;
   carregaStatus;
@@ -401,9 +501,10 @@ begin
   Frame_Pessoa.ComboBox_InformacaoExit(Sender);
 end;
 
-procedure TForm_CadastroUsuario.Frame_StatusComboBox_InformacaoExit(Sender: TObject);
+procedure TForm_CadastroUsuario.Frame_StatusComboBox_InformacaoExit
+  (Sender: TObject);
 begin
- Frame_Status.ComboBox_InformacaoExit(Sender);
+  Frame_Status.ComboBox_InformacaoExit(Sender);
 end;
 
 function TForm_CadastroUsuario.getUltimoId: String;
@@ -441,20 +542,15 @@ var
   tpPessoa: String;
 begin
 
-      sql := 'INSERT INTO pessoa (pes_nome, pes_rg, pes_celular, pes_nascimento, ' +
+  sql := 'INSERT INTO pessoa (pes_nome, pes_rg, pes_celular, pes_nascimento, ' +
     ' pes_email, pes_telefone, pes_ativo, tip_id_tipo_pessoa,pes_genero,' +
-    'pes_matricula,pes_datacadastro, pes_cpf, pes_cnpj)'
-    + 'VALUES (' + StrToSQL(Edit_nomecompleto.Text) + ',' +
-    StrToSQL(Mask_RG.Text) + ',' +
-    StrToSQL(Mask_Celular.Text) + ',' +
-    DateTimeToSQL(Date_Nascimento.datetime) + ',' +
-    StrToSQL(Edit_email.Text) + ',' +
-    StrToSQL(Mask_telefone.Text) + ',' +
-    StrToSQL(Frame_Status.indexCombo)+ ',' +
-    StrToSQL(Frame_Pessoa.indexCombo) + ',' +
-    StrToSQL(Combo_Genero.text) + ','  +
-    StrToSQL(Edit_Matricula.Text) + ',' +
-    'NOW()' + ',';
+    'pes_matricula,pes_datacadastro, pes_cpf, pes_cnpj)' + 'VALUES (' +
+    StrToSQL(Edit_nomecompleto.Text) + ',' + StrToSQL(Mask_RG.Text) + ',' +
+    StrToSQL(Mask_Celular.Text) + ',' + DateTimeToSQL(Date_Nascimento.datetime)
+    + ',' + StrToSQL(Edit_email.Text) + ',' + StrToSQL(Mask_telefone.Text) + ','
+    + StrToSQL(Frame_Status.indexCombo) + ',' +
+    StrToSQL(Frame_Pessoa.indexCombo) + ',' + StrToSQL(Combo_Genero.Text) + ','
+    + StrToSQL(Edit_Matricula.Text) + ',' + 'NOW()' + ',';
   if Frame_Pessoa.TableTemp.FieldByName('id_tipoPessoa').AsString = '1' then
   // Pessoa fisica
   begin
@@ -474,16 +570,11 @@ var
 begin
   sql := 'INSERT INTO endereco (end_num, end_rua, end_bairro, end_cidade, ' +
     'end_cep, end_cx_postal, end_complemento, end_estado, end_data_cadastro, end_pes_id_pessoa) VALUES ('
-    + StrToSQL(Edit_numero.Text) + ',' +
-    StrToSQL(Edit_logradouro.Text) + ',' +
-    StrToSQL(Edit_bairro.Text) + ',' +
-    StrToSQL(Edit_cidade.Text) + ',' +
-    StrToSQL(Mask_cep.Text) + ',' +
-    StrToSQL(Edit_cxpostal.Text) + ',' +
-    StrToSQL(Edit_complemento.Text) + ',' +
-    StrToSQL(Edit_Uf.Text) + ',' +
-    'NOW(),' +
-    StrToSQL(Edit_codigo.Text) + ')';
+    + StrToSQL(Edit_numero.Text) + ',' + StrToSQL(Edit_logradouro.Text) + ',' +
+    StrToSQL(Edit_bairro.Text) + ',' + StrToSQL(Edit_cidade.Text) + ',' +
+    StrToSQL(Mask_cep.Text) + ',' + StrToSQL(Edit_cxpostal.Text) + ',' +
+    StrToSQL(Edit_complemento.Text) + ',' + StrToSQL(Edit_Uf.Text) + ',' +
+    'NOW(),' + StrToSQL(Edit_codigo.Text) + ')';
   DataModuleConexao.ExecSQL(sql);
 end;
 
@@ -518,10 +609,10 @@ end;
 
 function TForm_CadastroUsuario.limparMask(cpf: String): String;
 begin
-Trim(cpf);
-cpf  := StringReplace(cpf, '-', '', [rfReplaceAll]);
-cpf  := StringReplace(cpf, '_', '', [rfReplaceAll]);
-cpf  := StringReplace(cpf, '.', '', [rfReplaceAll]);
+  Trim(cpf);
+  cpf := StringReplace(cpf, '-', '', [rfReplaceAll]);
+  cpf := StringReplace(cpf, '_', '', [rfReplaceAll]);
+  cpf := StringReplace(cpf, '.', '', [rfReplaceAll]);
 end;
 
 function TForm_CadastroUsuario.loadEnd: Boolean;
@@ -548,6 +639,21 @@ begin
     FreeAndNil(carrega);
   end;
 
+end;
+
+function TForm_CadastroUsuario.loadGenero: String;
+var
+  excist: TFDMemTable;
+begin
+  excist := TFDMemTable.Create(Self);
+  try
+    DataModuleConexao.ExecSQL
+      ('SELECT pes_genero FROM pessoa WHERE pes_id_pessoa = ' +
+      Edit_codigo.Text, excist);
+    Result := excist.FieldByName('pes_genero').AsString;
+  finally
+    FreeAndNil(excist);
+  end;
 end;
 
 function TForm_CadastroUsuario.loadLog: Boolean;
@@ -586,8 +692,10 @@ begin
     Mask_CPF.Text := carrega.FieldByName('pes_cpf').AsString;
     Date_Nascimento.Date := carrega.FieldByName('pes_nascimento').Value;
     Edit_email.Text := carrega.FieldByName('pes_email').AsString;
-    Frame_Status.ComboBox_Informacao.ItemIndex := carrega.FieldByName('pes_ativo').Value;
-    Frame_Pessoa.ComboBox_Informacao.ItemIndex := carrega.FieldByName('tip_id_tipo_pessoa').Value;
+    Frame_Status.ComboBox_Informacao.ItemIndex :=
+      carrega.FieldByName('pes_ativo').Value;
+    Frame_Pessoa.ComboBox_Informacao.ItemIndex :=
+      carrega.FieldByName('tip_id_tipo_pessoa').Value;
     Edit_Matricula.Text := carrega.FieldByName('pes_matricula').AsString;
     Mask_Celular.Text := carrega.FieldByName('pes_celular').AsString;
     Mask_telefone.Text := carrega.FieldByName('pes_telefone').AsString;
@@ -602,7 +710,7 @@ end;
 
 procedure TForm_CadastroUsuario.Mask_cepEnter(Sender: TObject);
 begin
-  Mask_cep.Tag := StrToIntDef(OnlyNumber(Mask_cep.Text),0);
+  Mask_cep.Tag := StrToIntDef(OnlyNumber(Mask_cep.Text), 0);
 end;
 
 procedure TForm_CadastroUsuario.Mask_cepExit(Sender: TObject);
@@ -613,7 +721,7 @@ begin
   // CEP := StringReplace(CEP, '.', '', [rfReplaceAll]);
   // CEP := StringReplace(CEP, '-', '', [rfReplaceAll]);
 
-  if Mask_cep.Tag = StrToIntDef(OnlyNumber(Mask_cep.Text),0) then
+  if Mask_cep.Tag = StrToIntDef(OnlyNumber(Mask_cep.Text), 0) then
     Exit;
 
   if (Trim(OnlyNumber(Mask_cep.Text)).Length = 8) then
@@ -651,6 +759,18 @@ begin
     if Form_ConsultaUsuario.ShowModal = mrOk then
       loadTela(Form_ConsultaUsuario.FDMemTable_Usuario.FieldByName('Código')
         .AsString);
+    if loadGenero = 'Masculino' then
+    begin
+      Combo_Genero.ItemIndex := 1;
+    end;
+    if loadGenero = 'Feminino' then
+    begin
+      Combo_Genero.ItemIndex := 2;
+    end;
+    if loadGenero = 'Indefinido' then
+    begin
+      Combo_Genero.ItemIndex := 3;
+    end;
   finally
     FreeAndNil(Form_ConsultaUsuario);
   end;
@@ -677,90 +797,83 @@ end;
 
 function TForm_CadastroUsuario.validacpf: Boolean;
 begin
-validador.Documento := Mask_CPF.Text ;
-  if Frame_Pessoa.indexCombo = '1'  then
+  Result := False;
+  validador.Documento := Mask_CPF.Text;
+  if Frame_Pessoa.indexCombo = '1' then
   begin
-    validador.TipoDocto :=  TACBrValTipoDocto(docCPF) ;
+    validador.TipoDocto := TACBrValTipoDocto(docCPF);
     if not validador.Validar then
-     ShowMessage ('CPF Inválido');
-     Exit;
+    begin
+      ShowMessage('CPF Inválido');
+      Mask_CPF.SetFocus;
+      Exit;
+    end;
+
   end;
-  if Frame_Pessoa.indexCombo = '2'  then
+  if Frame_Pessoa.indexCombo = '2' then
   begin
-    validador.TipoDocto :=  TACBrValTipoDocto(docCNPJ) ;
+    validador.TipoDocto := TACBrValTipoDocto(docCNPJ);
     if not validador.Validar then
-     ShowMessage ('CNPJ Inválido');
-     Exit;
-  end;
-     Exit;
+    begin
+      ShowMessage('CNPJ Inválido');
+      Mask_CPF.SetFocus;
+    Exit;
+    end;
+  end
+  else
+    Result := True;
 end;
 
 function TForm_CadastroUsuario.validarCampos: Boolean;
- begin
+begin
   Result := False;
-
-     if Frame_Status.indexCombo.ToInteger = 0 then
-   begin
-     ShowMessage('Informe o Status.');
-     Frame_Status.ComboBox_Informacao.SetFocus;
-     Exit;
-   end;
+  if Frame_Status.indexCombo.ToInteger = 0 then
+  begin
+    ShowMessage('Informe o Status.');
+    Frame_Status.ComboBox_Informacao.SetFocus;
+    Exit;
+  end;
 
   if Frame_Pessoa.ComboBox_Informacao.ItemIndex = 0 then
-   begin
-   ShowMessage('Informe o Tipo de Pessoa.');
-   Frame_Pessoa.ComboBox_Informacao.SetFocus;
-   Exit;
-   end;
+  begin
+    ShowMessage('Informe o Tipo de Pessoa.');
+    Frame_Pessoa.ComboBox_Informacao.SetFocus;
+    Exit;
+  end;
 
+  if Edit_nomecompleto.Text = '' then
+  begin
+    ShowMessage('Nome não Informado.');
+    Edit_nomecompleto.SetFocus;
+    Exit;
+  end;
 
-   if Edit_nomecompleto.Text = '' then
-   begin
-     ShowMessage('Nome não Informado.');
-     Edit_nomecompleto.SetFocus;
-     Exit;
-   end;
+  if Mask_RG.Text = '' then
+  begin
+    ShowMessage('RG Não Informado');
+    Exit;
+  end;
 
-   validacpf;
+  if Edit_login.Text = '' then
+  begin
+    ShowMessage('Informe o Login');
+    Edit_login.SetFocus;
+    Exit;
+  end;
 
+  if Edit_senha.Text = '' then
+  begin
+    ShowMessage('Informe a Senha');
+    Edit_login.SetFocus;
+    Exit;
+  end;
 
-   if Mask_RG.text = ''  then
-   begin
-     ShowMessage('RG Não Informado');
-     Exit;
-   end;
-
-   if Edit_login.Text = '' then
-   begin
-     ShowMessage('Informe o Login');
-     Edit_login.SetFocus;
-     Exit;
-   end;
-
-     if Edit_Senha.Text = '' then
-   begin
-     ShowMessage('Informe a Senha');
-     Edit_login.SetFocus;
-     Exit;
-   end;
-
-     if (Edit_senha.Text <> Edit_confirmasenha.Text) then
-   begin
-     ShowMessage('Senha Não Conpativel Com a Informada');
-      Edit_confirmasenha.SetFocus;
-     Exit;
-   end;
-
-
-//   validador.Documento   := Edit_email.Text ;
-//   validador.TipoDocto :=  TACBrValTipoDocto(docEmail) ;
-//     if not validador.Validar then
-//       begin
-//         ShowMessage ('Email Inválido');
-//         Edit_email.SetFocus;
-//         Exit;
-//       end;
-
+  if (Edit_senha.Text <> Edit_confirmasenha.Text) then
+  begin
+    ShowMessage('Senha Não Conpativel Com a Informada');
+    Edit_confirmasenha.SetFocus;
+    Exit;
+  end;
 
   if (Trim(OnlyNumber(Mask_cep.Text)).Length < 8) and
     (Trim(OnlyNumber(Mask_cep.Text)) <> EmptyStr) then

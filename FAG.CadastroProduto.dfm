@@ -1,15 +1,15 @@
 object Form_CadastroProduto: TForm_CadastroProduto
-  Left = 0
-  Top = 0
+  Left = 380
+  Top = 5
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Cadastro de Produto'
-  ClientHeight = 571
+  ClientHeight = 471
   ClientWidth = 869
   Color = clBtnFace
-  Constraints.MaxHeight = 600
+  Constraints.MaxHeight = 500
   Constraints.MaxWidth = 875
-  Constraints.MinHeight = 600
+  Constraints.MinHeight = 500
   Constraints.MinWidth = 875
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
   FormStyle = fsMDIChild
   OldCreateOrder = False
   PopupMode = pmExplicit
-  Position = poOwnerFormCenter
+  Position = poDesigned
   Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
@@ -29,7 +29,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
     Left = 0
     Top = 0
     Width = 869
-    Height = 571
+    Height = 471
     Align = alClient
     UseDockManager = False
     Font.Charset = DEFAULT_CHARSET
@@ -39,8 +39,9 @@ object Form_CadastroProduto: TForm_CadastroProduto
     Font.Style = []
     ParentFont = False
     TabOrder = 0
+    ExplicitHeight = 571
     object Label_tituloForm: TLabel
-      Left = 330
+      Left = 313
       Top = 40
       Width = 191
       Height = 32
@@ -249,9 +250,11 @@ object Form_CadastroProduto: TForm_CadastroProduto
         ExplicitTop = 102
         ExplicitWidth = 193
         inherited ComboBox_Informacao: TComboBox
+          Top = 26
           Width = 185
           Style = csDropDownList
           OnExit = Frame_UnMedidaComboBox_InformacaoExit
+          ExplicitTop = 26
           ExplicitWidth = 185
         end
         inherited TableTemp: TFDMemTable
@@ -281,13 +284,13 @@ object Form_CadastroProduto: TForm_CadastroProduto
     end
     object GroupBox2: TGroupBox
       Left = 27
-      Top = 384
+      Top = 352
       Width = 814
-      Height = 137
+      Height = 97
       TabOrder = 1
       object SpeedButton_cancelar: TSpeedButton
         Left = 272
-        Top = 56
+        Top = 32
         Width = 109
         Height = 33
         Caption = 'Cancelar'
@@ -301,7 +304,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
       end
       object SpeedButton_pesquisar: TSpeedButton
         Left = 403
-        Top = 56
+        Top = 32
         Width = 109
         Height = 33
         Caption = 'Pesquisar'
@@ -315,7 +318,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
       end
       object SpeedButton_sair: TSpeedButton
         Left = 534
-        Top = 56
+        Top = 32
         Width = 109
         Height = 33
         Caption = 'Sair'
@@ -329,7 +332,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
       end
       object BitBtn1: TBitBtn
         Left = 144
-        Top = 56
+        Top = 32
         Width = 109
         Height = 33
         Caption = 'Salvar'

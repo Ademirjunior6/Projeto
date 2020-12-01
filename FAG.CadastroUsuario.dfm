@@ -1,6 +1,6 @@
 object Form_CadastroUsuario: TForm_CadastroUsuario
-  Left = 0
-  Top = 0
+  Left = 380
+  Top = 5
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Cadastro de Usu'#225'rio'
@@ -18,7 +18,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
   Font.Style = []
   FormStyle = fsMDIChild
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poDesigned
   Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
@@ -208,6 +208,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Top = 48
         Width = 65
         Height = 29
+        Enabled = False
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -216,7 +217,6 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         NumbersOnly = True
         ParentFont = False
         TabOrder = 0
-        OnExit = Edit_codigoExit
       end
       object Edit_nomecompleto: TEdit
         Left = 16
