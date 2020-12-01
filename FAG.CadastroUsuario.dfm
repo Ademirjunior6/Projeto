@@ -101,10 +101,10 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       end
       object Label_NomeCompleto: TLabel
         Left = 16
-        Top = 83
-        Width = 115
+        Top = 82
+        Width = 126
         Height = 21
-        Caption = 'Nome Completo'
+        Caption = 'Nome Completo *'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -114,10 +114,10 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       end
       object Label_CPF: TLabel
         Left = 371
-        Top = 83
-        Width = 27
+        Top = 82
+        Width = 38
         Height = 21
-        Caption = 'CPF'
+        Caption = 'CPF *'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -127,7 +127,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       end
       object Label_RG: TLabel
         Left = 531
-        Top = 77
+        Top = 82
         Width = 21
         Height = 21
         Caption = 'RG'
@@ -153,10 +153,10 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       end
       object Label_Matricula: TLabel
         Left = 691
-        Top = 77
+        Top = 82
         Width = 65
         Height = 21
-        Caption = 'Matricula'
+        Caption = 'Matr'#237'cula'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -259,37 +259,11 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
         TabOrder = 6
       end
-      object Edit_Celular: TEdit
-        Left = 252
-        Top = 161
-        Width = 145
-        Height = 29
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 9
-      end
-      object Edit_Telefone: TEdit
-        Left = 403
-        Top = 161
-        Width = 145
-        Height = 29
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 10
-      end
       inline Frame_Pessoa: TFrame_Generico
         Left = 226
         Top = 21
         Width = 177
-        Height = 68
+        Height = 56
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -300,7 +274,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ExplicitLeft = 226
         ExplicitTop = 21
         ExplicitWidth = 177
-        ExplicitHeight = 68
+        ExplicitHeight = 56
         inherited Label_Titulo: TLabel
           Left = 5
           Top = 0
@@ -326,9 +300,9 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       object Mask_CPF: TMaskEdit
         Left = 371
         Top = 104
-        Width = 154
+        Width = 152
         Height = 29
-        EditMask = '000.000.000-00;1;_'
+        EditMask = '999.999.999-99;1;_'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -343,7 +317,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Left = 97
         Top = 22
         Width = 119
-        Height = 68
+        Height = 55
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -354,7 +328,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ExplicitLeft = 97
         ExplicitTop = 22
         ExplicitWidth = 119
-        ExplicitHeight = 68
+        ExplicitHeight = 55
         inherited Label_Titulo: TLabel
           Left = 4
           ExplicitLeft = 4
@@ -405,6 +379,38 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         OnEnter = Mask_cepEnter
         OnExit = Mask_cepExit
       end
+      object Mask_Celular: TMaskEdit
+        Left = 252
+        Top = 161
+        Width = 145
+        Height = 29
+        EditMask = '(99) 9 9999-9999;1;_'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        MaxLength = 16
+        ParentFont = False
+        TabOrder = 9
+        Text = '(  )       -    '
+      end
+      object Mask_telefone: TMaskEdit
+        Left = 403
+        Top = 161
+        Width = 145
+        Height = 29
+        EditMask = '(99) 9999-9999;1;_'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        MaxLength = 14
+        ParentFont = False
+        TabOrder = 10
+        Text = '(  )     -    '
+      end
     end
     object GroupBox2: TGroupBox
       Left = 20
@@ -434,7 +440,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       end
       object Label4: TLabel
         Left = 16
-        Top = 76
+        Top = 80
         Width = 42
         Height = 21
         Caption = 'Bairro'
@@ -447,7 +453,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       end
       object Label5: TLabel
         Left = 585
-        Top = 14
+        Top = 19
         Width = 19
         Height = 21
         Caption = 'N'#186
@@ -459,7 +465,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         ParentFont = False
       end
       object Label6: TLabel
-        Left = 677
+        Left = 667
         Top = 19
         Width = 99
         Height = 21
@@ -473,7 +479,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       end
       object Label10: TLabel
         Left = 496
-        Top = 76
+        Top = 80
         Width = 82
         Height = 21
         Caption = 'Caixa Postal'
@@ -486,7 +492,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       end
       object Label11: TLabel
         Left = 217
-        Top = 76
+        Top = 80
         Width = 48
         Height = 21
         Caption = 'Cidade'
@@ -499,7 +505,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       end
       object Label2: TLabel
         Left = 128
-        Top = 20
+        Top = 19
         Width = 82
         Height = 21
         Caption = 'Logradouro'
@@ -512,7 +518,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       end
       object UF: TLabel
         Left = 425
-        Top = 76
+        Top = 80
         Width = 46
         Height = 21
         Caption = 'Estado'
@@ -809,7 +815,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
   end
   object validador: TACBrValidador
     IgnorarChar = './-'
-    Left = 640
+    Left = 648
     Top = 24
   end
 end

@@ -30,9 +30,7 @@ type
     Label_Matricula: TLabel;
     Label_Sexo: TLabel;
     Label_Celular: TLabel;
-    Edit_Celular: TEdit;
     Label_Telefone: TLabel;
-    Edit_Telefone: TEdit;
     SpeedButton_editar: TSpeedButton;
     SpeedButton_Sair: TSpeedButton;
     Mask_CPF: TMaskEdit;
@@ -72,6 +70,8 @@ type
     Mask_RG: TMaskEdit;
     Cancelar: TBitBtn;
     validador: TACBrValidador;
+    Mask_Celular: TMaskEdit;
+    Mask_telefone: TMaskEdit;
     procedure FormCreate(Sender: TObject);
     procedure SpeedButton_SairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -85,9 +85,6 @@ type
     procedure Mask_cepEnter(Sender: TObject);
     procedure CancelarClick(Sender: TObject);
     procedure Frame_StatusComboBox_InformacaoExit(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-
 
     // procedure Edit_codigoExit(Sender: TObject);
 
@@ -111,8 +108,7 @@ type
     function loadLog: Boolean;
     procedure loadTela(id: string);
     function limparMask(cpf : String): String;
-    function validaCPF(CPF : string) : Boolean;
-    function testaCPF: Boolean;
+    function validacpf : Boolean;
 
   public
     function carregatppessoa: Boolean;
@@ -128,18 +124,20 @@ implementation
 uses FAG.DataModule.Conexao, FAG.ConsultaUsuario, FAG.RelatorioUsuario,
   ACBrUtil;
 
-
-
 function TForm_CadastroUsuario.alterarDados: Boolean;
 var
   sql: String;
 begin
-  sql := 'UPDATE pessoa SET ' + ' pes_nome = ' +
-    StrToSQL(Edit_nomecompleto.Text) + ',' + ' pes_rg = ' +
-    StrToSQL(Mask_RG.Text) + ',' + ' pes_celular =' +
-    StrToSQL(Edit_Celular.Text) + ',' + ' pes_genero = ' +
-    StrToSQL(Combo_Genero.Text) + ',' + ' pes_nascimento = ' +
-    DateTimeToSQL(Date_Nascimento.datetime);
+  sql := 'UPDATE pessoa SET ' +
+  ' pes_nome = ' + StrToSQL(Edit_nomecompleto.Text) + ',' +
+    ' pes_rg = ' + StrToSQL(Mask_RG.Text) + ',' +
+    ' pes_celular =' + StrToSQL(Mask_Celular.Text) + ',' +
+    ' pes_telefone =' + StrToSQL(Mask_telefone.Text) + ',' +
+    ' pes_genero = ' + StrToSQL(Combo_Genero.Text) + ',' +
+    ' pes_email = ' + StrToSQL(Edit_email.Text) + ',' +
+    ' pes_data_atualizacao = ' + 'NOW()' + ',' +
+    ' pes_matricula = ' + StrToSQL(Edit_Matricula.Text) + ',' +
+    ' pes_nascimento = ' + DateTimeToSQL(Date_Nascimento.datetime);
 
   if Frame_Pessoa.TableTemp.FieldByName('id_tipoPessoa').AsString = '1' then
   // Pessoa fisica
@@ -162,12 +160,14 @@ var
   sql: String;
 begin
   sql := ('UPDATE endereco SET end_num = ' + StrToSQL(Edit_numero.Text) + ',' +
-    ' end_rua = ' + StrToSQL(Edit_logradouro.Text) + ',' + ' end_bairro = ' +
-    StrToSQL(Edit_bairro.Text) + ', end_cidade =' + StrToSQL(Edit_cidade.Text) +
-    ',' + ' end_cep = ' + StrToSQL(Mask_cep.Text) + ',' + ' end_cx_postal = ' +
-    StrToSQL(Edit_cxpostal.Text) + ',' + ' end_complemento = ' +
-    StrToSQL(Edit_complemento.Text) + '' + ' WHERE end_pes_id_pessoa = ' +
-    Edit_codigo.Text + '');
+    ' end_rua = ' + StrToSQL(Edit_logradouro.Text) + ',' +
+    ' end_bairro = ' + StrToSQL(Edit_bairro.Text) + ','+
+    ' end_cidade =' + StrToSQL(Edit_cidade.Text) + ',' +
+    ' end_cep = ' + StrToSQL(Mask_cep.Text) + ',' +
+    ' end_estado = ' + StrToSQL(Edit_Uf.Text) + ',' +
+    ' end_cx_postal = ' + StrToSQL(Edit_cxpostal.Text) + ',' +
+    ' end_complemento = ' + StrToSQL(Edit_complemento.Text) + '' +
+    ' WHERE end_pes_id_pessoa = ' + Edit_codigo.Text + '');
   DataModuleConexao.ExecSQL(sql);
 end;
 
@@ -188,18 +188,26 @@ begin
     begin
       if existe_usuario(Edit_codigo.Text) then
       begin
+        Frame_Pessoa.ComboBox_Informacao.SetFocus;
+        Self.Perform(WM_NEXTDLGCTL, 0, 0);
+        Frame_Status.ComboBox_Informacao.SetFocus;
+        Self.Perform(WM_NEXTDLGCTL, 0, 0);
         alterarDados;
         alterarEndereco;
         alterarSenha;
-        ShowMessage('Alterado com sucesso.');
+        ShowMessage('Alterado com Sucesso.');
       end
       else
       begin
+        Frame_Pessoa.ComboBox_Informacao.SetFocus;
+        Self.Perform(WM_NEXTDLGCTL, 0, 0);
+        Frame_Status.ComboBox_Informacao.SetFocus;
+        Self.Perform(WM_NEXTDLGCTL, 0, 0);
         inserirDados;
         Edit_codigo.Text := getLastID;
         inserirendereco;
         inserirSenha;
-        ShowMessage('Salvo com sucesso.');
+        ShowMessage('Salvo com Sucesso.');
       end;
       limpacampos;
     end;
@@ -213,10 +221,7 @@ begin
   end;
 end;
 
-procedure TForm_CadastroUsuario.Button1Click(Sender: TObject);
-begin
-  testaCPF;
-end;
+
 
 procedure TForm_CadastroUsuario.CancelarClick(Sender: TObject);
 begin
@@ -232,9 +237,9 @@ begin
   Combo_Genero.clear;
   Combo_Genero.Style := csDropDownList;
   Combo_Genero.Items.Add('Selecione');
-  Combo_Genero.Items.Add('1 - Masculino');
-  Combo_Genero.Items.Add('2 - Feminino');
-  Combo_Genero.Items.Add('3 - Indefinido');
+  Combo_Genero.Items.Add('Masculino');
+  Combo_Genero.Items.Add('Feminino');
+  Combo_Genero.Items.Add('Indefinido');
   Combo_Genero.ItemIndex := 0;
 end;
 
@@ -311,14 +316,14 @@ begin
         Edit_nomecompleto.Text := carrega.FieldByName('pes_nome').AsString;
         Mask_CPF.Text := carrega.FieldByName('pes_cpf').AsString;
         Mask_RG.Text := carrega.FieldByName('pes_rg').AsString;
-        Edit_Celular.Text := carrega.FieldByName('pes_celular').AsString;
-        Edit_Telefone.Text := carrega.FieldByName('pes_telefone').AsString;
+        Mask_Celular.Text := carrega.FieldByName('pes_celular').AsString;
+        Mask_telefone.Text := carrega.FieldByName('pes_telefone').AsString;
         Edit_email.Text := carrega.FieldByName('pes_email').AsString;
         Combo_Genero.Text := carrega.FieldByName('pes_genero').AsString;
         Frame_Pessoa.ComboBox_Informacao.ItemIndex :=
-        carrega.FieldByName('tip_id_tipo_pessoa').AsInteger;
+          carrega.FieldByName('tip_id_tipo_pessoa').AsInteger;
         Frame_Status.ComboBox_Informacao.ItemIndex :=
-        carrega.FieldByName('pes_ativo').AsInteger;
+          carrega.FieldByName('pes_ativo').AsInteger;
         Date_Nascimento.Date := carrega.FieldByName('pes_nascimento').Value;
         Edit_nomecompleto.Text := carrega.FieldByName('pes_nome').AsString;
         Mask_CPF.Text := carrega.FieldByName('pes_cpf').AsString;
@@ -436,17 +441,20 @@ var
   tpPessoa: String;
 begin
 
- sql := 'INSERT INTO pessoa (pes_nome, pes_rg, pes_celular, pes_nascimento, ' +
-    ' pes_email, pes_telefone, pes_ativo, tip_id_tipo_pessoa, pes_cpf, pes_cnpj)'
+      sql := 'INSERT INTO pessoa (pes_nome, pes_rg, pes_celular, pes_nascimento, ' +
+    ' pes_email, pes_telefone, pes_ativo, tip_id_tipo_pessoa,pes_genero,' +
+    'pes_matricula,pes_datacadastro, pes_cpf, pes_cnpj)'
     + 'VALUES (' + StrToSQL(Edit_nomecompleto.Text) + ',' +
     StrToSQL(Mask_RG.Text) + ',' +
-    StrToSQL(Edit_Celular.Text) + ',' +
+    StrToSQL(Mask_Celular.Text) + ',' +
     DateTimeToSQL(Date_Nascimento.datetime) + ',' +
     StrToSQL(Edit_email.Text) + ',' +
-    StrToSQL(Edit_Telefone.Text) + ',' +
-    StrToSQL(Frame_Status.indexCombo) + ',' +
-    StrToSQL(Frame_Pessoa.indexCombo) + ',';
-
+    StrToSQL(Mask_telefone.Text) + ',' +
+    StrToSQL(Frame_Status.indexCombo)+ ',' +
+    StrToSQL(Frame_Pessoa.indexCombo) + ',' +
+    StrToSQL(Combo_Genero.text) + ','  +
+    StrToSQL(Edit_Matricula.Text) + ',' +
+    'NOW()' + ',';
   if Frame_Pessoa.TableTemp.FieldByName('id_tipoPessoa').AsString = '1' then
   // Pessoa fisica
   begin
@@ -465,11 +473,16 @@ var
   sql: String;
 begin
   sql := 'INSERT INTO endereco (end_num, end_rua, end_bairro, end_cidade, ' +
-    'end_cep, end_cx_postal, end_complemento, end_data_cadastro, end_estado, end_pes_id_pessoa) VALUES ('
-    + StrToSQL(Edit_numero.Text) + ',' + StrToSQL(Edit_logradouro.Text) + ',' +
-    StrToSQL(Edit_bairro.Text) + ',' + StrToSQL(Edit_cidade.Text) + ',' +
-    StrToSQL(Mask_cep.Text) + ',' + StrToSQL(Edit_cxpostal.Text) + ',' +
-    StrToSQL(Edit_complemento.Text) + ',' + 'NOW(),' +
+    'end_cep, end_cx_postal, end_complemento, end_estado, end_data_cadastro, end_pes_id_pessoa) VALUES ('
+    + StrToSQL(Edit_numero.Text) + ',' +
+    StrToSQL(Edit_logradouro.Text) + ',' +
+    StrToSQL(Edit_bairro.Text) + ',' +
+    StrToSQL(Edit_cidade.Text) + ',' +
+    StrToSQL(Mask_cep.Text) + ',' +
+    StrToSQL(Edit_cxpostal.Text) + ',' +
+    StrToSQL(Edit_complemento.Text) + ',' +
+    StrToSQL(Edit_Uf.Text) + ',' +
+    'NOW(),' +
     StrToSQL(Edit_codigo.Text) + ')';
   DataModuleConexao.ExecSQL(sql);
 end;
@@ -477,16 +490,16 @@ end;
 function TForm_CadastroUsuario.limpacampos: Boolean;
 begin
   // Dados pessoais //
+  Edit_codigo.Text := getUltimoId;
   Frame_Pessoa.ComboBox_Informacao.ItemIndex := 0;
   Frame_Status.ComboBox_Informacao.ItemIndex := 0;
-  Edit_codigo.Text := getUltimoId;
   Edit_nomecompleto.clear;
   Mask_RG.clear;
   Edit_Matricula.clear;
-  Combo_Genero.ItemIndex := 0  ;
+  Combo_Genero.ItemIndex := 0;
   Date_Nascimento.datetime := Date;
-  Edit_Celular.clear;
-  Edit_Telefone.clear;
+  Mask_Celular.clear;
+  Mask_telefone.clear;
   Mask_CPF.clear;
   // Endereço//
   Mask_cep.clear;
@@ -564,7 +577,7 @@ begin
   carrega := TFDMemTable.Create(Self);
   try
     DataModuleConexao.ExecSQL
-      ('SELECT pes_id_pessoa, pes_nome, pes_rg, pes_cpf, pes_nascimento, pes_ativo, pes_matricula, pes_celular, pes_telefone, pes_genero FROM pessoa '
+      ('SELECT pes_id_pessoa, pes_nome, pes_rg, pes_cpf, pes_nascimento, pes_email, pes_ativo,tip_id_tipo_pessoa, pes_matricula, pes_celular, pes_telefone, pes_genero FROM pessoa '
       + 'WHERE pes_id_pessoa  = ' + id, carrega);
 
     Edit_codigo.Text := carrega.FieldByName('pes_id_pessoa').AsString;
@@ -572,11 +585,13 @@ begin
     Mask_RG.Text := carrega.FieldByName('pes_rg').AsString;
     Mask_CPF.Text := carrega.FieldByName('pes_cpf').AsString;
     Date_Nascimento.Date := carrega.FieldByName('pes_nascimento').Value;
+    Edit_email.Text := carrega.FieldByName('pes_email').AsString;
     Frame_Status.ComboBox_Informacao.ItemIndex := carrega.FieldByName('pes_ativo').Value;
+    Frame_Pessoa.ComboBox_Informacao.ItemIndex := carrega.FieldByName('tip_id_tipo_pessoa').Value;
     Edit_Matricula.Text := carrega.FieldByName('pes_matricula').AsString;
-    Edit_Celular.Text := carrega.FieldByName('pes_celular').AsString;
-    Edit_Telefone.Text := carrega.FieldByName('pes_telefone').AsString;
-    Combo_Genero.ItemIndex := carrega.FieldByName('pes_genero').Value;
+    Mask_Celular.Text := carrega.FieldByName('pes_celular').AsString;
+    Mask_telefone.Text := carrega.FieldByName('pes_telefone').AsString;
+    Combo_Genero.Text := carrega.FieldByName('pes_genero').AsString;
     loadEnd;
     loadLog;
   finally
@@ -629,11 +644,6 @@ begin
   DataModuleConexao.ExecSQL(sql);
 end;
 
-procedure TForm_CadastroUsuario.SpeedButton1Click(Sender: TObject);
-begin
-  testaCPF;
-end;
-
 procedure TForm_CadastroUsuario.SpeedButton_editarClick(Sender: TObject);
 begin
   Form_ConsultaUsuario := TForm_ConsultaUsuario.Create(Self);
@@ -665,141 +675,92 @@ begin
   end;
 end;
 
-function TForm_CadastroUsuario.testaCPF: Boolean;
+function TForm_CadastroUsuario.validacpf: Boolean;
 begin
-  validador.Documento   := Mask_CPF.Text ;
+validador.Documento := Mask_CPF.Text ;
   if Frame_Pessoa.indexCombo = '1'  then
   begin
     validador.TipoDocto :=  TACBrValTipoDocto(docCPF) ;
     if not validador.Validar then
-     ShowMessage ('CPF RUIM');
+     ShowMessage ('CPF Inválido');
+     Exit;
   end;
   if Frame_Pessoa.indexCombo = '2'  then
   begin
     validador.TipoDocto :=  TACBrValTipoDocto(docCNPJ) ;
     if not validador.Validar then
-     ShowMessage ('CNPJ RUIM');
+     ShowMessage ('CNPJ Inválido');
+     Exit;
   end;
-end;
-
-
-function TForm_CadastroUsuario.validaCPF(CPF: string): Boolean;
-var i:integer;
-    Want:char;
-    Wvalid:boolean;
-    Wdigit1,Wdigit2:integer;
-begin
-    Wdigit1:=0;
-    Wdigit2:=0;
-    Want:=cpf[1];//variavel para testar se o cpf é repetido como 111.111.111-11
-    Delete(cpf,ansipos('.',cpf),1);  //retira as mascaras se houver
-    Delete(cpf,ansipos('.',cpf),1);
-    Delete(cpf,ansipos('-',cpf),1);
-
-   //testar se o cpf é repetido como 111.111.111-11
-   for i:=1 to length(cpf) do
-     begin
-       if cpf[i] <> Want then
-         begin
-            Wvalid:=true;  // se o cpf possui um digito diferente ele passou no primeiro teste
-            break
-         end;
-     end;
-       // se o cpf é composto por numeros repetido retorna falso
-     if not Wvalid then
-       begin
-          result:=false;
-          exit;
-       end;
-
-     //executa o calculo para o primeiro verificador
-     for i:=1 to 9 do
-       begin
-          wdigit1:=Wdigit1+(strtoint(cpf[10-i])*(I+1));
-       end;
-        Wdigit1:= ((11 - (Wdigit1 mod 11))mod 11) mod 10;
-        {formula do primeiro verificador
-            soma=1°*2+2°*3+3°*4.. até 9°*10
-            digito1 = 11 - soma mod 11
-            se digito > 10 digito1 =0
-          }
-
-         //verifica se o 1° digito confere
-        if IntToStr(Wdigit1) <> cpf[10] then
-          begin
-             result:=false;
-             exit;
-          end;
-
-
-         for i:=1 to 10 do
-       begin
-          wdigit2:=Wdigit2+(strtoint(cpf[11-i])*(I+1));
-       end;
-       Wdigit2:= ((11 - (Wdigit2 mod 11))mod 11) mod 10;
-         {formula do segundo verificador
-            soma=1°*2+2°*3+3°*4.. até 10°*11
-            digito1 = 11 - soma mod 11
-            se digito > 10 digito1 =0
-          }
-
-       // confere o 2° digito verificador
-       if IntToStr(Wdigit2) <> cpf[11] then
-          begin
-             result:=false;
-             exit;
-          end;
-
-   //se chegar até aqui o cpf é valido
-   result:=true;
-
+     Exit;
 end;
 
 function TForm_CadastroUsuario.validarCampos: Boolean;
-begin
+ begin
   Result := False;
+
+     if Frame_Status.indexCombo.ToInteger = 0 then
+   begin
+     ShowMessage('Informe o Status.');
+     Frame_Status.ComboBox_Informacao.SetFocus;
+     Exit;
+   end;
+
   if Frame_Pessoa.ComboBox_Informacao.ItemIndex = 0 then
    begin
    ShowMessage('Informe o Tipo de Pessoa.');
    Frame_Pessoa.ComboBox_Informacao.SetFocus;
    Exit;
-   end else
-   if Frame_Status.indexCombo.ToInteger = 0 then
-   begin
-   ShowMessage('Informe o Status.');
-   Frame_Status.ComboBox_Informacao.SetFocus;
-   Exit;
-   end else
+   end;
+
+
    if Edit_nomecompleto.Text = '' then
    begin
-   ShowMessage('Nome nao informado.');
-   Edit_nomecompleto.SetFocus;
-   Exit;
-   end;
-   testaCPF;
-   if Length(Mask_RG.text) < 9  then
-   begin
-   ShowMessage('RG Não Informado');
-   Mask_RG.SetFocus;
-    Exit;
-   end;
-
-      validador.Documento   := Edit_email.Text ;
-        validador.TipoDocto :=  TACBrValTipoDocto(docEmail) ;
-        if not validador.Validar then
-        begin
-         ShowMessage ('Email Inválido');
-         Edit_email.SetFocus;
-         Exit;
-         end;
-
-      if ((Edit_senha.Text <> Edit_confirmasenha.Text) and
-          (Edit_senha.Text = null ))  then
-   begin
-     ShowMessage('Senha diferente da informada');
-    Edit_confirmasenha.SetFocus;
+     ShowMessage('Nome não Informado.');
+     Edit_nomecompleto.SetFocus;
      Exit;
    end;
+
+   validacpf;
+
+
+   if Mask_RG.text = ''  then
+   begin
+     ShowMessage('RG Não Informado');
+     Exit;
+   end;
+
+   if Edit_login.Text = '' then
+   begin
+     ShowMessage('Informe o Login');
+     Edit_login.SetFocus;
+     Exit;
+   end;
+
+     if Edit_Senha.Text = '' then
+   begin
+     ShowMessage('Informe a Senha');
+     Edit_login.SetFocus;
+     Exit;
+   end;
+
+     if (Edit_senha.Text <> Edit_confirmasenha.Text) then
+   begin
+     ShowMessage('Senha Não Conpativel Com a Informada');
+      Edit_confirmasenha.SetFocus;
+     Exit;
+   end;
+
+
+//   validador.Documento   := Edit_email.Text ;
+//   validador.TipoDocto :=  TACBrValTipoDocto(docEmail) ;
+//     if not validador.Validar then
+//       begin
+//         ShowMessage ('Email Inválido');
+//         Edit_email.SetFocus;
+//         Exit;
+//       end;
+
 
   if (Trim(OnlyNumber(Mask_cep.Text)).Length < 8) and
     (Trim(OnlyNumber(Mask_cep.Text)) <> EmptyStr) then

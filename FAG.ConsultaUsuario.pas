@@ -118,7 +118,7 @@ begin
   Frame_Status.camposExtras := '';
   Frame_Status.condicao := '';
   Frame_Status.titulo := 'Status';
-  Frame_Status.primeiraOpcao := 'Escolha';
+  Frame_Status.primeiraOpcao := 'Ambo';
   Frame_Status.carregaFrame := True;
 end;
 
@@ -134,7 +134,21 @@ function TForm_ConsultaUsuario.filtrarCNPJ: Boolean;
 var
   sql: String;
 begin
-  sql := SQL_SELECT+' AND pes_cnpj LIKE "%'+ Edit_pesquisa.Text + '%"';
+  if Frame_Status.indexCombo = '0' then
+  begin
+    sql := SQL_SELECT;
+    if Edit_pesquisa.Text <> EmptyStr then
+      sql := sql + ' AND pes_cnpj LIKE "%' + Edit_pesquisa.Text + '%" ';
+  end;
+  if Frame_Status.indexCombo = '1' then
+  begin
+    sql := SQL_SELECT+' AND pes_ativo = 1 AND pes_cnpj LIKE "%' +  Edit_pesquisa.Text + '%" ';
+  end;
+  if Frame_Status.indexCombo = '2' then
+  begin
+    sql := SQL_SELECT+' AND pes_ativo = 2 AND pes_cnpj LIKE "%' + Edit_pesquisa.Text + '%" ';
+  end;
+
   DataModuleConexao.ExecSQL(sql, FDMemTable_Usuario);
 end;
 
@@ -142,7 +156,21 @@ function TForm_ConsultaUsuario.filtrarCPF: Boolean;
 var
   sql: String;
 begin
-  sql := SQL_SELECT+' pes_cpf LIKE "%'+ Edit_pesquisa.Text + '%"';
+  if Frame_Status.indexCombo = '0' then
+  begin
+    sql := SQL_SELECT;
+    if Edit_pesquisa.Text <> EmptyStr then
+      sql := sql + ' AND pes_cpf LIKE "%' + Edit_pesquisa.Text + '%" ';
+  end;
+  if Frame_Status.indexCombo = '1' then
+  begin
+    sql := SQL_SELECT+' AND pes_ativo = 1 AND pes_cpf LIKE "%' +  Edit_pesquisa.Text + '%" ';
+  end;
+  if Frame_Status.indexCombo = '2' then
+  begin
+    sql := SQL_SELECT+' AND pes_ativo = 2 AND pes_cpf LIKE "%' + Edit_pesquisa.Text + '%" ';
+  end;
+
   DataModuleConexao.ExecSQL(sql, FDMemTable_Usuario);
 end;
 

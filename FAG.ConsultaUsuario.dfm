@@ -219,26 +219,17 @@ object Form_ConsultaUsuario: TForm_ConsultaUsuario
           end
           item
             Expanded = False
-            Width = 238
+            Width = 257
             Visible = True
           end
           item
             Expanded = False
-            Width = 168
+            Width = 246
             Visible = True
           end
           item
             Expanded = False
-            Width = 142
-            Visible = True
-          end
-          item
-            Expanded = False
-            Width = 77
-            Visible = True
-          end
-          item
-            Expanded = False
+            Width = 186
             Visible = True
           end>
       end
