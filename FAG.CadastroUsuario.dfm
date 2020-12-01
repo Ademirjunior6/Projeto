@@ -32,8 +32,6 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
     Align = alClient
     UseDockManager = False
     TabOrder = 0
-    ExplicitLeft = -2
-    ExplicitTop = -2
     object Label_tituloForm: TLabel
       Left = 331
       Top = 24
@@ -808,5 +806,10 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
     PesquisarIBGE = True
     Left = 184
     Top = 8
+  end
+  object validador: TACBrValidador
+    IgnorarChar = './-'
+    Left = 640
+    Top = 24
   end
 end

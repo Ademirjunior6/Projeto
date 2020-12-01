@@ -11,7 +11,7 @@ uses
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   FAG.Frame.Generico, FireDAC.Stan.Async, FireDAC.DApt, FAG.Utils, ACBrBase,
-  ACBrSocket, ACBrCEP;
+  ACBrSocket, ACBrCEP, ACBrValidador;
 
 type
   TForm_CadastroUsuario = class(TForm)
@@ -71,6 +71,7 @@ type
     Combo_Genero: TComboBox;
     Mask_RG: TMaskEdit;
     Cancelar: TBitBtn;
+    validador: TACBrValidador;
     procedure FormCreate(Sender: TObject);
     procedure SpeedButton_SairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -84,6 +85,9 @@ type
     procedure Mask_cepEnter(Sender: TObject);
     procedure CancelarClick(Sender: TObject);
     procedure Frame_StatusComboBox_InformacaoExit(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+
 
     // procedure Edit_codigoExit(Sender: TObject);
 
@@ -107,6 +111,8 @@ type
     function loadLog: Boolean;
     procedure loadTela(id: string);
     function limparMask(cpf : String): String;
+    function validaCPF(CPF : string) : Boolean;
+    function testaCPF: Boolean;
 
   public
     function carregatppessoa: Boolean;
@@ -121,6 +127,8 @@ implementation
 
 uses FAG.DataModule.Conexao, FAG.ConsultaUsuario, FAG.RelatorioUsuario,
   ACBrUtil;
+
+
 
 function TForm_CadastroUsuario.alterarDados: Boolean;
 var
@@ -180,8 +188,6 @@ begin
     begin
       if existe_usuario(Edit_codigo.Text) then
       begin
-        Frame_Status.ComboBox_Informacao.SetFocus;
-        Self.Perform(WM_NEXTDLGCTL, 0, 0);
         alterarDados;
         alterarEndereco;
         alterarSenha;
@@ -189,8 +195,6 @@ begin
       end
       else
       begin
-        Frame_Status.ComboBox_Informacao.SetFocus;
-        Self.Perform(WM_NEXTDLGCTL, 0, 0);
         inserirDados;
         Edit_codigo.Text := getLastID;
         inserirendereco;
@@ -209,7 +213,10 @@ begin
   end;
 end;
 
-
+procedure TForm_CadastroUsuario.Button1Click(Sender: TObject);
+begin
+  testaCPF;
+end;
 
 procedure TForm_CadastroUsuario.CancelarClick(Sender: TObject);
 begin
@@ -225,9 +232,9 @@ begin
   Combo_Genero.clear;
   Combo_Genero.Style := csDropDownList;
   Combo_Genero.Items.Add('Selecione');
-  Combo_Genero.Items.Add('Masculino');
-  Combo_Genero.Items.Add('Feminino');
-  Combo_Genero.Items.Add('Indefinido');
+  Combo_Genero.Items.Add('1 - Masculino');
+  Combo_Genero.Items.Add('2 - Feminino');
+  Combo_Genero.Items.Add('3 - Indefinido');
   Combo_Genero.ItemIndex := 0;
 end;
 
@@ -309,9 +316,9 @@ begin
         Edit_email.Text := carrega.FieldByName('pes_email').AsString;
         Combo_Genero.Text := carrega.FieldByName('pes_genero').AsString;
         Frame_Pessoa.ComboBox_Informacao.ItemIndex :=
-          carrega.FieldByName('tip_id_tipo_pessoa').AsInteger;
+        carrega.FieldByName('tip_id_tipo_pessoa').AsInteger;
         Frame_Status.ComboBox_Informacao.ItemIndex :=
-          carrega.FieldByName('pes_ativo').AsInteger;
+        carrega.FieldByName('pes_ativo').AsInteger;
         Date_Nascimento.Date := carrega.FieldByName('pes_nascimento').Value;
         Edit_nomecompleto.Text := carrega.FieldByName('pes_nome').AsString;
         Mask_CPF.Text := carrega.FieldByName('pes_cpf').AsString;
@@ -429,13 +436,17 @@ var
   tpPessoa: String;
 begin
 
-  sql := 'INSERT INTO pessoa (pes_nome, pes_rg, pes_celular, pes_nascimento, ' +
+ sql := 'INSERT INTO pessoa (pes_nome, pes_rg, pes_celular, pes_nascimento, ' +
     ' pes_email, pes_telefone, pes_ativo, tip_id_tipo_pessoa, pes_cpf, pes_cnpj)'
     + 'VALUES (' + StrToSQL(Edit_nomecompleto.Text) + ',' +
-    StrToSQL(Mask_RG.Text) + ',' + StrToSQL(Edit_Celular.Text) + ',' +
-    DateTimeToSQL(Date_Nascimento.datetime) + ',' + StrToSQL(Edit_email.Text) +
-    ',' + StrToSQL(Edit_Telefone.Text) + ',' + StrToSQL(Frame_Status.indexCombo)
-    + ',' + StrToSQL(Frame_Pessoa.indexCombo) + ',';
+    StrToSQL(Mask_RG.Text) + ',' +
+    StrToSQL(Edit_Celular.Text) + ',' +
+    DateTimeToSQL(Date_Nascimento.datetime) + ',' +
+    StrToSQL(Edit_email.Text) + ',' +
+    StrToSQL(Edit_Telefone.Text) + ',' +
+    StrToSQL(Frame_Status.indexCombo) + ',' +
+    StrToSQL(Frame_Pessoa.indexCombo) + ',';
+
   if Frame_Pessoa.TableTemp.FieldByName('id_tipoPessoa').AsString = '1' then
   // Pessoa fisica
   begin
@@ -454,7 +465,7 @@ var
   sql: String;
 begin
   sql := 'INSERT INTO endereco (end_num, end_rua, end_bairro, end_cidade, ' +
-    'end_cep, end_cx_postal, end_complemento, end_data_cadastro, end_pes_id_pessoa) VALUES ('
+    'end_cep, end_cx_postal, end_complemento, end_data_cadastro, end_estado, end_pes_id_pessoa) VALUES ('
     + StrToSQL(Edit_numero.Text) + ',' + StrToSQL(Edit_logradouro.Text) + ',' +
     StrToSQL(Edit_bairro.Text) + ',' + StrToSQL(Edit_cidade.Text) + ',' +
     StrToSQL(Mask_cep.Text) + ',' + StrToSQL(Edit_cxpostal.Text) + ',' +
@@ -466,11 +477,13 @@ end;
 function TForm_CadastroUsuario.limpacampos: Boolean;
 begin
   // Dados pessoais //
+  Frame_Pessoa.ComboBox_Informacao.ItemIndex := 0;
+  Frame_Status.ComboBox_Informacao.ItemIndex := 0;
   Edit_codigo.Text := getUltimoId;
   Edit_nomecompleto.clear;
   Mask_RG.clear;
   Edit_Matricula.clear;
-  Combo_Genero.clear;
+  Combo_Genero.ItemIndex := 0  ;
   Date_Nascimento.datetime := Date;
   Edit_Celular.clear;
   Edit_Telefone.clear;
@@ -559,12 +572,11 @@ begin
     Mask_RG.Text := carrega.FieldByName('pes_rg').AsString;
     Mask_CPF.Text := carrega.FieldByName('pes_cpf').AsString;
     Date_Nascimento.Date := carrega.FieldByName('pes_nascimento').Value;
-    Frame_Status.ComboBox_Informacao.ItemIndex :=
-      carrega.FieldByName('pes_ativo').Value;
+    Frame_Status.ComboBox_Informacao.ItemIndex := carrega.FieldByName('pes_ativo').Value;
     Edit_Matricula.Text := carrega.FieldByName('pes_matricula').AsString;
     Edit_Celular.Text := carrega.FieldByName('pes_celular').AsString;
     Edit_Telefone.Text := carrega.FieldByName('pes_telefone').AsString;
-    Combo_Genero.Text := carrega.FieldByName('pes_genero').AsString;
+    Combo_Genero.ItemIndex := carrega.FieldByName('pes_genero').Value;
     loadEnd;
     loadLog;
   finally
@@ -617,6 +629,11 @@ begin
   DataModuleConexao.ExecSQL(sql);
 end;
 
+procedure TForm_CadastroUsuario.SpeedButton1Click(Sender: TObject);
+begin
+  testaCPF;
+end;
+
 procedure TForm_CadastroUsuario.SpeedButton_editarClick(Sender: TObject);
 begin
   Form_ConsultaUsuario := TForm_ConsultaUsuario.Create(Self);
@@ -648,6 +665,96 @@ begin
   end;
 end;
 
+function TForm_CadastroUsuario.testaCPF: Boolean;
+begin
+  validador.Documento   := Mask_CPF.Text ;
+  if Frame_Pessoa.indexCombo = '1'  then
+  begin
+    validador.TipoDocto :=  TACBrValTipoDocto(docCPF) ;
+    if not validador.Validar then
+     ShowMessage ('CPF RUIM');
+  end;
+  if Frame_Pessoa.indexCombo = '2'  then
+  begin
+    validador.TipoDocto :=  TACBrValTipoDocto(docCNPJ) ;
+    if not validador.Validar then
+     ShowMessage ('CNPJ RUIM');
+  end;
+end;
+
+
+function TForm_CadastroUsuario.validaCPF(CPF: string): Boolean;
+var i:integer;
+    Want:char;
+    Wvalid:boolean;
+    Wdigit1,Wdigit2:integer;
+begin
+    Wdigit1:=0;
+    Wdigit2:=0;
+    Want:=cpf[1];//variavel para testar se o cpf é repetido como 111.111.111-11
+    Delete(cpf,ansipos('.',cpf),1);  //retira as mascaras se houver
+    Delete(cpf,ansipos('.',cpf),1);
+    Delete(cpf,ansipos('-',cpf),1);
+
+   //testar se o cpf é repetido como 111.111.111-11
+   for i:=1 to length(cpf) do
+     begin
+       if cpf[i] <> Want then
+         begin
+            Wvalid:=true;  // se o cpf possui um digito diferente ele passou no primeiro teste
+            break
+         end;
+     end;
+       // se o cpf é composto por numeros repetido retorna falso
+     if not Wvalid then
+       begin
+          result:=false;
+          exit;
+       end;
+
+     //executa o calculo para o primeiro verificador
+     for i:=1 to 9 do
+       begin
+          wdigit1:=Wdigit1+(strtoint(cpf[10-i])*(I+1));
+       end;
+        Wdigit1:= ((11 - (Wdigit1 mod 11))mod 11) mod 10;
+        {formula do primeiro verificador
+            soma=1°*2+2°*3+3°*4.. até 9°*10
+            digito1 = 11 - soma mod 11
+            se digito > 10 digito1 =0
+          }
+
+         //verifica se o 1° digito confere
+        if IntToStr(Wdigit1) <> cpf[10] then
+          begin
+             result:=false;
+             exit;
+          end;
+
+
+         for i:=1 to 10 do
+       begin
+          wdigit2:=Wdigit2+(strtoint(cpf[11-i])*(I+1));
+       end;
+       Wdigit2:= ((11 - (Wdigit2 mod 11))mod 11) mod 10;
+         {formula do segundo verificador
+            soma=1°*2+2°*3+3°*4.. até 10°*11
+            digito1 = 11 - soma mod 11
+            se digito > 10 digito1 =0
+          }
+
+       // confere o 2° digito verificador
+       if IntToStr(Wdigit2) <> cpf[11] then
+          begin
+             result:=false;
+             exit;
+          end;
+
+   //se chegar até aqui o cpf é valido
+   result:=true;
+
+end;
+
 function TForm_CadastroUsuario.validarCampos: Boolean;
 begin
   Result := False;
@@ -668,29 +775,26 @@ begin
    ShowMessage('Nome nao informado.');
    Edit_nomecompleto.SetFocus;
    Exit;
-   end
-   else
-    if  Mask_CPF.text = '   .   .   -  ' then
-   begin
-   ShowMessage('CPF não informado.');
-   Mask_CPF.SetFocus;
-   Exit;
-   end else
-
-   if  Mask_CPF.text = '  .   .   /    -  ' then
-   begin
-   ShowMessage('CNPJ não informado.');
-   Mask_CPF.SetFocus;
-   Exit;
-   end else
-
-   if Mask_RG.Text = '  .   .   - '  then
+   end;
+   testaCPF;
+   if Length(Mask_RG.text) < 9  then
    begin
    ShowMessage('RG Não Informado');
    Mask_RG.SetFocus;
     Exit;
-   end else
-      if Edit_senha.Text <> Edit_confirmasenha.Text then
+   end;
+
+      validador.Documento   := Edit_email.Text ;
+        validador.TipoDocto :=  TACBrValTipoDocto(docEmail) ;
+        if not validador.Validar then
+        begin
+         ShowMessage ('Email Inválido');
+         Edit_email.SetFocus;
+         Exit;
+         end;
+
+      if ((Edit_senha.Text <> Edit_confirmasenha.Text) and
+          (Edit_senha.Text = null ))  then
    begin
      ShowMessage('Senha diferente da informada');
     Edit_confirmasenha.SetFocus;
