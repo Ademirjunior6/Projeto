@@ -31,7 +31,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDataModuleConexao, DataModuleConexao);
   Application.CreateForm(TForm_Menu, Form_Menu);
-  Application.CreateForm(TForm_detalharMovimento, Form_detalharMovimento);
-  Application.CreateForm(TForm_ConsultaUsuario, Form_ConsultaUsuario);
   Application.Run;
 end.

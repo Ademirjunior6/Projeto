@@ -715,7 +715,6 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        PasswordChar = '*'
         TabOrder = 2
       end
       object Edit_email: TEdit
@@ -742,7 +741,6 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        PasswordChar = '*'
         TabOrder = 3
       end
       object Edit_login: TEdit
@@ -798,8 +796,8 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 808
-    Top = 16
+    Left = 240
+    Top = 8
   end
   object FDQuery1: TFDQuery
     Left = 620
@@ -810,12 +808,12 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
     ParseText = True
     WebService = wsViaCep
     PesquisarIBGE = True
-    Left = 184
+    Left = 176
     Top = 8
   end
   object validador: TACBrValidador
     IgnorarChar = './-'
-    Left = 648
-    Top = 24
+    Left = 112
+    Top = 8
   end
 end

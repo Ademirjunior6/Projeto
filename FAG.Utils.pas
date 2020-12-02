@@ -120,9 +120,36 @@ begin
   tmp := TFDMemTable.Create(nil);
   try
     DataModuleConexao.ExecSQL('SELECT (SELECT LAST_INSERT_ID()) AS id', tmp);
-    result := tmp.FieldByName('id').AsString;
+    Result := tmp.FieldByName('id').AsString;
   finally
     FreeAndNil(tmp);
+  end;
+end;
+
+function EncryptSTR(const InString: string;
+  StartKey, MultKey, AddKey: Integer): string;
+var
+  I: Byte;
+begin
+  Result :=  '\';
+  for I := 1 to Length(InString) do
+  begin
+    Result := Result + CHAR(Byte(InString[I]) xor (StartKey));
+    StartKey := (Byte(Result[I]) + StartKey) * MultKey + AddKey;
+  end;
+end;
+
+function DecryptSTR(const InString: string;
+  StartKey, MultKey, AddKey: Integer): string;
+
+var
+  I: Byte;
+begin
+  Result :=  '\';
+  for I := 1 to Length(InString) do
+  begin
+    Result := Result + CHAR(Byte(InString[I]) xor (StartKey));
+    StartKey := (Byte(InString[I]) + StartKey) * MultKey + AddKey;
   end;
 end;
 

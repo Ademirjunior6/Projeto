@@ -33,9 +33,6 @@ type
     ImagemAparecer: TImage;
     procedure entrarClick(Sender: TObject);
     procedure ovP_CancelarClick(Sender: TObject);
-    function existe_usuario(codigo: String): Boolean;
-    function confirmar: Boolean;
-    function validarCampos: Boolean;
     procedure ovP_EntrarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ImagemAparecerClick(Sender: TObject);
@@ -52,6 +49,11 @@ type
 
   private
     function EncryptSTR(const Key, texto: String): String;
+    function user_ativo(codigo: string): Boolean;
+    function exist(Login: String; var senha: String): Boolean;
+    // function existe_usuario(codigo: String): Boolean;
+    function confirmar: Boolean;
+    function validarCampos: Boolean;
   public
 
   end;
@@ -63,32 +65,24 @@ implementation
 
 {$R *.dfm}
 
-uses FAG.DataModule.Conexao, FAG.Menu;
+uses FAG.DataModule.Conexao,
+  FAG.Menu,
+  FAG.Utils;
 
 function TForm_Login.confirmar: Boolean;
 var
   SQL: String;
-
 begin
   if not validarCampos then
   begin
     Result := False;
     Exit;
   end;
-  if existe_usuario(Edit_usuario.Text) then
-  begin
-    if not Assigned(Form_Menu) then
-      Form_Menu.Hide;
-    Form_Menu.usuarioLogado := Edit_usuario.Text;
-    ModalResult := mrOk;
-  end
-  else
-  begin
-    Application.MessageBox
-      ('Usuário ou senha inserido está inválido/incorreto, tente novamente.',
-      'NÃO FOI POSSÍVEL LOGAR', MB_OK + MB_ICONHAND + MB_TASKMODAL);
-  end;
 
+  if not Assigned(Form_Menu) then
+    Form_Menu.Hide;
+  Form_Menu.usuarioLogado := Edit_usuario.Text;
+  ModalResult := mrOk;
 end;
 
 function TForm_Login.EncryptSTR(const Key, texto: String): String;
@@ -124,24 +118,21 @@ begin
   confirmar;
 end;
 
-function TForm_Login.existe_usuario(codigo: String): Boolean;
-var
-  excist: TFDMemTable;
-  senhaLogin: String;
-begin
-  excist := TFDMemTable.Create(Self);
-  senhaLogin := Edit_senha.Text;
-
-  try
-    DataModuleConexao.ExecSQL
-      ('SELECT login_usuario, login_senha FROM login WHERE login_usuario = "' +
-      codigo + '" AND login_senha ="' + EncryptSTR(Edit_senha.Text,
-      Edit_usuario.Text) + '"', excist);
-    Result := not excist.IsEmpty;
-  finally
-    FreeAndNil(excist);
-  end;
-end;
+// function TForm_Login.existe_usuario(codigo: String): Boolean;
+// var
+// excist: TFDMemTable;
+// begin
+// excist := TFDMemTable.Create(Self);
+// try
+// DataModuleConexao.ExecSQL
+// ('SELECT login_usuario, login_senha FROM login WHERE  login_usuario = ' +
+// StrToSQL(codigo) + ' AND login_senha ="' + EncryptSTR(Edit_senha.Text,
+// Edit_usuario.Text) + '"', excist);
+// Result := not excist.IsEmpty;
+// finally
+// FreeAndNil(excist);
+// end;
+// end;
 
 procedure TForm_Login.FormShow(Sender: TObject);
 begin
@@ -191,26 +182,86 @@ begin
   confirmar;
 end;
 
+function TForm_Login.exist(Login: String; var senha: String): Boolean;
+var
+  excist: TFDMemTable;
+begin
+  Result := False;
+  excist := TFDMemTable.Create(Self);
+  try
+    DataModuleConexao.ExecSQL('SELECT login_usuario, ' +
+      ' AES_DECRYPT(login_senha,"' + Key + '") AS login_senha FROM Login ' +
+      ' WHERE login_usuario = ' + StrToSQL(Login), excist);
+
+    // if ((excist.FieldByName('login_usuario').AsString = Edit_usuario.Text) AND
+    // (excist.FieldByName('login_senha').AsString = Edit_senha.Text)) then
+    // begin
+
+    if not excist.IsEmpty then
+    begin
+      Result := True;
+      senha := excist.FieldByName('login_senha').AsString;
+    end
+    else
+      senha := EmptyStr;
+
+  finally
+    FreeAndNil(excist);
+  end;
+end;
+
+function TForm_Login.user_ativo(codigo: string): Boolean;
+var
+  excist: TFDMemTable;
+begin
+  excist := TFDMemTable.Create(Self);
+  try
+    DataModuleConexao.ExecSQL('SELECT login_usuario, login_senha, pes_ativo FROM login AS A ' +
+      'INNER JOIN pessoa AS B ON A.login_pes_id_pessoa = B.pes_id_pessoa ' +
+      'WHERE pes_ativo = 1 AND login_usuario = ' + StrToSQL(codigo), excist);
+    Result := not excist.IsEmpty;
+  finally
+    FreeAndNil(excist);
+  end;
+end;
+
 function TForm_Login.validarCampos: Boolean;
+var
+  consultaSenha: String;
 begin
   Result := False;
   if Edit_usuario.Text = '' then
   begin
-    Application.MessageBox('O campo login não foi preenchido !',
+    Application.MessageBox('O campo login não foi preenchido.',
       'Atenção, campo não preenchido', MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     Edit_usuario.SetFocus;
   end
   else if Edit_senha.Text = '' then
   begin
-    Application.MessageBox('O campo senha não foi preenchido !',
+    Application.MessageBox('O campo senha não foi preenchido.',
       'Atenção, campo não preenchido', MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     Edit_senha.SetFocus;
+  end
+  else if not exist(Edit_usuario.Text, consultaSenha) then
+  begin
+    Application.MessageBox('Usuário ou senha inserido está inválido/incorreto, tente novamente.',
+      'NÃO FOI POSSÍVEL LOGAR', MB_OK + MB_ICONHAND + MB_TASKMODAL);
+  end
+  else if consultaSenha <> Edit_senha.Text then
+  begin
+    Application.MessageBox('Senha inválida/incorreta, tente novamente.',
+      'NÃO FOI POSSÍVEL LOGAR', MB_OK + MB_ICONHAND + MB_TASKMODAL);
+  end
+  else
+  if not user_ativo(Edit_usuario.Text) then
+  begin
+    Application.MessageBox('Usuário inativo, solicite ao administrador a ativação.',
+      'NÃO FOI POSSÍVEL LOGAR', MB_OK + MB_ICONHAND + MB_TASKMODAL);
   end
   else
   begin
     Result := True;
   end;
-
 end;
 
 end.

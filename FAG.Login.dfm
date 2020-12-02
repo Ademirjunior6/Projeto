@@ -22836,7 +22836,7 @@ object Form_Login: TForm_Login
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 528
-    Top = 167
+    Left = 456
+    Top = 143
   end
 end

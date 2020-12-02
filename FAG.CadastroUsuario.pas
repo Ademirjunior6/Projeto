@@ -1,5 +1,5 @@
 unit FAG.CadastroUsuario;
-
+
 interface
 
 uses
@@ -136,7 +136,8 @@ begin
   sql := 'UPDATE pessoa SET ' + ' pes_nome = ' +
     StrToSQL(Edit_nomecompleto.Text) + ',' + ' pes_rg = ' +
     StrToSQL(Mask_RG.Text) + ',' + ' pes_celular =' +
-    StrToSQL(Mask_Celular.Text) + ',' + ' pes_telefone =' +
+    StrToSQL(Mask_Celular.Text) + ',' + ' pes_ativo =' +
+    StrToSQL(Frame_Status.indexCombo) + ',' + ' pes_telefone =' +
     StrToSQL(Mask_telefone.Text) + ',' + ' pes_genero = ' +
     StrToSQL(Combo_Genero.Text) + ',' + ' pes_email = ' +
     StrToSQL(Edit_email.Text) + ',' + ' pes_data_atualizacao = ' + 'NOW()' + ','
@@ -178,8 +179,8 @@ function TForm_CadastroUsuario.alterarSenha: Boolean;
 var
   sql: String;
 begin
-  sql := ' UPDATE login SET ' + 'login_senha = ' + CryptBD(Edit_senha.Text) +
-    ' WHERE login_pes_id_pessoa = ' + (Edit_codigo.Text) + '';
+  sql := ('UPDATE login SET ' + 'login_senha = ' + CryptBD(Edit_senha.Text) +
+    ' WHERE login_pes_id_pessoa = ' + (Edit_codigo.Text) + '');
   DataModuleConexao.ExecSQL(sql);
 end;
 
@@ -187,32 +188,41 @@ procedure TForm_CadastroUsuario.BitBtn1Click(Sender: TObject);
 begin
   try
     DataModuleConexao.BeginTrans;
-    if validarCampos then
+    if existe_usuario(Edit_codigo.Text) then
     begin
-      if validacpf then
+      if validarCampos then
       begin
-        if existeCampos then
+        if validacpf then
         begin
           Frame_Status.ComboBox_Informacao.SetFocus;
           Self.Perform(WM_NEXTDLGCTL, 0, 0);
           Frame_Pessoa.ComboBox_Informacao.SetFocus;
           Self.Perform(WM_NEXTDLGCTL, 0, 0);
-          if existe_usuario(Edit_codigo.Text) then
-          begin
-            alterarDados;
-            alterarEndereco;
-            alterarSenha;
-            ShowMessage('Alterado com Sucesso.');
-          end
-          else
+          alterarDados;
+          alterarEndereco;
+          alterarSenha;
+          ShowMessage('Alterado com Sucesso.');
+          limpacampos;
+        end;
+        exit
+      end;
+      exit
+    end
+    else
+    begin
+      if validarCampos then
+      begin
+        if validacpf then
+        begin
+          if existeCampos then
           begin
             inserirDados;
             Edit_codigo.Text := getLastID;
             inserirendereco;
             inserirSenha;
             ShowMessage('Salvo com Sucesso.');
+            limpacampos;
           end;
-          limpacampos;
         end;
         exit
       end;
@@ -237,7 +247,7 @@ begin
     begin
       ShowMessage('CPF já cadastrado');
       Mask_CPF.SetFocus;
-      Exit;
+      exit;
     end;
   end;
   if Frame_Pessoa.ComboBox_Informacao.ItemIndex = 2 then
@@ -246,20 +256,20 @@ begin
     begin
       ShowMessage('CNPJ já cadastrado');
       Mask_CPF.SetFocus;
-      Exit;
+      exit;
     end;
   end;
   if existe_rg(Mask_RG.Text) then
   begin
     ShowMessage('RG já cadastrado');
     Mask_RG.SetFocus;
-    Exit;
+    exit;
   end;
   if existe_login(Edit_login.Text) then
   begin
     ShowMessage('Login já cadastrado');
     Edit_login.SetFocus;
-    Exit;
+    exit;
   end
   else
     Result := True;
@@ -342,7 +352,7 @@ begin
   else
   begin
     if StrToInt(Edit_codigo.Text) = Edit_codigo.Tag then
-      Exit;
+      exit;
     if existe_usuario(Edit_codigo.Text) then
     begin
       carrega := TFDMemTable.Create(Self);
@@ -666,7 +676,6 @@ begin
       ' AES_DECRYPT(login_senha,"' + key + '") AS login_senha FROM Login ' +
       ' WHERE login_pes_id_pessoa = ' + Form_ConsultaUsuario.FDMemTable_Usuario.
       FieldByName('Código').AsString, carrega);
-
     Edit_login.Text := carrega.FieldByName('login_usuario').AsString;
     Edit_senha.Text := carrega.FieldByName('login_senha').AsString;
     Edit_confirmasenha.Text := carrega.FieldByName('login_senha').AsString;
@@ -722,7 +731,7 @@ begin
   // CEP := StringReplace(CEP, '-', '', [rfReplaceAll]);
 
   if Mask_cep.Tag = StrToIntDef(OnlyNumber(Mask_cep.Text), 0) then
-    Exit;
+    exit;
 
   if (Trim(OnlyNumber(Mask_cep.Text)).Length = 8) then
   begin
@@ -806,7 +815,7 @@ begin
     begin
       ShowMessage('CPF Inválido');
       Mask_CPF.SetFocus;
-      Exit;
+      exit;
     end;
 
   end;
@@ -817,7 +826,7 @@ begin
     begin
       ShowMessage('CNPJ Inválido');
       Mask_CPF.SetFocus;
-    Exit;
+      exit;
     end;
   end
   else
@@ -831,56 +840,56 @@ begin
   begin
     ShowMessage('Informe o Status.');
     Frame_Status.ComboBox_Informacao.SetFocus;
-    Exit;
+    exit;
   end;
 
   if Frame_Pessoa.ComboBox_Informacao.ItemIndex = 0 then
   begin
     ShowMessage('Informe o Tipo de Pessoa.');
     Frame_Pessoa.ComboBox_Informacao.SetFocus;
-    Exit;
+    exit;
   end;
 
   if Edit_nomecompleto.Text = '' then
   begin
     ShowMessage('Nome não Informado.');
     Edit_nomecompleto.SetFocus;
-    Exit;
+    exit;
   end;
 
-  if Mask_RG.Text = '' then
+  if Trim(OnlyNumber(Mask_RG.Text)).Length < 9  then
   begin
-    ShowMessage('RG Não Informado');
-    Exit;
+    ShowMessage('RG não informado.');
+    exit;
   end;
 
   if Edit_login.Text = '' then
   begin
-    ShowMessage('Informe o Login');
+    ShowMessage('Informe o login.');
     Edit_login.SetFocus;
-    Exit;
+    exit;
   end;
 
-  if Edit_senha.Text = '' then
+  if Edit_senha.Text = emptyStr then
   begin
-    ShowMessage('Informe a Senha');
+    ShowMessage('Informe a senha.');
     Edit_login.SetFocus;
-    Exit;
+    exit;
   end;
 
   if (Edit_senha.Text <> Edit_confirmasenha.Text) then
   begin
-    ShowMessage('Senha Não Conpativel Com a Informada');
+    ShowMessage('Senha não compatível com a informada.');
     Edit_confirmasenha.SetFocus;
-    Exit;
+    exit;
   end;
 
   if (Trim(OnlyNumber(Mask_cep.Text)).Length < 8) and
-    (Trim(OnlyNumber(Mask_cep.Text)) <> EmptyStr) then
+    (Trim(OnlyNumber(Mask_cep.Text)) <> emptyStr) then
   begin
-    ShowMessage('CEP inválido');
+    ShowMessage('CEP inválido.');
     Mask_cep.SetFocus;
-    Exit
+    exit
   end
   else
     Result := True;
@@ -888,3 +897,4 @@ begin
 end;
 
 end.
+
