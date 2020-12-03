@@ -39,7 +39,8 @@ implementation
 {$R *.dfm}
 
 Uses
-  FAG.Menu, FAG.DataModule.Conexao, FAG.CadastroProduto, FAG.Frame.Generico;
+  FAG.Menu, FAG.DataModule.Conexao, FAG.CadastroProduto, FAG.Frame.Generico,
+  FAG.Utils;
 
 procedure TForm_CadastroCategoria.BitBtn_cancelarClick(Sender: TObject);
 begin
@@ -105,9 +106,9 @@ begin
   end
   else
   begin
-    SQL := 'INSERT INTO categoria (cat_id_categoria, cat_desc, cat_data_cadastro) '
+    SQL := 'INSERT INTO categoria (cat_id_categoria, cat_desc, cat_data_cadastro, cat_userInclude) '
       + ' VALUES (' + Edit_codigo.Text + ',"' + Edit_descricao.Text +
-      '",NOW())';
+      '",NOW(),'+ StrToSQL(Form_Menu.usuarioLogado)  +')';
     DataModuleConexao.ExecSQL(SQL);
     ShowMessage('Salvo com Sucesso.');
     ModalResult := mrOk;

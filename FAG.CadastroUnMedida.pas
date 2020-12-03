@@ -109,10 +109,10 @@ begin
     begin
       if not existeSIGLA(EditSigla.Text) then
       begin
-        SQL := ('INSERT INTO un_medida (un_medida_id, un_medida_desc, un_medida_sigla) '
+        SQL := ('INSERT INTO un_medida (un_medida_id, un_medida_desc, un_medida_sigla, un_userInclude) '
           + ' VALUES (' + Edit_codigoUnMedida.Text + ',' +
-          StrToSQL(Edit_descricaoUnMedida.Text) + ',' +
-          StrToSQL(EditSigla.Text) + ')');
+          StrToSQL(Edit_descricaoUnMedida.Text) + ',' + StrToSQL(EditSigla.Text) + ','
+          + StrToSQL(Form_Menu.usuarioLogado) + ')');
         DataModuleConexao.ExecSQL(SQL);
         ShowMessage('Salvo com Sucesso.');
         ModalResult := mrOk;

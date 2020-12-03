@@ -424,7 +424,7 @@ begin
   Frame_UnMedida.campoSigla := 'un_medida_sigla';
   // Frame_UnMedida.camposExtras := ',un_medida_sigla';
   Frame_UnMedida.condicao := '';
-  Frame_UnMedida.titulo := 'UnMedida';
+  Frame_UnMedida.titulo := 'Un. Medida';
   Frame_UnMedida.primeiraOpcao := 'Escolha';
   Frame_UnMedida.carregaFrame := True;
 end;
