@@ -39,7 +39,7 @@ implementation
 {$R *.dfm}
 
 Uses
-  FAG.Menu, FAG.DataModule.Conexao,FAG.CadastroProduto,FAG.Frame.Generico;
+  FAG.Menu, FAG.DataModule.Conexao, FAG.CadastroProduto, FAG.Frame.Generico;
 
 procedure TForm_CadastroCategoria.BitBtn_cancelarClick(Sender: TObject);
 begin
@@ -49,7 +49,6 @@ end;
 procedure TForm_CadastroCategoria.BitBtn_salvarClick(Sender: TObject);
 begin
   gravar;
-  ModalResult := mrOk;
 end;
 
 procedure TForm_CadastroCategoria.FormCreate(Sender: TObject);
@@ -78,8 +77,9 @@ var
 begin
   excist := TFDMemTable.Create(Self);
   try
-    DataModuleConexao.ExecSQL('SELECT cat_id_categoria , cat_desc FROM categoria WHERE cat_desc =   ' + '"' +
-      codigo + '"', excist);
+    DataModuleConexao.ExecSQL
+      ('SELECT cat_id_categoria , cat_desc FROM categoria WHERE cat_desc =   ' +
+      '"' + codigo + '"', excist);
     Result := not excist.IsEmpty;
   finally
     FreeAndNil(excist);
@@ -95,17 +95,22 @@ begin
     Result := False;
     Exit;
   end;
-   if existeCategoria(Edit_descricao.Text) then
-      begin
-        ShowMessage('Categoria já cadastrada!');
-      end
-      else
-      begin
-    SQL := 'INSERT INTO categoria (cat_id_categoria, cat_desc, cat_data_cadastro) ' + ' VALUES (' +
-      Edit_codigo.Text + ',"' + Edit_descricao.Text + '",NOW())';
+  if existeCategoria(Edit_descricao.Text) then
+  begin
+     Application.MessageBox
+        (PCHAR('A Categoria ' + Edit_descricao.Text +
+        ' já está cadastrada.'), 'Atenção!', MB_ICONWARNING + MB_OK +
+        MB_TASKMODAL);
+      Edit_descricao.SetFocus;
+  end
+  else
+  begin
+    SQL := 'INSERT INTO categoria (cat_id_categoria, cat_desc, cat_data_cadastro) '
+      + ' VALUES (' + Edit_codigo.Text + ',"' + Edit_descricao.Text +
+      '",NOW())';
     DataModuleConexao.ExecSQL(SQL);
     ShowMessage('Salvo com Sucesso.');
-
+    ModalResult := mrOk;
   end;
 end;
 

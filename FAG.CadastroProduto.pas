@@ -65,13 +65,13 @@ type
     function carregaCategoria: Boolean;
     function carregaUnMedida: Boolean;
     function carregaStatus: Boolean;
+    function existe_DESC(codigo: string): Boolean;
   public
 
   end;
 
 var
   Form_CadastroProduto: TForm_CadastroProduto;
-
 
 implementation
 
@@ -80,8 +80,6 @@ implementation
 Uses
   FAG.Menu, FAG.DataModule.Conexao, FAG.CadastroUnMedida, FAG.CadastroCategoria,
   FAG.ConsultarProduto, FAG.Utils;
-
-
 
 procedure TForm_CadastroProduto.Edit_valorChange(Sender: TObject);
 var
@@ -146,7 +144,8 @@ begin
   cancelar;
 end;
 
-procedure TForm_CadastroProduto.Frame_CategoriaComboBox_InformacaoExit(Sender: TObject);
+procedure TForm_CadastroProduto.Frame_CategoriaComboBox_InformacaoExit
+  (Sender: TObject);
 begin
   Frame_Categoria.ComboBox_InformacaoExit(Sender);
 end;
@@ -162,7 +161,8 @@ begin
   // .AsString);
 end;
 
-procedure TForm_CadastroProduto.Frame_UnMedidaComboBox_InformacaoExit(Sender: TObject);
+procedure TForm_CadastroProduto.Frame_UnMedidaComboBox_InformacaoExit
+  (Sender: TObject);
 begin
   Frame_UnMedida.ComboBox_InformacaoExit(Sender);
 end;
@@ -201,10 +201,13 @@ begin
     Edit_codigo.Text := carrega.FieldByName('prod_id_produto').AsString;
     ComboBox_status.ItemIndex := carrega.FieldByName('prod_ativo').AsInteger;
     Edit_descricao.Text := carrega.FieldByName('prod_desc').AsString;
-    Frame_Categoria.ComboBox_Informacao.ItemIndex := carrega.FieldByName('cat_id_categoria').AsInteger;
-     DateTimePicker1.Date := carrega.FieldByName('prod_data_cadastro').Value;
-    Frame_UnMedida.ComboBox_Informacao.ItemIndex := carrega.FieldByName('un_medida_id').AsInteger;
-    Edit_valor.Text := FormatFloat('###,##0.00', carrega.FieldByName('prod_valor').Value);
+    Frame_Categoria.ComboBox_Informacao.ItemIndex :=
+      carrega.FieldByName('cat_id_categoria').AsInteger;
+    DateTimePicker1.Date := carrega.FieldByName('prod_data_cadastro').Value;
+    Frame_UnMedida.ComboBox_Informacao.ItemIndex :=
+      carrega.FieldByName('un_medida_id').AsInteger;
+    Edit_valor.Text := FormatFloat('###,##0.00',
+      carrega.FieldByName('prod_valor').Value);
   finally
     FreeAndNil(carrega);
   end;
@@ -268,7 +271,21 @@ begin
   try
     DataModuleConexao.ExecSQL
       ('SELECT prod_id_produto FROM produto WHERE prod_id_produto = ' +
-      codigo, excist);
+      StrToSQL(codigo), excist);
+    Result := not excist.IsEmpty;
+  finally
+    FreeAndNil(excist);
+  end;
+end;
+
+function TForm_CadastroProduto.existe_DESC(codigo: string): Boolean;
+var
+  excist: TFDMemTable;
+begin
+  excist := TFDMemTable.Create(Self);
+  try
+    DataModuleConexao.ExecSQL('SELECT prod_desc FROM produto WHERE prod_desc = '
+      + StrToSQL(codigo), excist);
     Result := not excist.IsEmpty;
   finally
     FreeAndNil(excist);
@@ -285,34 +302,44 @@ begin
     Exit;
   end;
   begin
-    if existe_produto(Edit_codigo.Text) then
+    if not existe_DESC(Edit_descricao.Text) then
     begin
-      sql := ('UPDATE produto SET prod_desc = ' + StrToSQL(Edit_descricao.Text)
-        + ',' + ' prod_ativo = ' + IntToSQL(ComboBox_status.ItemIndex) + ',' +
-        ' prod_data_alterado = ' + DateTimeToSQL(DateTimePicker1.DateTime) +
-        ', cat_id_categoria = ' + StrToSQL(Frame_Categoria.indexCombo) + ',' +
-        ' un_medida_id = ' + StrToSQL(Frame_UnMedida.indexCombo) + ',' +
-        ' prod_valor = ' + VirgulaPorPonto(Edit_valor.Text) + ',' +
-        ' prod_userInclude = "' + Form_Menu.usuarioLogado + '"' +
-        ' WHERE prod_id_produto = ' + Edit_codigo.Text + '');
-      DataModuleConexao.ExecSQL(sql);
-      ShowMessage('Alterado com Sucesso.');
+      if existe_produto(Edit_codigo.Text) then
+      begin
+        sql := ('UPDATE produto SET prod_desc = ' +
+          StrToSQL(Edit_descricao.Text) + ',' + ' prod_ativo = ' +
+          IntToSQL(ComboBox_status.ItemIndex) + ',' + ' prod_data_alterado = ' +
+          DateTimeToSQL(DateTimePicker1.DateTime) + ', cat_id_categoria = ' +
+          StrToSQL(Frame_Categoria.indexCombo) + ',' + ' un_medida_id = ' +
+          StrToSQL(Frame_UnMedida.indexCombo) + ',' + ' prod_valor = ' +
+          VirgulaPorPonto(Edit_valor.Text) + ',' + ' prod_userInclude = "' +
+          Form_Menu.usuarioLogado + '"' + ' WHERE prod_id_produto = ' +
+          Edit_codigo.Text + '');
+        DataModuleConexao.ExecSQL(sql);
+        ShowMessage('Alterado com Sucesso.');
+      end
+      else
+      begin
+        sql := ('INSERT INTO produto (prod_id_produto, prod_desc, cat_id_categoria, un_medida_id'
+          + ', prod_data_cadastro, prod_ativo, prod_valor, prod_userInclude) VALUES ('
+          + Edit_codigo.Text + ',' + StrToSQL(Edit_descricao.Text) + ',' +
+          StrToSQL(Frame_Categoria.indexCombo) + ',' +
+          StrToSQL(Frame_UnMedida.indexCombo) + ',' +
+          DateTimeToSQL(DateTimePicker1.DateTime) + ',' +
+          IntToSQL(ComboBox_status.ItemIndex) + ',' +
+          VirgulaPorPonto(Edit_valor.Text) + ',"' +
+          Form_Menu.usuarioLogado + '")');
+        DataModuleConexao.ExecSQL(sql);
+        ShowMessage('Salvo com Sucesso.');
+      end;
+      cancelar;
     end
     else
     begin
-      sql := ('INSERT INTO produto (prod_id_produto, prod_desc, cat_id_categoria, un_medida_id'
-        + ', prod_data_cadastro, prod_ativo, prod_valor, prod_userInclude) VALUES (' +
-        Edit_codigo.Text + ',' + StrToSQL(Edit_descricao.Text) + ',' +
-        StrToSQL(Frame_Categoria.indexCombo) + ',' +
-        StrToSQL(Frame_UnMedida.indexCombo) + ',' +
-        DateTimeToSQL(DateTimePicker1.DateTime) + ',' +
-        IntToSQL(ComboBox_status.ItemIndex) + ',' +
-        VirgulaPorPonto(Edit_valor.Text) + ',"' +
-        Form_Menu.usuarioLogado +'")');
-      DataModuleConexao.ExecSQL(sql);
-      ShowMessage('Salvo com Sucesso.');
+    Application.MessageBox(PCHAR('O produto '+ Edit_descricao.Text +' já está cadastrado.'),
+      'Atenção, verifique seus produtos!', MB_ICONWARNING + MB_OK + MB_TASKMODAL);
+      Edit_descricao.SetFocus;
     end;
-    cancelar;
   end;
 end;
 
@@ -332,7 +359,8 @@ begin
   try
     if Form_CadastroCategoria.ShowModal = mrOk then
       carregaCategoria;
-    Frame_Categoria.ComboBox_Informacao.ItemIndex := StrToInt(Form_CadastroCategoria.Edit_codigo.Text);
+    Frame_Categoria.ComboBox_Informacao.ItemIndex :=
+      StrToInt(Form_CadastroCategoria.Edit_codigo.Text);
   finally
     Form_CadastroCategoria.Free;
   end;
@@ -359,7 +387,7 @@ begin
   Frame_UnMedida.ComboBox_Informacao.ItemIndex := 0;
   DateTimePicker1.DateTime := Date;
   ComboBox_status.ItemIndex := 0;
-  Edit_valor.Clear;
+  Edit_valor.clear;
 end;
 
 function TForm_CadastroProduto.getUltimoID: String;
@@ -381,7 +409,7 @@ begin
   Frame_Categoria.tabela := 'categoria';
   Frame_Categoria.campoChave := 'cat_id_categoria';
   Frame_Categoria.campoDescricao := 'cat_desc';
- // Frame_Categoria.camposExtras := ',cat_data_cadastro, cat_data_alterado';
+  // Frame_Categoria.camposExtras := ',cat_data_cadastro, cat_data_alterado';
   Frame_Categoria.condicao := '';
   Frame_Categoria.titulo := 'Categorias';
   Frame_Categoria.primeiraOpcao := 'Escolha';
@@ -394,7 +422,7 @@ begin
   Frame_UnMedida.campoChave := 'un_medida_id';
   Frame_UnMedida.campoDescricao := 'un_medida_desc';
   Frame_UnMedida.campoSigla := 'un_medida_sigla';
- // Frame_UnMedida.camposExtras := ',un_medida_sigla';
+  // Frame_UnMedida.camposExtras := ',un_medida_sigla';
   Frame_UnMedida.condicao := '';
   Frame_UnMedida.titulo := 'UnMedida';
   Frame_UnMedida.primeiraOpcao := 'Escolha';

@@ -30,6 +30,8 @@ type
     function getUltimoID: String;
     function validarCampos: Boolean;
     function gravar: Boolean;
+    function existeUn(codigo: string): Boolean;
+    function existeSIGLA(codigo: string): Boolean;
   public
     { Public declarations }
   end;
@@ -56,10 +58,40 @@ begin
   begin
     ShowMessage('Informe uma sigla.');
     EditSigla.SetFocus;
-    end
+  end
   else
   begin
     Result := True;
+  end;
+end;
+
+function TForm_CadastroUnMedida.existeSIGLA(codigo: string): Boolean;
+var
+  excist: TFDMemTable;
+begin
+  excist := TFDMemTable.Create(Self);
+  try
+    DataModuleConexao.ExecSQL
+      ('SELECT un_medida_sigla FROM un_medida WHERE un_medida_sigla = ' + '"' +
+      codigo + '"', excist);
+    Result := not excist.IsEmpty;
+  finally
+    FreeAndNil(excist);
+  end;
+end;
+
+function TForm_CadastroUnMedida.existeUn(codigo: string): Boolean;
+var
+  excist: TFDMemTable;
+begin
+  excist := TFDMemTable.Create(Self);
+  try
+    DataModuleConexao.ExecSQL
+      ('SELECT un_medida_desc FROM un_medida WHERE un_medida_desc = "' + codigo
+      + '"', excist);
+    Result := not excist.IsEmpty;
+  finally
+    FreeAndNil(excist);
   end;
 end;
 
@@ -70,15 +102,37 @@ begin
   if not validarCampos then
   begin
     Result := False;
-    Exit;
+    exit;
   end;
   begin
-    SQL := ('INSERT INTO un_medida (un_medida_id, un_medida_desc, un_medida_sigla) '
-      + ' VALUES (' + Edit_codigoUnMedida.Text + ',' +
-      StrToSQL(Edit_descricaoUnMedida.Text) + ',' +
-      StrToSQL(EditSigla.Text) + ')');
-    DataModuleConexao.ExecSQL(SQL);
-    ShowMessage('Salvo com Sucesso.');
+    if not existeUn(Edit_descricaoUnMedida.Text) then
+    begin
+      if not existeSIGLA(EditSigla.Text) then
+      begin
+        SQL := ('INSERT INTO un_medida (un_medida_id, un_medida_desc, un_medida_sigla) '
+          + ' VALUES (' + Edit_codigoUnMedida.Text + ',' +
+          StrToSQL(Edit_descricaoUnMedida.Text) + ',' +
+          StrToSQL(EditSigla.Text) + ')');
+        DataModuleConexao.ExecSQL(SQL);
+        ShowMessage('Salvo com Sucesso.');
+        ModalResult := mrOk;
+      end
+      else
+      begin
+        Application.MessageBox(PCHAR('A sigla  ' + EditSigla.Text +
+          ' já está cadastrada.'), 'Atenção!', MB_ICONWARNING + MB_OK +
+          MB_TASKMODAL);
+        EditSigla.SetFocus;
+      end;
+    end
+    else
+    begin
+      Application.MessageBox
+        (PCHAR('A unidade de medida  ' + Edit_descricaoUnMedida.Text +
+        ' já está cadastrada.'), 'Atenção!', MB_ICONWARNING + MB_OK +
+        MB_TASKMODAL);
+      EditSigla.SetFocus;
+    end;
   end;
 end;
 
@@ -90,7 +144,6 @@ end;
 procedure TForm_CadastroUnMedida.BitBtn_salvarClick(Sender: TObject);
 begin
   gravar;
-  ModalResult := mrOk;
 end;
 
 procedure TForm_CadastroUnMedida.FormCreate(Sender: TObject);
