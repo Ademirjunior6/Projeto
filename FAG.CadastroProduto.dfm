@@ -39,7 +39,6 @@ object Form_CadastroProduto: TForm_CadastroProduto
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    ExplicitHeight = 571
     object Label_tituloForm: TLabel
       Left = 313
       Top = 40
