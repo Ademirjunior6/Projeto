@@ -181,6 +181,7 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
           Left = 9
           Top = 27
           Width = 163
+          Style = csDropDownList
           OnExit = Frame_categoriaComboBox_InformacaoExit
           ExplicitLeft = 9
           ExplicitTop = 27

@@ -234,27 +234,38 @@ begin
   Result := False;
   if Edit_descricao.Text = '' then
   begin
-    ShowMessage('Informe a descrição.');
+    Application.MessageBox(PCHAR('Informe a descrição.'),
+      'Atenção, campo vazio!', MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     Edit_descricao.SetFocus;
   end
-  else if ((Edit_valor.Text = '') AND (Edit_valor.Text <= '0')) then
+  else if Edit_valor.Text = '' then
   begin
-    ShowMessage('Informe o valor.');
+    Application.MessageBox(PCHAR('Informe o valor.'), 'Atenção, campo vazio!',
+      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     Edit_valor.SetFocus
+  end
+  else if strtofloat(Edit_valor.Text) = 0 then
+  begin
+    Application.MessageBox(PCHAR('Informe o valor.'), 'Atenção, campo vazio!',
+      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
+    Edit_valor.SetFocus;
   end
   else if ComboBox_status.ItemIndex = 0 then
   begin
-    ShowMessage('Informe o status.');
+    Application.MessageBox(PCHAR('Informe o status.'), 'Atenção, campo vazio!',
+      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     ComboBox_status.SetFocus;
   end
   else if Frame_Categoria.indexCombo.ToInteger = 0 then
   begin
-    ShowMessage('Informe a categoria.');
+    Application.MessageBox(PCHAR('Informe a categoria.'),
+      'Atenção, campo vazio!', MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     Frame_Categoria.ComboBox_Informacao.SetFocus;
   end
   else if Frame_UnMedida.ComboBox_Informacao.ItemIndex = 0 then
   begin
-    ShowMessage('Informe a unidade de medida.');
+    Application.MessageBox(PCHAR('Informe a Un. de medida.'),
+      'Atenção, campo vazio!', MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     Frame_UnMedida.ComboBox_Informacao.SetFocus;
   end
   else
@@ -302,23 +313,22 @@ begin
     Exit;
   end;
   begin
-    if not existe_DESC(Edit_descricao.Text) then
+    if existe_produto(Edit_codigo.Text) then
     begin
-      if existe_produto(Edit_codigo.Text) then
-      begin
-        sql := ('UPDATE produto SET prod_desc = ' +
-          StrToSQL(Edit_descricao.Text) + ',' + ' prod_ativo = ' +
-          IntToSQL(ComboBox_status.ItemIndex) + ',' + ' prod_data_alterado = ' +
-          DateTimeToSQL(DateTimePicker1.DateTime) + ', cat_id_categoria = ' +
-          StrToSQL(Frame_Categoria.indexCombo) + ',' + ' un_medida_id = ' +
-          StrToSQL(Frame_UnMedida.indexCombo) + ',' + ' prod_valor = ' +
-          VirgulaPorPonto(Edit_valor.Text) + ',' + ' prod_userInclude = "' +
-          Form_Menu.usuarioLogado + '"' + ' WHERE prod_id_produto = ' +
-          Edit_codigo.Text + '');
-        DataModuleConexao.ExecSQL(sql);
-        ShowMessage('Alterado com Sucesso.');
-      end
-      else
+      sql := ('UPDATE produto SET prod_desc = ' + StrToSQL(Edit_descricao.Text)
+        + ',' + ' prod_ativo = ' + IntToSQL(ComboBox_status.ItemIndex) + ',' +
+        ' prod_data_alterado = ' + DateTimeToSQL(DateTimePicker1.DateTime) +
+        ', cat_id_categoria = ' + StrToSQL(Frame_Categoria.indexCombo) + ',' +
+        ' un_medida_id = ' + StrToSQL(Frame_UnMedida.indexCombo) + ',' +
+        ' prod_valor = ' + VirgulaPorPonto(Edit_valor.Text) + ',' +
+        ' prod_userInclude = "' + Form_Menu.usuarioLogado + '"' +
+        ' WHERE prod_id_produto = ' + Edit_codigo.Text + '');
+      DataModuleConexao.ExecSQL(sql);
+      ShowMessage('Alterado com Sucesso.');
+    end
+    else
+    begin
+      if not existe_DESC(Edit_descricao.Text) then
       begin
         sql := ('INSERT INTO produto (prod_id_produto, prod_desc, cat_id_categoria, un_medida_id'
           + ', prod_data_cadastro, prod_ativo, prod_valor, prod_userInclude) VALUES ('
@@ -331,15 +341,16 @@ begin
           Form_Menu.usuarioLogado + '")');
         DataModuleConexao.ExecSQL(sql);
         ShowMessage('Salvo com Sucesso.');
+      end
+      else
+      begin
+        Application.MessageBox(PCHAR('O produto ' + Edit_descricao.Text +
+          ' já está cadastrado.'), 'Atenção, verifique seus produtos!',
+          MB_ICONWARNING + MB_OK + MB_TASKMODAL);
+        Edit_descricao.SetFocus;
       end;
-      cancelar;
-    end
-    else
-    begin
-    Application.MessageBox(PCHAR('O produto '+ Edit_descricao.Text +' já está cadastrado.'),
-      'Atenção, verifique seus produtos!', MB_ICONWARNING + MB_OK + MB_TASKMODAL);
-      Edit_descricao.SetFocus;
     end;
+    cancelar;
   end;
 end;
 

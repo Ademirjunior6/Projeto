@@ -170,6 +170,7 @@ object Form_CadastroProduto: TForm_CadastroProduto
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 33
         ParentFont = False
         TabOrder = 3
       end

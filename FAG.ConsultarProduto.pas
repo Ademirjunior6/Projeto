@@ -72,7 +72,8 @@ begin
    case ComboBox_filtro.ItemIndex of
     0:
       begin
-        ShowMessage('Selecione um filtro.');
+      Application.MessageBox(PCHAR('Selecione um filtro.'),
+      'Atenção!', MB_ICONWARNING + MB_OK + MB_TASKMODAL);
       end;
     1:
       begin
@@ -141,6 +142,7 @@ begin
       end;
     3:
       begin
+        Edit_produto.clear;
         Edit_produto.Enabled := False;
         Frame_categoria.ComboBox_Informacao.Enabled := True;
         Frame_categoria.ComboBox_Informacao.SetFocus;
