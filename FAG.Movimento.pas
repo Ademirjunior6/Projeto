@@ -131,9 +131,20 @@ begin
     buscar := (FDMemTable3.FieldByName('prod_quantidade').AsInteger) -
       (Table_Itens.FieldByName('prod_quantidade').AsInteger);
 
-    DataModuleConexao.ExecSQL('UPDATE produto SET prod_quantidade = ' +
-      IntToStr(buscar) + ' WHERE prod_id_produto = ' + Table_Itens.FieldByName
-      ('prod_id_produto').AsString);
+    if buscar < 0 then
+    begin
+      Application.MessageBox('O produto ficou com a quantidade negativa, favor verificar o estoque', 'Quantidade inválida',
+        MB_ICONWARNING + MB_TASKMODAL + MB_OK);
+      Abort;
+    end
+    else
+    begin
+
+      DataModuleConexao.ExecSQL('UPDATE produto SET prod_quantidade = ' +
+        IntToStr(buscar) + ' WHERE prod_id_produto = ' + Table_Itens.FieldByName
+        ('prod_id_produto').AsString);
+
+    end;
   end;
 
 end;
@@ -232,6 +243,8 @@ begin
   Edit_categoria.Clear;
   Edit_quantidade.Clear;
   Table_Itens.EmptyDataSet;
+  DataModuleConexao.ExecSQL('SELECT MAX(mov_id)+1 FROM movimento', FDMemTable1);
+  Edit_codigo.Text := FDMemTable1.FieldByName('MAX(mov_id)+1').AsString;;
 end;
 
 function TForm_Movimento.saveLancamento: Boolean;
@@ -325,6 +338,12 @@ begin
   begin
     Application.MessageBox('Quantidade do produto não informada',
       'Campo em branco', MB_ICONWARNING + MB_TASKMODAL + MB_OK);
+    Edit_quantidade.SetFocus;
+  end
+  else if Edit_quantidade.Text = '0' then
+  begin
+    Application.MessageBox('Você não pode informar o zero como quantidade',
+      'Número inválido', MB_ICONWARNING + MB_TASKMODAL + MB_OK);
     Edit_quantidade.SetFocus;
   end
   else

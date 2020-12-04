@@ -750,6 +750,7 @@ object Form_Movimento: TForm_Movimento
             Font.Height = -16
             Font.Name = 'Segoe UI'
             Font.Style = [fsBold]
+            MaxLength = 7
             NumbersOnly = True
             ParentFont = False
             TabOrder = 0
@@ -799,6 +800,7 @@ object Form_Movimento: TForm_Movimento
             Font.Height = -16
             Font.Name = 'Segoe UI'
             Font.Style = [fsBold]
+            MaxLength = 13
             NumbersOnly = True
             ParentFont = False
             TabOrder = 3
