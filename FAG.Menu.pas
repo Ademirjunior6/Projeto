@@ -113,7 +113,6 @@ begin
   begin
     Form_CadastroUsuario := TForm_CadastroUsuario.Create(Application);
   end;
-  Form_CadastroUsuario.Position := poOwnerFormCenter;
   Form_CadastroUsuario.Show;
 end;
 

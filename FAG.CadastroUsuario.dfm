@@ -580,6 +580,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Style = []
         ParentFont = False
         TabOrder = 7
+        OnKeyPress = Edit_cxpostalKeyPress
       end
       object Edit_cidade: TEdit
         Left = 217

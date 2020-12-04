@@ -324,7 +324,8 @@ begin
         ' prod_userInclude = "' + Form_Menu.usuarioLogado + '"' +
         ' WHERE prod_id_produto = ' + Edit_codigo.Text + '');
       DataModuleConexao.ExecSQL(sql);
-      ShowMessage('Alterado com Sucesso.');
+      Application.MessageBox(PCHAR('Cadastro alterado com sucesso.'),
+            'Atenção.', MB_ICONINFORMATION + MB_OK + MB_TASKMODAL);
     end
     else
     begin
@@ -340,7 +341,8 @@ begin
           VirgulaPorPonto(Edit_valor.Text) + ',"' +
           Form_Menu.usuarioLogado + '")');
         DataModuleConexao.ExecSQL(sql);
-        ShowMessage('Salvo com Sucesso.');
+        Application.MessageBox(PCHAR('Cadastro incluso com sucesso.'),
+            'Atenção.', MB_ICONINFORMATION + MB_OK + MB_TASKMODAL);
       end
       else
       begin

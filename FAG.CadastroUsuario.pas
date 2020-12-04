@@ -85,6 +85,7 @@ type
     procedure Mask_cepEnter(Sender: TObject);
     procedure CancelarClick(Sender: TObject);
     procedure Frame_StatusComboBox_InformacaoExit(Sender: TObject);
+    procedure Edit_cxpostalKeyPress(Sender: TObject; var Key: Char);
     // procedure Edit_codigoExit(Sender: TObject);
 
   private
@@ -102,7 +103,7 @@ type
     function inserirSenha: Boolean;
     function alterarSenha: Boolean;
     function existeCampos: Boolean;
-    function EncryptSTR(const key, texto: String): String;
+    function EncryptSTR(const Key, texto: String): String;
     function getUltimoId: String;
     function getUltimoIdEnd: String;
     function limpacampos: Boolean;
@@ -201,7 +202,8 @@ begin
           alterarDados;
           alterarEndereco;
           alterarSenha;
-          ShowMessage('Alterado com Sucesso.');
+          Application.MessageBox(PCHAR('Cadastro alterado com sucesso.'),
+            'Atenção.', MB_ICONINFORMATION + MB_OK + MB_TASKMODAL);
           limpacampos;
         end;
         exit
@@ -220,7 +222,9 @@ begin
             Edit_codigo.Text := getLastID;
             inserirendereco;
             inserirSenha;
-            ShowMessage('Salvo com Sucesso.');
+            Application.MessageBox(PCHAR('Cadastro incluso com sucesso.'),
+              'Atenção.', MB_ICONINFORMATION + MB_OK +
+              MB_TASKMODAL);
             limpacampos;
           end;
         end;
@@ -233,7 +237,9 @@ begin
     on E: Exception do
     begin
       DataModuleConexao.RollBackTrans;
-      ShowMessage('Erro ao salvar ' + E.Message);
+      Application.MessageBox(PCHAR('O produto ' + E.Message +
+          ' já está cadastrado.'), 'Atenção, verifique seus produtos!',
+          MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     end;
   end;
 end;
@@ -245,7 +251,8 @@ begin
   begin
     if existe_cpf(Mask_CPF.Text) then
     begin
-      ShowMessage('CPF já cadastrado');
+      Application.MessageBox(PCHAR('CPF já cadastrado.'), 'Atenção!',
+        MB_ICONWARNING + MB_OK + MB_TASKMODAL);
       Mask_CPF.SetFocus;
       exit;
     end;
@@ -254,7 +261,8 @@ begin
   begin
     if existe_cnpj(Mask_CPF.Text) then
     begin
-      ShowMessage('CNPJ já cadastrado');
+      Application.MessageBox(PCHAR('CNPJ já cadastrado.'), 'Atenção!',
+        MB_ICONWARNING + MB_OK + MB_TASKMODAL);
       Mask_CPF.SetFocus;
       exit;
     end;
@@ -392,7 +400,14 @@ begin
   end;
 end;
 
-function TForm_CadastroUsuario.EncryptSTR(const key, texto: String): String;
+procedure TForm_CadastroUsuario.Edit_cxpostalKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if NOT(Key in ['0' .. '9', #8, #9]) then
+    Key := #0;
+end;
+
+function TForm_CadastroUsuario.EncryptSTR(const Key, texto: String): String;
 var
   I: Integer;
   C: Byte;
@@ -400,8 +415,8 @@ begin
   Result := '';
   for I := 1 to Length(texto) do
   begin
-    if Length(key) > 0 then
-      C := Byte(key[1 + ((I - 1) mod Length(key))]) xor Byte(texto[I])
+    if Length(Key) > 0 then
+      C := Byte(Key[1 + ((I - 1) mod Length(Key))]) xor Byte(texto[I])
     else
       C := Byte(texto[I]);
     Result := Result + AnsiLowerCase(IntToHex(C, 2));
@@ -673,7 +688,7 @@ begin
   carrega := TFDMemTable.Create(Self);
   try
     DataModuleConexao.ExecSQL('SELECT login_usuario, ' +
-      ' AES_DECRYPT(login_senha,"' + key + '") AS login_senha FROM Login ' +
+      ' AES_DECRYPT(login_senha,"' + Key + '") AS login_senha FROM Login ' +
       ' WHERE login_pes_id_pessoa = ' + Form_ConsultaUsuario.FDMemTable_Usuario.
       FieldByName('Código').AsString, carrega);
     Edit_login.Text := carrega.FieldByName('login_usuario').AsString;
@@ -738,7 +753,8 @@ begin
     ACBrCEP1.BuscarPorCEP(Mask_cep.Text);
     if ACBrCEP1.Enderecos.Count = 0 then
     begin
-      ShowMessage('CEP não encontrado.');
+      Application.MessageBox(PCHAR('CEP não encontrado.'), 'Atenção!',
+        MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     end
     else
     begin
@@ -813,7 +829,8 @@ begin
     validador.TipoDocto := TACBrValTipoDocto(docCPF);
     if not validador.Validar then
     begin
-      ShowMessage('CPF Inválido');
+      Application.MessageBox(PCHAR('CPF inválido.'), 'Atenção!',
+        MB_ICONWARNING + MB_OK + MB_TASKMODAL);
       Mask_CPF.SetFocus;
       exit;
     end;
@@ -824,7 +841,8 @@ begin
     validador.TipoDocto := TACBrValTipoDocto(docCNPJ);
     if not validador.Validar then
     begin
-      ShowMessage('CNPJ Inválido');
+      Application.MessageBox(PCHAR('CNPJ inválido.'), 'Atenção!',
+        MB_ICONWARNING + MB_OK + MB_TASKMODAL);
       Mask_CPF.SetFocus;
       exit;
     end;
@@ -838,62 +856,69 @@ begin
   Result := False;
   if Frame_Status.indexCombo.ToInteger = 0 then
   begin
-    ShowMessage('Informe o Status.');
+    Application.MessageBox(PCHAR('Informe o status.'), 'Atenção, campo vazio!',
+      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     Frame_Status.ComboBox_Informacao.SetFocus;
     exit;
-  end;
-
-  if Frame_Pessoa.ComboBox_Informacao.ItemIndex = 0 then
+  end
+  else if Frame_Pessoa.ComboBox_Informacao.ItemIndex = 0 then
   begin
-    ShowMessage('Informe o Tipo de Pessoa.');
+    Application.MessageBox(PCHAR('Informe o tipo da pessoa.'), 'Atenção, campo vazio!',
+      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     Frame_Pessoa.ComboBox_Informacao.SetFocus;
     exit;
-  end;
-
-  if Edit_nomecompleto.Text = '' then
+  end
+  else if Edit_nomecompleto.Text = '' then
   begin
-    ShowMessage('Nome não Informado.');
+    Application.MessageBox(PCHAR('Informe o nome.'), 'Atenção, campo vazio!',
+      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     Edit_nomecompleto.SetFocus;
     exit;
-  end;
-
-  if Trim(OnlyNumber(Mask_RG.Text)).Length < 9  then
+  end
+  else if Trim(OnlyNumber(Mask_RG.Text)).Length <= 8 then
   begin
-    ShowMessage('RG não informado.');
+    Application.MessageBox(PCHAR('RG inválido.'), 'Atenção!',
+      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     exit;
-  end;
-
-  if Edit_login.Text = '' then
+  end
+  else if Combo_Genero.ItemIndex = 0 then
   begin
-    ShowMessage('Informe o login.');
+    Application.MessageBox(PCHAR('Informe o gênero.'), 'Atenção!',
+      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     Edit_login.SetFocus;
     exit;
-  end;
-
-  if Edit_senha.Text = emptyStr then
+  end
+  else if Edit_login.Text = '' then
   begin
-    ShowMessage('Informe a senha.');
+    Application.MessageBox(PCHAR('Informe o login.'), 'Atenção, campo vazio!',
+      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     Edit_login.SetFocus;
     exit;
-  end;
-
-  if (Edit_senha.Text <> Edit_confirmasenha.Text) then
+  end
+  else if Edit_senha.Text = emptyStr then
   begin
-    ShowMessage('Senha não compatível com a informada.');
+    Application.MessageBox(PCHAR('Informe a senha.'), 'Atenção, campo vazio!',
+      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
+    Edit_login.SetFocus;
+    exit;
+  end
+  else if (Edit_senha.Text <> Edit_confirmasenha.Text) then
+  begin
+    Application.MessageBox(PCHAR('Confirmação de senha inválida.'), 'Atenção!',
+      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     Edit_confirmasenha.SetFocus;
     exit;
-  end;
-
-  if (Trim(OnlyNumber(Mask_cep.Text)).Length < 8) and
+  end
+  else if (Trim(OnlyNumber(Mask_cep.Text)).Length < 8) and
     (Trim(OnlyNumber(Mask_cep.Text)) <> emptyStr) then
   begin
-    ShowMessage('CEP inválido.');
+    Application.MessageBox(PCHAR('CEP inválido.'), 'Atenção!',
+      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     Mask_cep.SetFocus;
     exit
   end
   else
     Result := True;
-
 end;
 
 end.
