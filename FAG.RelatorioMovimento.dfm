@@ -55,7 +55,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       ParentFont = False
     end
     object SpeedButton_sair: TSpeedButton
-      Left = 738
+      Left = 754
       Top = 557
       Width = 68
       Height = 33
@@ -69,7 +69,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       OnClick = SpeedButton_sairClick
     end
     object SpeedButton_exportar: TSpeedButton
-      Left = 214
+      Left = 221
       Top = 557
       Width = 149
       Height = 33
@@ -212,9 +212,9 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         OnClick = SpeedButton_exibirTodosClick
       end
       object Label1: TLabel
-        Left = 365
-        Top = 28
-        Width = 110
+        Left = 361
+        Top = 27
+        Width = 112
         Height = 21
         Caption = 'Filtrar por data?'
         Font.Charset = DEFAULT_CHARSET
@@ -317,9 +317,9 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         TabOrder = 5
       end
       object RadioButtonSIM: TRadioButton
-        Left = 481
-        Top = 31
-        Width = 50
+        Left = 477
+        Top = 30
+        Width = 52
         Height = 17
         Caption = 'Sim'
         Font.Charset = DEFAULT_CHARSET
@@ -332,9 +332,9 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         OnClick = RadioButtonSIMClick
       end
       object RadioButtonNAO: TRadioButton
-        Left = 537
-        Top = 32
-        Width = 50
+        Left = 533
+        Top = 31
+        Width = 52
         Height = 17
         Caption = 'N'#227'o'
         Font.Charset = DEFAULT_CHARSET

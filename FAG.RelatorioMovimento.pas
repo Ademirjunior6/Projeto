@@ -128,12 +128,14 @@ procedure TForm_RelatorioMovimento.RadioButtonNAOClick(Sender: TObject);
 begin
     DateTimePicker_Fim.Enabled := false;
     DateTimePicker_Ini.Enabled := false;
+
 end;
 
 procedure TForm_RelatorioMovimento.RadioButtonSIMClick(Sender: TObject);
 begin
     DateTimePicker_Fim.Enabled := true;
     DateTimePicker_Ini.Enabled := true;
+
 end;
 
 procedure TForm_RelatorioMovimento.alimentaCategoria;
@@ -202,13 +204,11 @@ end;
 
 procedure TForm_RelatorioMovimento.SpeedButton_exportarClick(Sender: TObject);
 begin
- // frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorio.fr3');
   if FDMemTable_consulta.IsEmpty then
   begin
    Application.MessageBox ('Realize uma consulta para exportar!','Aviso',MB_OK+MB_ICONEXCLAMATION);
    exit
   end;
-    //frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorioUsuario.fr3') ;
     frxReportExport.ShowReport();
 end;
 
@@ -230,7 +230,7 @@ begin
   end;
 
   if (DateTimePicker_Fim.Enabled = true) and (DateTimePicker_Ini.Enabled = true) then
-  //if (DateTimePicker_Ini.Date <> 0) and (DateTimePicker_Fim.Date <> 0) then
+
   begin
     sql := sql + ' AND M.mov_data_movimento BETWEEN("' +
       FormatDateTime('yyyy-mm-dd', DateTimePicker_Ini.Date) + '")' + ' AND ("' +
@@ -241,11 +241,6 @@ begin
   begin
     sql := sql + ' AND (p.prod_desc LIKE "%' + Edit_produto.Text + '%")'
   end;
-
-//  if FrProd_Filtro.Edit_codigoProduto.Text <> EmptyStr then
-//  begin
-//    sql := sql + ' AND (p.prod_id_produto = ' + FrProd_Filtro.FDMemTable_Produto.FieldByName('prod_id_produto').AsString + ')'
-//  end;
 
   if ComboBox_categoria.ItemIndex <> 0 then
   begin
@@ -274,16 +269,32 @@ end;
 
 procedure TForm_RelatorioMovimento.SpeedButton_filtrarClick(Sender: TObject);
 begin
-   if(Edit_codigo.Text = EmptyStr) and (Edit_produto.Text = EmptyStr)
-      and (ComboBox_categoria.ItemIndex = 0) and (ComboBox_tipoMoviemento.ItemIndex = 0) then
-    begin
-    Application.MessageBox ('Preencha a consulta!','Aviso',MB_OK+MB_ICONEXCLAMATION);
-    end
+   if RadioButtonSIM.Enabled = true then
+   begin
+     if DateTimePicker_Ini.Date > DateTimePicker_Fim.Date then
+     begin
+       Application.MessageBox ('Data inicial maior que a final! Informe outra data.','Aviso',MB_OK+MB_ICONEXCLAMATION);
+       DateTimePicker_Fim.Date := now;
+       DateTimePicker_Ini.Date := now;
+       DateTimePicker_Ini.SetFocus;
+       exit;
+     end;
+   end
    else
-    begin
-     buscaMovimentos;
-    end;
+   begin
+    buscaMovimentos;
+   end;
 
+  if(Edit_codigo.Text = EmptyStr) and (Edit_produto.Text = EmptyStr)
+   and (ComboBox_categoria.ItemIndex = 0) and (ComboBox_tipoMoviemento.ItemIndex = 0)
+   and(RadioButtonSIM.Checked = false) and (RadioButtonNAO.Checked = true) then
+   begin
+    Application.MessageBox ('Preencha a consulta!','Aviso',MB_OK+MB_ICONEXCLAMATION);
+   end
+   else
+   begin
+    buscaMovimentos;
+   end;
 end;
 
 procedure TForm_RelatorioMovimento.SpeedButton_limparConsultaClick
@@ -296,51 +307,4 @@ procedure TForm_RelatorioMovimento.SpeedButton_sairClick(Sender: TObject);
 begin
   Form_RelatorioMovimento.Close;
 end;
-
-//procedure TForm_RelatorioMovimento.SpeedButton_detalharMovClick
-//  (Sender: TObject);
-//
-//begin
-//  if FDMemTable_consulta.IsEmpty = true then
-//  begin
-//    Application.MessageBox ('Selecione um movimento','Erro',MB_OK+MB_ICONEXCLAMATION);
-//    Edit_codigo.SetFocus;
-//    exit
-//  end;
-//
-//  if not Assigned(Form_detalharMovimento) then
-//    Form_detalharMovimento := TForm_detalharMovimento.Create(Self);
-//  try
-//    Form_detalharMovimento.codigoConsulta := FDMemTable_consulta.FieldByName
-//      ('mov_id').AsString;
-//
-//    Form_detalharMovimento.ShowModal;
-//
-//  finally
-//    FreeAndNil(Form_detalharMovimento);
-//  end;
-//
-//end;
-
-//procedure TForm_RelatorioMovimento.DBGrid_resultadoPesquisaDblClick
-//  (Sender: TObject);
-//begin
-//  if FDMemTable_consulta.IsEmpty = true then
-//  begin
-//    ShowMessage('Selecione um movimento');
-//    Edit_codigo.SetFocus;
-//    exit
-//  end;
-//
-//  if not Assigned(Form_detalharMovimento) then
-//    Form_detalharMovimento := TForm_detalharMovimento.Create(Self);
-//  try
-//    Form_detalharMovimento.codigoConsulta := FDMemTable_consulta.FieldByName
-//      ('mov_id').AsString;
-//    Form_detalharMovimento.ShowModal;
-//
-//  finally
-//    FreeAndNil(Form_detalharMovimento);
-//  end;
-//end;
 end.
