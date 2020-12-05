@@ -209,7 +209,6 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
         end
         inherited Edit_codigoProduto: TEdit
           Font.Style = []
-          OnChange = Frame_Produto1Edit_codigoProdutoChange
         end
         inherited FDMemTable_Produto: TFDMemTable
           Left = 320
@@ -380,7 +379,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44130.771658877300000000
-    ReportOptions.LastChange = 44169.873793171300000000
+    ReportOptions.LastChange = 44151.826957604160000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -407,7 +406,7 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
       RightMargin = 10.000000000000000000
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
-      Frame.Typ = []
+      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
       object ReportTitle1: TfrxReportTitle
         FillType = ftBrush
         Frame.Typ = []
@@ -677,5 +676,72 @@ object Form_RelatorioProduto: TForm_RelatorioProduto
     BCDToCurrency = False
     Left = 696
     Top = 16
+  end
+  object exportPDF: TfrxPDFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    OpenAfterExport = False
+    PrintOptimized = False
+    Outline = False
+    Background = False
+    HTMLTags = True
+    Quality = 95
+    Transparency = False
+    Author = 'FastReport'
+    Subject = 'FastReport PDF export'
+    ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
+    HideToolbar = False
+    HideMenubar = False
+    HideWindowUI = False
+    FitWindow = False
+    CenterWindow = False
+    PrintScaling = False
+    PdfA = False
+    Left = 176
+    Top = 32
+  end
+  object exportEXCEL: TfrxCSVExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    Separator = ';'
+    OEMCodepage = False
+    UTF8 = False
+    OpenAfterExport = False
+    NoSysSymbols = True
+    ForcedQuotes = False
+    Left = 248
+    Top = 32
+  end
+  object exportTXT: TfrxSimpleTextExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    Frames = False
+    EmptyLines = False
+    OEMCodepage = False
+    OpenAfterExport = False
+    DeleteEmptyColumns = True
+    Left = 112
+    Top = 32
+  end
+  object exportWORD: TfrxRTFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    PictureType = gpPNG
+    OpenAfterExport = False
+    Wysiwyg = True
+    Creator = 'FastReport'
+    SuppressPageHeadersFooters = False
+    HeaderFooterMode = hfText
+    AutoSize = False
+    Left = 40
+    Top = 32
   end
 end

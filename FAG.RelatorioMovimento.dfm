@@ -99,7 +99,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
     object GroupBox1: TGroupBox
       Left = 19
       Top = 74
-      Width = 818
+      Width = 809
       Height = 167
       BiDiMode = bdLeftToRight
       Caption = 'Dados da Consulta'
@@ -125,7 +125,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         ParentFont = False
       end
       object Label_data_ate: TLabel
-        Left = 578
+        Left = 570
         Top = 55
         Width = 21
         Height = 21
@@ -192,15 +192,15 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       object SpeedButton_filtrar: TSpeedButton
         Left = 537
         Top = 114
-        Width = 115
+        Width = 103
         Height = 32
         Caption = 'Filtrar'
         OnClick = SpeedButton_filtrarClick
       end
       object SpeedButton_exibirTodos: TSpeedButton
-        Left = 667
+        Left = 655
         Top = 114
-        Width = 134
+        Width = 132
         Height = 32
         Caption = 'Exibir Todos'
         Font.Charset = DEFAULT_CHARSET
@@ -212,9 +212,9 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         OnClick = SpeedButton_exibirTodosClick
       end
       object Label1: TLabel
-        Left = 469
-        Top = 25
-        Width = 114
+        Left = 361
+        Top = 27
+        Width = 112
         Height = 21
         Caption = 'Filtrar por data?'
         Font.Charset = DEFAULT_CHARSET
@@ -238,8 +238,6 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        OnChange = Edit_codigoChange
-        OnExit = Edit_codigoExit
       end
       object Edit_produto: TEdit
         Left = 16
@@ -272,9 +270,9 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         TabOrder = 1
       end
       object DateTimePicker_Fim: TDateTimePicker
-        Left = 613
+        Left = 602
         Top = 51
-        Width = 187
+        Width = 185
         Height = 29
         Date = 44100.000000000000000000
         Time = 0.354362268517434100
@@ -288,9 +286,9 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         TabOrder = 3
       end
       object DateTimePicker_Ini: TDateTimePicker
-        Left = 378
+        Left = 374
         Top = 51
-        Width = 187
+        Width = 185
         Height = 29
         Date = 44100.000000000000000000
         Time = 0.354362268517434100
@@ -319,9 +317,9 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         TabOrder = 5
       end
       object RadioButtonSIM: TRadioButton
-        Left = 585
-        Top = 28
-        Width = 56
+        Left = 477
+        Top = 30
+        Width = 52
         Height = 17
         Caption = 'Sim'
         Font.Charset = DEFAULT_CHARSET
@@ -334,9 +332,9 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         OnClick = RadioButtonSIMClick
       end
       object RadioButtonNAO: TRadioButton
-        Left = 637
-        Top = 29
-        Width = 56
+        Left = 533
+        Top = 31
+        Width = 52
         Height = 17
         Caption = 'N'#227'o'
         Font.Charset = DEFAULT_CHARSET
@@ -352,7 +350,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
     object GroupBox2: TGroupBox
       Left = 19
       Top = 247
-      Width = 818
+      Width = 809
       Height = 298
       BiDiMode = bdLeftToRight
       Caption = 'Resultados da Pesquisa'
@@ -367,14 +365,14 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       object Panel_resultadoPesquisa: TPanel
         Left = 16
         Top = 32
-        Width = 785
+        Width = 774
         Height = 249
         Caption = 'Panel_resultadoPesquisa'
         TabOrder = 0
         object DBGrid_resultadoPesquisa: TDBGrid
           Left = 1
           Top = 1
-          Width = 783
+          Width = 772
           Height = 247
           Align = alClient
           BiDiMode = bdLeftToRight
@@ -476,6 +474,73 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
       Size = 255
     end
   end
+  object exportWORD: TfrxRTFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    PictureType = gpPNG
+    OpenAfterExport = False
+    Wysiwyg = True
+    Creator = 'FastReport'
+    SuppressPageHeadersFooters = False
+    HeaderFooterMode = hfText
+    AutoSize = False
+    Left = 24
+    Top = 24
+  end
+  object exportTXT: TfrxSimpleTextExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    Frames = False
+    EmptyLines = False
+    OEMCodepage = False
+    OpenAfterExport = False
+    DeleteEmptyColumns = True
+    Left = 96
+    Top = 24
+  end
+  object exportPDF: TfrxPDFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    OpenAfterExport = False
+    PrintOptimized = False
+    Outline = False
+    Background = False
+    HTMLTags = True
+    Quality = 95
+    Transparency = False
+    Author = 'FastReport'
+    Subject = 'FastReport PDF export'
+    ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
+    HideToolbar = False
+    HideMenubar = False
+    HideWindowUI = False
+    FitWindow = False
+    CenterWindow = False
+    PrintScaling = False
+    PdfA = False
+    Left = 160
+    Top = 24
+  end
+  object exportEXCEL: TfrxCSVExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    Separator = ';'
+    OEMCodepage = False
+    UTF8 = False
+    OpenAfterExport = False
+    NoSysSymbols = True
+    ForcedQuotes = False
+    Left = 232
+    Top = 24
+  end
   object frxDBDatasetExport: TfrxDBDataset
     UserName = 'frxDBDataset1'
     CloseDataSource = False
@@ -493,7 +558,7 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44130.771658877300000000
-    ReportOptions.LastChange = 44169.874059479170000000
+    ReportOptions.LastChange = 44148.672571377310000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -514,13 +579,13 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
     end
     object Page1: TfrxReportPage
       PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
-      PaperSize = 9
+      PaperHeight = 290.000000000000000000
+      PaperSize = 256
       LeftMargin = 10.000000000000000000
       RightMargin = 10.000000000000000000
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
-      Frame.Typ = []
+      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
       HGuides.Strings = (
         '110,00'
         '90,80972973')
@@ -539,8 +604,8 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         Width = 718.110700000000000000
         object Memo1: TfrxMemoView
           AllowVectorExport = True
-          Left = 0.009350000000000000
-          Top = 4.313852860000000000
+          Left = 0.078850000000000000
+          Top = 1.456710000000000000
           Width = 717.850650000000000000
           Height = 46.370130000000000000
           AutoWidth = True
@@ -807,16 +872,5 @@ object Form_RelatorioMovimento: TForm_RelatorioMovimento
         end
       end
     end
-  end
-  object FDMemTable_Preview: TFDMemTable
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    Left = 339
-    Top = 90
   end
 end

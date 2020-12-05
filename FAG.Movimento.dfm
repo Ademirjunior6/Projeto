@@ -2,7 +2,7 @@ object Form_Movimento: TForm_Movimento
   Left = 0
   Top = 0
   BorderIcons = []
-  Caption = 'Movimentar estoque'
+  Caption = 'Movimento de Estoque'
   ClientHeight = 594
   ClientWidth = 859
   Color = clBtnFace
@@ -28,7 +28,7 @@ object Form_Movimento: TForm_Movimento
     Align = alClient
     TabOrder = 0
     object SpeedButton_salvar: TSpeedButton
-      Left = 19
+      Left = 16
       Top = 556
       Width = 109
       Height = 33
@@ -42,7 +42,7 @@ object Form_Movimento: TForm_Movimento
       OnClick = SpeedButton_salvarClick
     end
     object SpeedButton_sair: TSpeedButton
-      Left = 134
+      Left = 131
       Top = 556
       Width = 109
       Height = 33
@@ -62,14 +62,14 @@ object Form_Movimento: TForm_Movimento
       Height = 32
       Align = alTop
       Alignment = taCenter
-      Caption = 'Lan'#231'ar estoque'
+      Caption = 'Lan'#231'amento estoque'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -24
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitWidth = 161
+      ExplicitWidth = 223
     end
     object GroupBox1: TGroupBox
       Left = 16
@@ -800,7 +800,7 @@ object Form_Movimento: TForm_Movimento
             Font.Height = -16
             Font.Name = 'Segoe UI'
             Font.Style = [fsBold]
-            MaxLength = 10
+            MaxLength = 13
             NumbersOnly = True
             ParentFont = False
             TabOrder = 3

@@ -30,6 +30,10 @@ type
     FDMemTable_Consulta: TFDMemTable;
     frxReportExport: TfrxReport;
     frxDBDatasetExport: TfrxDBDataset;
+    exportPDF: TfrxPDFExport;
+    exportEXCEL: TfrxCSVExport;
+    exportTXT: TfrxSimpleTextExport;
+    exportWORD: TfrxRTFExport;
     FDMemTable_Consultaprod_id_produto: TIntegerField;
     FDMemTable_Consultaprod_desc: TWideStringField;
     FDMemTable_Consultaun_medida_desc: TWideStringField;
@@ -45,8 +49,6 @@ type
     procedure SpeedButton_exibirTodosClick(Sender: TObject);
     procedure SpeedButton_exportarClick(Sender: TObject);
     procedure FDMemTable_Consultaprod_quantidadeGetText(Sender: TField; var Text: string; DisplayText: Boolean);
-    procedure Frame_Produto1Edit_codigoProdutoChange(Sender: TObject);
-
 
   private
     procedure alimentaCategoria;
@@ -62,7 +64,7 @@ implementation
 
 {$R *.dfm}
 Uses
-  FAG.Menu, FAG.DataModule.Conexao, FAG.RelatorioMovimento;
+  FAG.Menu, FAG.DataModule.Conexao;
 
   procedure TForm_RelatorioProduto.alimentaCategoria;
 var
@@ -120,11 +122,10 @@ begin
   end;
 end;
 
-
 procedure TForm_RelatorioProduto.FDMemTable_Consultaprod_quantidadeGetText(Sender: TField; var Text: string;
   DisplayText: Boolean);
 begin
-  if ((Sender as TField).AsString = '' )and (FDMemTable_Consultaprod_id_produto.IsNull = false)then
+  if (Sender as TField).AsString = '' then
     text := '0'
   else
     text := (Sender as TField).AsString;
@@ -157,24 +158,6 @@ end;
 
 
 
-procedure TForm_RelatorioProduto.Frame_Produto1Edit_codigoProdutoChange(Sender: TObject);
-begin
-  Frame_Produto1.Edit_codigoProdutoChange(Sender);
-  if Frame_Produto1.Edit_codigoProduto.Text <> EmptyStr then
-  begin
-  ComboBox_categoria.Enabled := false;
-  ComboBox_Status.Enabled:= false;
-  ComboBox_categoria.ItemIndex := Frame_Produto1.FDMemTable_Produto.FieldByName('cat_id_categoria').AsInteger;
-  ComboBox_Status.ItemIndex := Frame_Produto1.FDMemTable_Produto.FieldByName('prod_ativo').AsInteger;
-  end else
-  begin
-  ComboBox_categoria.ItemIndex := 0;
-  ComboBox_Status.ItemIndex :=  0;
-  ComboBox_categoria.Enabled := true;
-   ComboBox_Status.Enabled:= true;
-  end;
-  end;
-
 procedure TForm_RelatorioProduto.SpeedButton_exibirTodosClick(Sender: TObject);
 var
   sql: String;
@@ -197,7 +180,6 @@ begin
    exit
   end;
     //frxReport1.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'relatorioUsuario.fr3') ;
-
     frxReportExport.ShowReport();
 end;
 
@@ -213,13 +195,10 @@ end;
 
 procedure TForm_RelatorioProduto.SpeedButton_limparConsultaClick(Sender: TObject);
 begin
-
- if not FDMemTable_Consulta.IsEmpty  then
+  if not FDMemTable_Consulta.IsEmpty  then
   begin
   FDMemTable_Consulta.Open;
   FDMemTable_Consulta.EmptyDataSet;
-  FDMemTable_Consulta.Insert;
-  FDMemTable_Consultaprod_quantidade.Text := EmptyStr;
   FDMemTable_Consulta.Close;
   FDMemTable_Consulta.Open;
   end;
@@ -227,9 +206,6 @@ begin
   Frame_Produto1.Edit_codigoProduto.Clear;
   ComboBox_categoria.ItemIndex := 0;
   ComboBox_Status.ItemIndex := 0;
-  ComboBox_categoria.Enabled := true;
-  ComboBox_Status.Enabled:= true;
-
 end;
 
 procedure TForm_RelatorioProduto.SpeedButton_sairClick(Sender: TObject);
