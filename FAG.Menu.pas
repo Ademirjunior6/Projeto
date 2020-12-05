@@ -11,7 +11,7 @@ uses
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, Vcl.Buttons, Vcl.Menus, FAG.CadastroProduto,
   FAG.RelatorioMovimento,
-  Vcl.ComCtrls;
+  Vcl.ComCtrls, frxExportRTF, frxExportText, frxExportPDF, frxClass, frxExportBaseDialog, frxExportCSV;
 
 type
   TForm_Menu = class(TForm)
@@ -28,6 +28,10 @@ type
     SpeedButton1: TSpeedButton;
     SpeedButton2: TSpeedButton;
     SpeedButton3: TSpeedButton;
+    exportPDF: TfrxPDFExport;
+    exportWORD: TfrxRTFExport;
+    exportEXCEL: TfrxCSVExport;
+    exportTXT: TfrxSimpleTextExport;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Produto1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);

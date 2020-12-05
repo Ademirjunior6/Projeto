@@ -38,10 +38,6 @@ type
     FDMemTable_Consultapes_email: TWideStringField;
     FDMemTable_Consultapes_celular: TWideStringField;
     frxDBDatasetExport: TfrxDBDataset;
-    exportTXT: TfrxSimpleTextExport;
-    exportWORD: TfrxRTFExport;
-    exportPDF: TfrxPDFExport;
-    exportEXCEL: TfrxCSVExport;
     SpeedButton_exibirTodos: TSpeedButton;
     FDMemTable_Consultapes_ativo: TIntegerField;
     FDMemTable_Consultapse_cnpj: TWideStringField;

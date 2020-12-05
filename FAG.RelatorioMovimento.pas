@@ -38,10 +38,6 @@ type
     DataSource_consulta: TDataSource;
     FDMemTable_consulta: TFDMemTable;
     Panel_resultadoPesquisa: TPanel;
-    exportWORD: TfrxRTFExport;
-    exportTXT: TfrxSimpleTextExport;
-    exportPDF: TfrxPDFExport;
-    exportEXCEL: TfrxCSVExport;
     FDMemTable_consultamov_id: TIntegerField;
     FDMemTable_consultamov_data_movimento: TDateTimeField;
     FDMemTable_consultamov_tipo: TWideStringField;
@@ -54,6 +50,7 @@ type
     Label1: TLabel;
     RadioButtonSIM: TRadioButton;
     RadioButtonNAO: TRadioButton;
+    FDMemTable_Preview: TFDMemTable;
     procedure SpeedButton_sairClick(Sender: TObject);
     procedure SpeedButton_limparConsultaClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -64,6 +61,8 @@ type
     procedure SpeedButton_exportarClick(Sender: TObject);
     procedure RadioButtonSIMClick(Sender: TObject);
     procedure RadioButtonNAOClick(Sender: TObject);
+    procedure Edit_codigoChange(Sender: TObject);
+    procedure Edit_codigoExit(Sender: TObject);
 
 
   private
@@ -119,6 +118,9 @@ begin
   ComboBox_categoria.ItemIndex := 0;
   ComboBox_tipoMoviemento.ItemIndex := 0;
   DateTimePicker_Fim.DateTime := Now;
+  ComboBox_tipoMoviemento.Enabled := true;
+  ComboBox_categoria.Enabled := true;
+  Edit_produto.Enabled := true;
   Edit_codigo.SetFocus;
 
 end;
@@ -229,12 +231,12 @@ begin
     sql := sql + ' AND m.mov_id = ' + Edit_codigo.Text;
   end;
 
-  if (DateTimePicker_Fim.Enabled = true) and (DateTimePicker_Ini.Enabled = true) then
+  if (DateTimePicker_Fim.Enabled <> false) and (DateTimePicker_Ini.Enabled <> false) then
 
   begin
     sql := sql + ' AND M.mov_data_movimento BETWEEN("' +
-      FormatDateTime('yyyy-mm-dd', DateTimePicker_Ini.Date) + '")' + ' AND ("' +
-      FormatDateTime('yyyy-mm-dd', DateTimePicker_Fim.Date) + '") ';
+      FormatDateTime('yyyy-mm-dd ', DateTimePicker_Ini.Date) + '")' + ' AND (("' +
+      FormatDateTime('yyyy-mm-dd ', DateTimePicker_Fim.Date) +  ' ") + INTERVAL 1 DAY) ';
   end;
 
   if Trim(Edit_produto.Text) <> EmptyStr then
@@ -265,6 +267,68 @@ begin
      Application.MessageBox ('Nenhum registro encontrado!','Aviso',MB_OK+MB_ICONEXCLAMATION);
   end;
 
+end;
+
+procedure TForm_RelatorioMovimento.Edit_codigoChange(Sender: TObject);
+var
+  sql: String;
+begin
+
+
+  if Edit_codigo.Text <> EmptyStr then
+  begin
+   sql := 'SELECT m.mov_id, m.mov_data_movimento,m.mov_tipo, m.usuario,' +
+    ' p.prod_desc, c.cat_desc, p.cat_id_categoria FROM movimento AS m ' +
+    ' INNER JOIN item_movimento AS im ON m.mov_id = im.mov_id ' +
+    ' INNER JOIN produto AS p ' + ' ON im.prod_id_produto = p.prod_id_produto '+
+    ' INNER JOIN categoria AS c' +
+    ' ON p.cat_id_categoria = c.cat_id_categoria WHERE m.mov_id ='+Edit_codigo.Text +' ' ;
+   DataModuleConexao.ExecSQL(sql, FDMemTable_Preview);
+  ComboBox_categoria.ItemIndex := FDMemTable_Preview.FieldByName('cat_id_categoria').AsInteger;
+  Edit_produto.Text := FDMemTable_Preview.FieldByName('prod_desc').AsString;
+   if FDMemTable_Preview.FieldByName('mov_tipo').AsString = 'ENTRADA' then
+   begin
+   ComboBox_tipoMoviemento.ItemIndex := 1;
+   end else
+       if FDMemTable_Preview.FieldByName('mov_tipo').AsString = 'SAÍDA' then
+        begin
+         ComboBox_tipoMoviemento.ItemIndex := 2;
+        end
+        else
+        begin
+         ComboBox_tipoMoviemento.ItemIndex := 0;
+        end;
+   ComboBox_categoria.Enabled := false;
+   ComboBox_tipoMoviemento.Enabled := false;
+   Edit_produto.Enabled := false;
+   RadioButtonSIM.Checked := false;
+   RadioButtonNAO.Checked := true;
+  end else
+  begin
+  ComboBox_categoria.ItemIndex := 0;
+   ComboBox_tipoMoviemento.ItemIndex := 0;
+   Edit_produto.Text := EmptyStr;
+   ComboBox_tipoMoviemento.Enabled := true;
+   ComboBox_categoria.Enabled := true;
+   Edit_produto.Enabled := true;
+   RadioButtonSIM.Checked := true;
+   RadioButtonNAO.Checked := false;
+  end;
+
+
+end;
+
+procedure TForm_RelatorioMovimento.Edit_codigoExit(Sender: TObject);
+begin
+ if Edit_codigo.Text = EmptyStr then
+ begin
+   ComboBox_categoria.ItemIndex := 0;
+   ComboBox_tipoMoviemento.ItemIndex := 0;
+   Edit_produto.Text := EmptyStr;
+   ComboBox_tipoMoviemento.Enabled := true;
+   ComboBox_categoria.Enabled := true;
+   Edit_produto.Enabled := true;
+ end;
 end;
 
 procedure TForm_RelatorioMovimento.SpeedButton_filtrarClick(Sender: TObject);

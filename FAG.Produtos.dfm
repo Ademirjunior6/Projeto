@@ -19,9 +19,9 @@ object Form_Produtos: TForm_Produtos
   object Label1: TLabel
     Left = 6
     Top = 5
-    Width = 138
+    Width = 173
     Height = 21
-    Caption = 'Pesquisar descri'#231#227'o:'
+    Caption = 'PESQUISAR DESCRI'#199#195'O:'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
@@ -136,6 +136,7 @@ object Form_Produtos: TForm_Produtos
     Font.Height = -16
     Font.Name = 'Segoe UI'
     Font.Style = []
+    MaxLength = 33
     OEMConvert = True
     ParentFont = False
     ParentShowHint = False
