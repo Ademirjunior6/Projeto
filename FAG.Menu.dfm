@@ -22,9 +22,9 @@ object Form_Menu: TForm_Menu
   TextHeight = 13
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 736
+    Top = 728
     Width = 1270
-    Height = 22
+    Height = 30
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
