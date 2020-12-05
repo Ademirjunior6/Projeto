@@ -1,7 +1,7 @@
 object Form_ConsultaUsuario: TForm_ConsultaUsuario
   Left = 0
   Top = 0
-  Caption = 'Consulta Usu'#225'rio'
+  Caption = 'Consultar Usu'#225'rio'
   ClientHeight = 612
   ClientWidth = 866
   Color = clBtnFace
@@ -179,6 +179,7 @@ object Form_ConsultaUsuario: TForm_ConsultaUsuario
         Top = 64
         Width = 320
         Height = 29
+        MaxLength = 33
         TabOrder = 3
       end
     end
@@ -214,22 +215,27 @@ object Form_ConsultaUsuario: TForm_ConsultaUsuario
         Columns = <
           item
             Expanded = False
-            Width = 58
+            Width = 61
             Visible = True
           end
           item
             Expanded = False
-            Width = 257
+            Width = 222
             Visible = True
           end
           item
             Expanded = False
-            Width = 246
+            Width = 205
             Visible = True
           end
           item
             Expanded = False
-            Width = 186
+            Width = 162
+            Visible = True
+          end
+          item
+            Expanded = False
+            Width = 81
             Visible = True
           end>
       end

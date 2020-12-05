@@ -3,7 +3,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
   Top = 5
   BorderIcons = []
   BorderStyle = bsSingle
-  Caption = 'Cadastro de Usu'#225'rio'
+  Caption = 'Cadastrar Usu'#225'rio'
   ClientHeight = 667
   ClientWidth = 884
   Color = clBtnFace
@@ -35,9 +35,9 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
     object Label_tituloForm: TLabel
       Left = 331
       Top = 24
-      Width = 214
+      Width = 186
       Height = 32
-      Caption = 'Cadastro de Usu'#225'rio'
+      Caption = 'Cadastrar Usu'#225'rio'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -24
@@ -141,9 +141,9 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
       object Label_nascimento: TLabel
         Left = 136
         Top = 139
-        Width = 103
+        Width = 106
         Height = 21
-        Caption = 'Dt. nascimento'
+        Caption = 'Dt. Nascimento'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -223,13 +223,16 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Top = 104
         Width = 349
         Height = 29
+        CharCase = ecUpperCase
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 33
         ParentFont = False
         TabOrder = 3
+        OnKeyPress = Edit_nomecompletoKeyPress
       end
       object Date_Nascimento: TDateTimePicker
         Left = 136
@@ -237,12 +240,13 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Width = 110
         Height = 29
         Date = 44126.000000000000000000
-        Time = 0.486402592592639800
+        Time = 44126.000000000000000000
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxDate = 44169.999988425920000000
         ParentFont = False
         TabOrder = 8
       end
@@ -256,6 +260,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 11
         ParentFont = False
         TabOrder = 6
       end
@@ -302,6 +307,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Top = 104
         Width = 152
         Height = 29
+        CharCase = ecUpperCase
         EditMask = '999.999.999-99;1;_'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -534,24 +540,29 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Top = 103
         Width = 195
         Height = 29
+        CharCase = ecUpperCase
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 21
         ParentFont = False
         TabOrder = 4
+        OnKeyPress = Edit_bairroKeyPress
       end
       object Edit_numero: TEdit
         Left = 585
         Top = 41
         Width = 76
         Height = 29
+        CharCase = ecUpperCase
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 7
         ParentFont = False
         TabOrder = 2
       end
@@ -560,11 +571,13 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Top = 41
         Width = 138
         Height = 29
+        CharCase = ecUpperCase
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 11
         ParentFont = False
         TabOrder = 3
       end
@@ -573,11 +586,13 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Top = 103
         Width = 138
         Height = 29
+        CharCase = ecUpperCase
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 6
         ParentFont = False
         TabOrder = 7
         OnKeyPress = Edit_cxpostalKeyPress
@@ -587,32 +602,39 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Top = 103
         Width = 202
         Height = 29
+        CharCase = ecUpperCase
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 21
         ParentFont = False
         TabOrder = 5
+        OnKeyPress = Edit_cidadeKeyPress
       end
       object Edit_logradouro: TEdit
         Left = 128
         Top = 41
         Width = 451
         Height = 29
+        CharCase = ecUpperCase
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 33
         ParentFont = False
         TabOrder = 1
+        OnKeyPress = Edit_logradouroKeyPress
       end
       object Mask_cep: TMaskEdit
         Left = 16
         Top = 41
         Width = 105
         Height = 29
+        CharCase = ecUpperCase
         EditMask = '99.999-999;1;_'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -631,13 +653,16 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Top = 103
         Width = 65
         Height = 29
+        CharCase = ecUpperCase
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 2
         ParentFont = False
         TabOrder = 6
+        OnKeyPress = Edit_UfKeyPress
       end
     end
     object GroupBox3: TGroupBox
@@ -715,6 +740,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 18
         ParentFont = False
         TabOrder = 2
       end
@@ -728,6 +754,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 44
         ParentFont = False
         TabOrder = 1
       end
@@ -741,6 +768,7 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 18
         ParentFont = False
         TabOrder = 3
       end
@@ -754,8 +782,10 @@ object Form_CadastroUsuario: TForm_CadastroUsuario
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 11
         ParentFont = False
         TabOrder = 0
+        OnKeyPress = Edit_loginKeyPress
       end
     end
     object BitBtn1: TBitBtn

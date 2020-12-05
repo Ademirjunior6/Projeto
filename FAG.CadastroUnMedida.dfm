@@ -3,7 +3,7 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
   Top = 0
   BorderIcons = []
   BorderStyle = bsSingle
-  Caption = 'Cadastro de Un. Medida'
+  Caption = 'Cadastrar Un. de Medida'
   ClientHeight = 171
   ClientWidth = 314
   Color = clBtnFace
@@ -103,6 +103,7 @@ object Form_CadastroUnMedida: TForm_CadastroUnMedida
     Font.Height = -16
     Font.Name = 'Segoe UI'
     Font.Style = []
+    MaxLength = 15
     ParentFont = False
     TabOrder = 3
   end

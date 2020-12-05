@@ -86,6 +86,13 @@ type
     procedure CancelarClick(Sender: TObject);
     procedure Frame_StatusComboBox_InformacaoExit(Sender: TObject);
     procedure Edit_cxpostalKeyPress(Sender: TObject; var Key: Char);
+    procedure Button1Click(Sender: TObject);
+    procedure Edit_loginKeyPress(Sender: TObject; var Key: Char);
+    procedure Edit_nomecompletoKeyPress(Sender: TObject; var Key: Char);
+    procedure Edit_logradouroKeyPress(Sender: TObject; var Key: Char);
+    procedure Edit_bairroKeyPress(Sender: TObject; var Key: Char);
+    procedure Edit_cidadeKeyPress(Sender: TObject; var Key: Char);
+    procedure Edit_UfKeyPress(Sender: TObject; var Key: Char);
     // procedure Edit_codigoExit(Sender: TObject);
 
   private
@@ -223,8 +230,7 @@ begin
             inserirendereco;
             inserirSenha;
             Application.MessageBox(PCHAR('Cadastro incluso com sucesso.'),
-              'Atenção.', MB_ICONINFORMATION + MB_OK +
-              MB_TASKMODAL);
+              'Atenção.', MB_ICONINFORMATION + MB_OK + MB_TASKMODAL);
             limpacampos;
           end;
         end;
@@ -238,10 +244,15 @@ begin
     begin
       DataModuleConexao.RollBackTrans;
       Application.MessageBox(PCHAR('O produto ' + E.Message +
-          ' já está cadastrado.'), 'Atenção, verifique seus produtos!',
-          MB_ICONWARNING + MB_OK + MB_TASKMODAL);
+        ' já está cadastrado.'), 'Atenção, verifique seus produtos!',
+        MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     end;
   end;
+end;
+
+procedure TForm_CadastroUsuario.Button1Click(Sender: TObject);
+begin
+  inserirDados;
 end;
 
 function TForm_CadastroUsuario.existeCampos: Boolean;
@@ -267,12 +278,12 @@ begin
       exit;
     end;
   end;
-  if existe_rg(Mask_RG.Text) then
-  begin
-    ShowMessage('RG já cadastrado');
-    Mask_RG.SetFocus;
-    exit;
-  end;
+//  if existe_rg(Mask_RG.Text) then
+//  begin
+//    ShowMessage('RG já cadastrado');
+//    Mask_RG.SetFocus;
+//    exit;
+//  end;
   if existe_login(Edit_login.Text) then
   begin
     ShowMessage('Login já cadastrado');
@@ -296,10 +307,10 @@ function TForm_CadastroUsuario.carregaGenero: Boolean;
 begin
   Combo_Genero.clear;
   Combo_Genero.Style := csDropDownList;
-  Combo_Genero.Items.Add('Selecione');
-  Combo_Genero.Items.Add('Masculino');
-  Combo_Genero.Items.Add('Feminino');
-  Combo_Genero.Items.Add('Indefinido');
+  Combo_Genero.Items.Add('SELECIONE');
+  Combo_Genero.Items.Add('MASCULINO');
+  Combo_Genero.Items.Add('FEMININO');
+  Combo_Genero.Items.Add('INDEFINIDO');
   Combo_Genero.ItemIndex := 0;
 end;
 
@@ -310,8 +321,8 @@ begin
   Frame_Status.campoDescricao := 'sit_descricao';
   Frame_Status.camposExtras := '';
   Frame_Status.condicao := '';
-  Frame_Status.titulo := 'Status';
-  Frame_Status.primeiraOpcao := 'Escolha';
+  Frame_Status.titulo := 'Status*';
+  Frame_Status.primeiraOpcao := 'SELECIONE';
   Frame_Status.carregaFrame := True;
 end;
 
@@ -322,8 +333,8 @@ begin
   Frame_Pessoa.campoDescricao := 'tipopessoa_desc';
   Frame_Pessoa.camposExtras := '';
   Frame_Pessoa.condicao := '';
-  Frame_Pessoa.titulo := 'Tipo Pessoa';
-  Frame_Pessoa.primeiraOpcao := 'Escolha';
+  Frame_Pessoa.titulo := 'Tipo Pessoa*';
+  Frame_Pessoa.primeiraOpcao := 'SELECIONE';
   Frame_Pessoa.carregaFrame := True;
 end;
 
@@ -338,15 +349,28 @@ begin
       end;
     1:
       begin
-        Label_CPF.Caption := 'CPF';
+        Label_CPF.Caption := 'CPF*';
         Mask_CPF.EditMask := '999.999.999-99;1;_';
       end;
     2:
       begin
-        Label_CPF.Caption := 'CNPJ';
+        Label_CPF.Caption := 'CNPJ*';
         Mask_CPF.EditMask := '99.999.999/9999-99;1;_';
       end;
   end;
+end;
+
+
+procedure TForm_CadastroUsuario.Edit_bairroKeyPress(Sender: TObject; var Key: Char);
+begin
+  if (Key in ['0' .. '9', #8, #9]) then
+    Key := #0;
+end;
+
+procedure TForm_CadastroUsuario.Edit_cidadeKeyPress(Sender: TObject; var Key: Char);
+begin
+  if (Key in ['0' .. '9', #8, #9]) then
+    Key := #0;
 end;
 
 procedure TForm_CadastroUsuario.Edit_codigoExit(Sender: TObject);
@@ -404,6 +428,32 @@ procedure TForm_CadastroUsuario.Edit_cxpostalKeyPress(Sender: TObject;
   var Key: Char);
 begin
   if NOT(Key in ['0' .. '9', #8, #9]) then
+    Key := #0;
+end;
+
+procedure TForm_CadastroUsuario.Edit_loginKeyPress(Sender: TObject; var Key: Char);
+begin
+  if (Key in ['0' .. '9', #8, #9]) then
+    Key := #0;
+end;
+
+
+
+procedure TForm_CadastroUsuario.Edit_logradouroKeyPress(Sender: TObject; var Key: Char);
+begin
+  if (Key in ['0' .. '9', #8, #9]) then
+    Key := #0;
+end;
+
+procedure TForm_CadastroUsuario.Edit_nomecompletoKeyPress(Sender: TObject; var Key: Char);
+begin
+  if (Key in ['0' .. '9', #8, #9]) then
+    Key := #0;
+end;
+
+procedure TForm_CadastroUsuario.Edit_UfKeyPress(Sender: TObject; var Key: Char);
+begin
+  if (Key in ['0' .. '9', #8, #9]) then
     Key := #0;
 end;
 
@@ -512,6 +562,7 @@ begin
   Edit_codigo.Text := getUltimoId;
   getUltimoIdEnd;
   carregaGenero;
+  Date_Nascimento.maxdate := now;
 end;
 
 procedure TForm_CadastroUsuario.Frame_PessoaComboBox_InformacaoChange
@@ -624,6 +675,7 @@ begin
   Edit_complemento.clear;
   Edit_bairro.clear;
   Edit_cidade.clear;
+  Edit_Uf.clear;
   Edit_cxpostal.clear;
   // Login //
   Edit_login.clear;
@@ -707,13 +759,24 @@ begin
   carrega := TFDMemTable.Create(Self);
   try
     DataModuleConexao.ExecSQL
-      ('SELECT pes_id_pessoa, pes_nome, pes_rg, pes_cpf, pes_nascimento, pes_email, pes_ativo,tip_id_tipo_pessoa, pes_matricula, pes_celular, pes_telefone, pes_genero FROM pessoa '
+      ('SELECT pes_id_pessoa, pes_nome, pes_rg, pes_cpf, pes_cnpj, pes_nascimento, pes_email, pes_ativo,tip_id_tipo_pessoa, pes_matricula, pes_celular, pes_telefone, pes_genero FROM pessoa '
       + 'WHERE pes_id_pessoa  = ' + id, carrega);
 
     Edit_codigo.Text := carrega.FieldByName('pes_id_pessoa').AsString;
     Edit_nomecompleto.Text := carrega.FieldByName('pes_nome').AsString;
     Mask_RG.Text := carrega.FieldByName('pes_rg').AsString;
-    Mask_CPF.Text := carrega.FieldByName('pes_cpf').AsString;
+    if carrega.FieldByName('pes_cpf').AsString = '' then
+    begin
+      Label_CPF.Caption := 'CNPJ*';
+      Mask_CPF.EditMask := '99.999.999/9999-99;1;_';
+      Mask_CPF.Text := carrega.FieldByName('pes_cnpj').AsString;
+    end
+    else
+    begin
+      Label_CPF.Caption := 'CPF*';
+      Mask_CPF.EditMask := '999.999.999-99;1;_';
+      Mask_CPF.Text := carrega.FieldByName('pes_cpf').AsString;
+    end;
     Date_Nascimento.Date := carrega.FieldByName('pes_nascimento').Value;
     Edit_email.Text := carrega.FieldByName('pes_email').AsString;
     Frame_Status.ComboBox_Informacao.ItemIndex :=
@@ -784,15 +847,15 @@ begin
     if Form_ConsultaUsuario.ShowModal = mrOk then
       loadTela(Form_ConsultaUsuario.FDMemTable_Usuario.FieldByName('Código')
         .AsString);
-    if loadGenero = 'Masculino' then
+    if loadGenero = 'MASCULINO' then
     begin
       Combo_Genero.ItemIndex := 1;
     end;
-    if loadGenero = 'Feminino' then
+    if loadGenero = 'FEMININO' then
     begin
       Combo_Genero.ItemIndex := 2;
     end;
-    if loadGenero = 'Indefinido' then
+    if loadGenero = 'INDEFINIDO' then
     begin
       Combo_Genero.ItemIndex := 3;
     end;
@@ -824,6 +887,7 @@ function TForm_CadastroUsuario.validacpf: Boolean;
 begin
   Result := False;
   validador.Documento := Mask_CPF.Text;
+
   if Frame_Pessoa.indexCombo = '1' then
   begin
     validador.TipoDocto := TACBrValTipoDocto(docCPF);
@@ -833,8 +897,11 @@ begin
         MB_ICONWARNING + MB_OK + MB_TASKMODAL);
       Mask_CPF.SetFocus;
       exit;
+    end
+    else
+    begin
+      Result := True;
     end;
-
   end;
   if Frame_Pessoa.indexCombo = '2' then
   begin
@@ -845,10 +912,12 @@ begin
         MB_ICONWARNING + MB_OK + MB_TASKMODAL);
       Mask_CPF.SetFocus;
       exit;
+    end
+    else
+    begin
+      Result := True;
     end;
-  end
-  else
-    Result := True;
+  end;
 end;
 
 function TForm_CadastroUsuario.validarCampos: Boolean;
@@ -863,8 +932,8 @@ begin
   end
   else if Frame_Pessoa.ComboBox_Informacao.ItemIndex = 0 then
   begin
-    Application.MessageBox(PCHAR('Informe o tipo da pessoa.'), 'Atenção, campo vazio!',
-      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
+    Application.MessageBox(PCHAR('Informe o tipo da pessoa.'),
+      'Atenção, campo vazio!', MB_ICONWARNING + MB_OK + MB_TASKMODAL);
     Frame_Pessoa.ComboBox_Informacao.SetFocus;
     exit;
   end
@@ -875,19 +944,19 @@ begin
     Edit_nomecompleto.SetFocus;
     exit;
   end
-  else if Trim(OnlyNumber(Mask_RG.Text)).Length <= 8 then
-  begin
-    Application.MessageBox(PCHAR('RG inválido.'), 'Atenção!',
-      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
-    exit;
-  end
-  else if Combo_Genero.ItemIndex = 0 then
-  begin
-    Application.MessageBox(PCHAR('Informe o gênero.'), 'Atenção!',
-      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
-    Edit_login.SetFocus;
-    exit;
-  end
+  // else if Trim(OnlyNumber(Mask_RG.Text)).Length <= 8 then
+  // begin
+  // Application.MessageBox(PCHAR('RG inválido.'), 'Atenção!',
+  // MB_ICONWARNING + MB_OK + MB_TASKMODAL);
+  // exit;
+  // end
+//  else if Combo_Genero.ItemIndex = 0 then
+//  begin
+//    Application.MessageBox(PCHAR('Informe o gênero.'), 'Atenção!',
+//      MB_ICONWARNING + MB_OK + MB_TASKMODAL);
+//    Edit_login.SetFocus;
+//    exit;
+//  end
   else if Edit_login.Text = '' then
   begin
     Application.MessageBox(PCHAR('Informe o login.'), 'Atenção, campo vazio!',

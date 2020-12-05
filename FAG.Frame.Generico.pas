@@ -116,11 +116,9 @@ begin
   while not TableTemp.eof do
   begin
     if not campoSigla.IsEmpty then
-      addS :=TableTemp.FieldByName(campoChave).AsString +
-      ' - ' + TableTemp.FieldByName(campoDescricao).AsString+ ' - ' + TableTemp.FieldByName(campoSigla).AsString
+      addS := TableTemp.FieldByName(campoChave).AsString + ' - ' + TableTemp.FieldByName(campoDescricao).AsString+ ' - ' + TableTemp.FieldByName(campoSigla).AsString
     else
-      addS := TableTemp.FieldByName(campoChave).AsString +
-      ' - ' + TableTemp.FieldByName(campoDescricao).AsString;
+      addS := TableTemp.FieldByName(campoChave).AsString + ' - ' +  TableTemp.FieldByName(campoDescricao).AsString;
 
     ComboBox_Informacao.Items.Add(addS);
     TableTemp.Next;

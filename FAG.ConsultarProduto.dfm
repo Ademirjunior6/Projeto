@@ -1,7 +1,7 @@
 object Form_ConsultarProduto: TForm_ConsultarProduto
   Left = 0
   Top = 0
-  Caption = 'Form_ConsultarProduto'
+  Caption = 'Consultar Produtos '
   ClientHeight = 620
   ClientWidth = 853
   Color = clBtnFace
@@ -137,6 +137,7 @@ object Form_ConsultarProduto: TForm_ConsultarProduto
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = []
+        MaxLength = 33
         ParentFont = False
         TabOrder = 1
       end

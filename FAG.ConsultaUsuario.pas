@@ -63,7 +63,7 @@ uses FAG.DataModule.Conexao;
 const
   SQL_SELECT: String = 'SELECT pes_id_pessoa as Código, pes_nome as Nome, ' +
    ' IF(pes_cnpj IS NULL, CONCAT("CPF: ",pes_cpf), CONCAT("CNPJ: ",pes_cnpj)) AS Inscrição, '+
-    ' pes_celular as Celular, pes_ativo as Status FROM pessoa WHERE 1>0 ';
+    ' pes_celular as Celular, IF(pes_ativo = 1, CONCAT("ATIVO"), CONCAT("INATIVO"))as Status FROM pessoa WHERE 1>0 ';
 
 
 procedure TForm_ConsultaUsuario.Bit_FiltrarClick(Sender: TObject);
@@ -96,7 +96,7 @@ begin
   resultadoUsuario.Columns[2].FieldName := 'Inscrição';
   //resultadoUsuario.Columns[3].FieldName := 'CNPJ';
   resultadoUsuario.Columns[3].FieldName := 'Celular';
-  //resultadoUsuario.Columns[4].FieldName := 'Status';
+  resultadoUsuario.Columns[4].FieldName := 'Status';
 end;
 
 function TForm_ConsultaUsuario.carregaFiltros: Boolean;
@@ -121,7 +121,6 @@ begin
   Frame_Status.primeiraOpcao := 'Ambos';
   Frame_Status.carregaFrame := True;
 end;
-
 function TForm_ConsultaUsuario.carregaTodos: Boolean;
 var
   sql: String;
@@ -129,6 +128,7 @@ begin
   sql := SQL_SELECT+' order by pes_id_pessoa ';
   DataModuleConexao.ExecSQL(sql, FDMemTable_Usuario);
 end;
+
 
 function TForm_ConsultaUsuario.filtrarCNPJ: Boolean;
 var
